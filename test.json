@@ -1,0 +1,1439 @@
+{
+  "statistics": {
+    "displayName": "Career Passing",
+    "labels": ["CMP", "ATT", "CMP%", "YDS", "AVG", "TD", "INT", "LNG", "RTG"],
+    "names": [
+      "completions",
+      "passingAttempts",
+      "completionPct",
+      "passingYards",
+      "yardsPerPassAttempt",
+      "passingTouchdowns",
+      "interceptions",
+      "longPassing",
+      "QBRating"
+    ],
+    "displayNames": [
+      "Completions",
+      "Passing Attempts",
+      "Completion Percentage",
+      "Passing Yards",
+      "Yards Per Pass Attempt",
+      "Passing Touchdowns",
+      "Interceptions",
+      "Longest Pass",
+      "Passer Rating"
+    ],
+    "splits": [
+      { "displayName": "Career", "stats": ["4967", "8358", "59.4", "61,361", "7.3", "420", "252", "85", "86.4"] }
+    ]
+  },
+  "nextGame": {},
+  "gameLog": {
+    "displayName": "Recent Games",
+    "statistics": [
+      {
+        "displayName": "Passing",
+        "labels": ["CMP", "ATT", "YDS", "CMP%", "AVG", "TD", "INT", "LNG", "SACK", "RTG", "QBR"],
+        "names": [
+          "completions",
+          "passingAttempts",
+          "passingYards",
+          "completionPct",
+          "yardsPerPassAttempt",
+          "passingTouchdowns",
+          "interceptions",
+          "longPassing",
+          "sacks",
+          "QBRating",
+          "adjQBR"
+        ],
+        "displayNames": [
+          "Completions",
+          "Passing Attempts",
+          "Passing Yards",
+          "Completion Percentage",
+          "Yards Per Pass Attempt",
+          "Passing Touchdowns",
+          "Interceptions",
+          "Longest Pass",
+          "Total Sacks",
+          "Passer Rating",
+          "Adjusted QBR"
+        ],
+        "events": [
+          { "eventId": "200115030", "stats": ["11", "25", "95", "44.0", "3.8", "1", "2", "20", "2", "34.6", "-"] },
+          { "eventId": "200109026", "stats": ["17", "30", "196", "56.7", "6.5", "1", "0", "27", "1", "87.6", "-"] },
+          { "eventId": "200102028", "stats": ["11", "24", "118", "45.8", "4.9", "0", "1", "26", "0", "43.4", "-"] },
+          { "eventId": "191219015", "stats": ["22", "36", "241", "61.1", "6.7", "0", "0", "55", "2", "80.9", "-"] },
+          { "eventId": "191212020", "stats": ["19", "40", "188", "47.5", "4.7", "0", "2", "25", "2", "40.4", "-"] }
+        ]
+      },
+      {
+        "displayName": "Rushing",
+        "labels": ["CAR", "YDS", "AVG", "TD", "LNG"],
+        "names": ["rushingAttempts", "rushingYards", "yardsPerRushAttempt", "rushingTouchdowns", "longRushing"],
+        "displayNames": [
+          "Rushing Attempts",
+          "Rushing Yards",
+          "Yards Per Rush Attempt",
+          "Rushing Touchdowns",
+          "Long Rushing"
+        ],
+        "events": [
+          { "eventId": "200115030", "stats": ["1", "0", "0.0", "0", "0"] },
+          { "eventId": "200109026", "stats": ["1", "-1", "-1.0", "0", "-1"] },
+          { "eventId": "200102028", "stats": ["0", "0", "0.0", "0", "0"] },
+          { "eventId": "191219015", "stats": ["2", "-2", "-1.0", "0", "-1"] },
+          { "eventId": "191212020", "stats": ["0", "0", "0.0", "0", "0"] }
+        ]
+      }
+    ],
+    "events": {
+      "200109026": {
+        "id": "200109026",
+        "links": [
+          {
+            "language": "en",
+            "rel": ["summary", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/200109026",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["summary", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=200109026",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["now", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/200109026",
+            "text": "Now",
+            "shortText": "Now",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["teamstats", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/matchup?gameId=200109026",
+            "text": "Team Stats",
+            "shortText": "Team Stats",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/boxscore/_/gameId/200109026",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=200109026",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          }
+        ],
+        "atVs": "@",
+        "gameDate": "2000-01-09T05:00:00.000+00:00",
+        "score": "20-17",
+        "homeTeamId": "26",
+        "awayTeamId": "15",
+        "homeTeamScore": "17",
+        "awayTeamScore": "20",
+        "gameResult": "W",
+        "opponent": {
+          "id": "26",
+          "uid": "s:20~l:28~t:26",
+          "displayName": "Seattle Seahawks",
+          "abbreviation": "SEA",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/sea/seattle-seahawks",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/sea/seattle-seahawks",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/sea/seattle-seahawks",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/sea",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/sea",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:26&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/sea/seattle-seahawks",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/sea",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/sea",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/sea",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png"
+        },
+        "leagueName": "National Football League",
+        "leagueAbbreviation": "NFL",
+        "leagueShortName": "NFL",
+        "eventNote": "AFC Playoffs-First Round",
+        "team": {
+          "id": "15",
+          "uid": "s:20~l:28~t:15",
+          "abbreviation": "MIA",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/mia/miami-dolphins",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/mia/miami-dolphins",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/mia",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/mia",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:15&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/mia/miami-dolphins",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/mia",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/mia",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/mia",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+          "isAllStar": false
+        }
+      },
+      "200115030": {
+        "id": "200115030",
+        "links": [
+          {
+            "language": "en",
+            "rel": ["summary", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/200115030",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["summary", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=200115030",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["now", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/200115030",
+            "text": "Now",
+            "shortText": "Now",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["teamstats", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/matchup?gameId=200115030",
+            "text": "Team Stats",
+            "shortText": "Team Stats",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/boxscore/_/gameId/200115030",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=200115030",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          }
+        ],
+        "atVs": "@",
+        "gameDate": "2000-01-15T05:00:00.000+00:00",
+        "score": "62-7",
+        "homeTeamId": "30",
+        "awayTeamId": "15",
+        "homeTeamScore": "62",
+        "awayTeamScore": "7",
+        "gameResult": "L",
+        "opponent": {
+          "id": "30",
+          "uid": "s:20~l:28~t:30",
+          "displayName": "Jacksonville Jaguars",
+          "abbreviation": "JAX",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/jax/jacksonville-jaguars",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/jax/jacksonville-jaguars",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/jax/jacksonville-jaguars",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/jax",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/jax",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:30&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/jax/jacksonville-jaguars",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/jax",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/jax",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/jax",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png"
+        },
+        "leagueName": "National Football League",
+        "leagueAbbreviation": "NFL",
+        "leagueShortName": "NFL",
+        "eventNote": "AFC Playoffs-Second Round",
+        "team": {
+          "id": "15",
+          "uid": "s:20~l:28~t:15",
+          "abbreviation": "MIA",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/mia/miami-dolphins",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/mia/miami-dolphins",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/mia",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/mia",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:15&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/mia/miami-dolphins",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/mia",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/mia",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/mia",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+          "isAllStar": false
+        }
+      },
+      "191212020": {
+        "id": "191212020",
+        "links": [
+          {
+            "language": "en",
+            "rel": ["summary", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/191212020",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["summary", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=191212020",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["now", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/191212020",
+            "text": "Now",
+            "shortText": "Now",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["teamstats", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/matchup?gameId=191212020",
+            "text": "Team Stats",
+            "shortText": "Team Stats",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/boxscore/_/gameId/191212020",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=191212020",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          }
+        ],
+        "week": 14,
+        "atVs": "@",
+        "gameDate": "1999-12-12T05:00:00.000+00:00",
+        "score": "28-20",
+        "homeTeamId": "20",
+        "awayTeamId": "15",
+        "homeTeamScore": "28",
+        "awayTeamScore": "20",
+        "gameResult": "L",
+        "opponent": {
+          "id": "20",
+          "uid": "s:20~l:28~t:20",
+          "displayName": "New York Jets",
+          "abbreviation": "NYJ",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/nyj/new-york-jets",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/nyj/new-york-jets",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/nyj/new-york-jets",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/nyj",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/nyj",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:20&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/nyj/new-york-jets",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/nyj",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/nyj",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/nyj",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png"
+        },
+        "leagueName": "National Football League",
+        "leagueAbbreviation": "NFL",
+        "leagueShortName": "NFL",
+        "team": {
+          "id": "15",
+          "uid": "s:20~l:28~t:15",
+          "abbreviation": "MIA",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/mia/miami-dolphins",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/mia/miami-dolphins",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/mia",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/mia",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:15&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/mia/miami-dolphins",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/mia",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/mia",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/mia",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+          "isAllStar": false
+        }
+      },
+      "191219015": {
+        "id": "191219015",
+        "links": [
+          {
+            "language": "en",
+            "rel": ["summary", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/191219015",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["summary", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=191219015",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["now", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/191219015",
+            "text": "Now",
+            "shortText": "Now",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["teamstats", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/matchup?gameId=191219015",
+            "text": "Team Stats",
+            "shortText": "Team Stats",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/boxscore/_/gameId/191219015",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=191219015",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          }
+        ],
+        "week": 15,
+        "atVs": "vs",
+        "gameDate": "1999-12-19T05:00:00.000+00:00",
+        "score": "12-9",
+        "homeTeamId": "15",
+        "awayTeamId": "24",
+        "homeTeamScore": "12",
+        "awayTeamScore": "9",
+        "gameResult": "W",
+        "opponent": {
+          "id": "24",
+          "uid": "s:20~l:28~t:24",
+          "displayName": "San Diego Chargers",
+          "abbreviation": "SD",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/lac/los-angeles-chargers",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/lac/los-angeles-chargers",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/lac/los-angeles-chargers",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/lac",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/lac",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:24&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/lac/los-angeles-chargers",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/lac",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/lac",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/lac",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ]
+        },
+        "leagueName": "National Football League",
+        "leagueAbbreviation": "NFL",
+        "leagueShortName": "NFL",
+        "team": {
+          "id": "15",
+          "uid": "s:20~l:28~t:15",
+          "abbreviation": "MIA",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/mia/miami-dolphins",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/mia/miami-dolphins",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/mia",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/mia",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:15&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/mia/miami-dolphins",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/mia",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/mia",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/mia",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+          "isAllStar": false
+        }
+      },
+      "200102028": {
+        "id": "200102028",
+        "links": [
+          {
+            "language": "en",
+            "rel": ["summary", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/200102028",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["summary", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=200102028",
+            "text": "Gamecast",
+            "shortText": "Summary",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["now", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/game/_/gameId/200102028",
+            "text": "Now",
+            "shortText": "Now",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["teamstats", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/matchup?gameId=200102028",
+            "text": "Team Stats",
+            "shortText": "Team Stats",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "desktop", "event"],
+            "href": "https://www.espn.com/nfl/boxscore/_/gameId/200102028",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          },
+          {
+            "language": "en",
+            "rel": ["boxscore", "sportscenter", "app", "event"],
+            "href": "sportscenter://x-callback-url/showGame?sportName=football&leagueAbbrev=nfl&gameId=200102028",
+            "text": "Box Score",
+            "shortText": "Box Score",
+            "isExternal": false,
+            "isPremium": false
+          }
+        ],
+        "week": 17,
+        "atVs": "@",
+        "gameDate": "2000-01-02T05:00:00.000+00:00",
+        "score": "21-10",
+        "homeTeamId": "28",
+        "awayTeamId": "15",
+        "homeTeamScore": "21",
+        "awayTeamScore": "10",
+        "gameResult": "L",
+        "opponent": {
+          "id": "28",
+          "uid": "s:20~l:28~t:28",
+          "displayName": "Washington Redskins",
+          "abbreviation": "WSH",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/wsh/washington-commanders",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/wsh/washington-commanders",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/wsh/washington-commanders",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/wsh",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/wsh",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:28&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/wsh/washington-commanders",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/wsh",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/wsh",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/wsh",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ]
+        },
+        "leagueName": "National Football League",
+        "leagueAbbreviation": "NFL",
+        "leagueShortName": "NFL",
+        "team": {
+          "id": "15",
+          "uid": "s:20~l:28~t:15",
+          "abbreviation": "MIA",
+          "links": [
+            {
+              "language": "en",
+              "rel": ["clubhouse", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/_/name/mia/miami-dolphins",
+              "text": "Clubhouse",
+              "shortText": "Clubhouse",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["roster", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/roster/_/name/mia/miami-dolphins",
+              "text": "Roster",
+              "shortText": "Roster",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["stats", "desktop", "team"],
+              "href": "http://www.espn.com/nfl/team/stats/_/name/mia/miami-dolphins",
+              "text": "Statistics",
+              "shortText": "Statistics",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["schedule", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/schedule/_/name/mia",
+              "text": "Schedule",
+              "shortText": "Schedule",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["photos", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/photos/_/name/mia",
+              "text": "photos",
+              "shortText": "photos",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["scores", "sportscenter", "app", "team"],
+              "href": "sportscenter://x-callback-url/showClubhouse?uid=s:20~l:28~t:15&section=scores",
+              "text": "Scores",
+              "shortText": "Scores",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["draftpicks", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/draft/teams/_/name/mia/miami-dolphins",
+              "text": "Draft Picks",
+              "shortText": "Draft Picks",
+              "isExternal": false,
+              "isPremium": true
+            },
+            {
+              "language": "en",
+              "rel": ["transactions", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/transactions/_/name/mia",
+              "text": "Transactions",
+              "shortText": "Transactions",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["injuries", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/injuries/_/name/mia",
+              "text": "Injuries",
+              "shortText": "Injuries",
+              "isExternal": false,
+              "isPremium": false
+            },
+            {
+              "language": "en",
+              "rel": ["depthchart", "desktop", "team"],
+              "href": "https://www.espn.com/nfl/team/depth/_/name/mia",
+              "text": "Depth Chart",
+              "shortText": "Depth Chart",
+              "isExternal": false,
+              "isPremium": false
+            }
+          ],
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+          "isAllStar": false
+        }
+      }
+    }
+  },
+  "rotowire": {}
+}

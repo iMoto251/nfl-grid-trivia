@@ -1,9 +1,16 @@
-import pandas as pd
+# import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import json
+import sqlite3
+import re
 
-url = "https://www.pro-football-reference.com/players/J/JenkMa99.htm"
+con = sqlite3.connect("players.db")
+cur = con.cursor()
+
+# url = "https://www.pro-football-reference.com/players/J/JenkMa99.htm"
+# url = "https://www.pro-football-reference.com/players/S/ShahRa00.htm"
+url = "https://www.pro-football-reference.com/players/N/NewtCa00.htm"
 
 # Send an HTTP GET request to the URL
 response = requests.get(url)
@@ -12,7 +19,7 @@ response = requests.get(url)
 soup = BeautifulSoup(response.content, 'html.parser')
 
 # Create player ID from url
-playerID = url.split("/")[-1].split(".")[0]
+playerID = url.split("/")[-2] + "/" + url.split("/")[-1].split(".")[0]
 
 # Find the player's name
 name = soup.find("h1").text.strip()
@@ -21,51 +28,101 @@ name = soup.find("h1").text.strip()
 position = soup.find("strong", string="Position").next_sibling.strip()
 position = position.replace(": ","")
 
+try:
+    team = soup.find("strong", string="Team").find_next("a").text
+    team = team.split()[-1]
+    # print(team)
+except:
+    team = "FA"
+
 # Find the player's college
 college = soup.find("strong", string='College').find_next("a").text
 
+
+try:
+    draft_team = soup.find("strong", string='Draft').find_next().text
+    #print(draft_team)
+
+    draft_year = soup.find("a",string=draft_team).find_next().text.split(" NFL Draft")[0]
+
+    soup1 = BeautifulSoup(response.text, 'html.parser').text.split(" of the")[0].split("in the ")[1]
+    draft = re.findall(r'\d+',soup1)
+    round = draft[0]
+    pick = draft[1]
+
+    draft_team = draft_team.split()[-1]
+    # print(draft_team)
+    # print(draft_year)
+    # print(soup1)
+    # print(round)
+    # print(pick)
+except:
+    draft_year = "Undrafted"
+    draft_team = "Undrafted"
+    round = "Undrafted"
+    pick = "Undrafted"
+    pass
+
+
+
+# draft_info1 = soup.find("a", string="Draft").find_next_sibling().text
+# print(draft_info1)
+
 # Find the table with class "stats_table"
-table = soup.find("table", class_="stats_table")
 
 # Find the footer section of the table
-footer = table.find("tfoot")
 
 # Find the rows in the footer
-rows = footer.find_all("tr")
 
 # Print the scraped information
-print("Name:", name)
-print("Position:", position)
-print("College:", college)
+# print("Name:", name)
+# print("Position:", position)
+# print("College:", college)
 
 # Create Teams array
 teams = []
 
 # Loop through the rows and print the data
-for row in rows:
-    data = [td.text.strip() for td in row.find_all("td")]
-    if data[0] == "":
-        pass
-    else:
-        teams.append(data[0])
-        print(data[0])
-        
-f = open("players.txt", "a")
-# f.write('{"id": "'+playerID+'","name": "'+name+'","position": "'+position+'","college": "'+college+'","teams": '+teams'},\n')
+table = soup.find("table", class_="stats_table")
+if table:
+    rows = table.find_all("tr")
+    for row in rows:
+        team_cell = row.find("td", {"data-stat": "team"})
+        if team_cell:
+            team_name = team_cell.get_text()
+            if team_name != "":
+                teams.append(team_name)
+                # print(team_name)
+            else:
+                pass
+else:
+    print("Stats table not found.")
+    
+teams = list(set(teams))
 
-output = {
-  "id": playerID,
-  "name": name,
-  "position": position,
-  "college": college,
-  "teams": teams
-}
+# f = open("players.txt", "a")
 
-out1 = ""
+# output = {
+#   "id": playerID,
+#   "name": name,
+#   "position": position,
+#   "college": college,
+#   "teams": teams,
+#   "draft":{
+#       "draftTeam": draft_team,
+#       "draftYear": draft_year,
+#       "draftRound": round,
+#       "draftPick": pick
+#   }
+# }
 
-print(output)
+# print(output)
 
-with open('players.json','w') as outfile:
-    json.dump(output, outfile, indent=4)
-
-# f.write('{"id": "'+playerID+'","name": "'+name+'","position": "'+position+'","college": "'+college+'","teams": '+teams'},\n')
+# with open('players.json','a') as outfile:
+#     json.dump(output, outfile, indent=2)
+    
+print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
+# cur.execute(f"""
+#             INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
+#             """)
+# con.commit()

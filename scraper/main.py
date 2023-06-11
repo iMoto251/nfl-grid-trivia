@@ -10,7 +10,8 @@ cur = con.cursor()
 
 # url = "https://www.pro-football-reference.com/players/J/JenkMa99.htm"
 # url = "https://www.pro-football-reference.com/players/S/ShahRa00.htm"
-url = "https://www.pro-football-reference.com/players/N/NewtCa00.htm"
+# url = "https://www.pro-football-reference.com/players/N/NewtCa00.htm"
+url = "https://www.pro-football-reference.com/players/M/McCaCh01.htm"
 
 # Send an HTTP GET request to the URL
 response = requests.get(url)
@@ -63,22 +64,6 @@ except:
     pick = "Undrafted"
     pass
 
-
-
-# draft_info1 = soup.find("a", string="Draft").find_next_sibling().text
-# print(draft_info1)
-
-# Find the table with class "stats_table"
-
-# Find the footer section of the table
-
-# Find the rows in the footer
-
-# Print the scraped information
-# print("Name:", name)
-# print("Position:", position)
-# print("College:", college)
-
 # Create Teams array
 teams = []
 
@@ -90,15 +75,17 @@ if table:
         team_cell = row.find("td", {"data-stat": "team"})
         if team_cell:
             team_name = team_cell.get_text()
-            if team_name != "":
+            if team_name != "" and re.findall(r'[TM]+',team_name) != ['TM']:
                 teams.append(team_name)
-                # print(team_name)
+                #print(team_name)
             else:
                 pass
 else:
     print("Stats table not found.")
     
 teams = list(set(teams))
+
+print(teams)
 
 # f = open("players.txt", "a")
 

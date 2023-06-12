@@ -76,7 +76,6 @@ typings/
 .fusebox/
 
 *.exe
-*.txt
 *.rar
 *.zip
 test.py

@@ -1,115 +1,153 @@
-# import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import json
 import sqlite3
 import re
+import time
 
-con = sqlite3.connect("players.db")
-cur = con.cursor()
+teamdict = {
+    "Atlanta Falcons":"ATL",
+    "Carolina Panthers":"CAR",
+    "San Francisco 49ers":"SFO"
+}
 
-# url = "https://www.pro-football-reference.com/players/J/JenkMa99.htm"
-# url = "https://www.pro-football-reference.com/players/S/ShahRa00.htm"
-# url = "https://www.pro-football-reference.com/players/N/NewtCa00.htm"
-url = "https://www.pro-football-reference.com/players/M/McCaCh01.htm"
+def convert_teams(teams):
+    print("Converted Teams")
+    convTeams = []
 
-# Send an HTTP GET request to the URL
-response = requests.get(url)
+    for team in teams:
+        #newTeam = teamdict(team)
+        convTeams.append(teamdict[team])
+    return convTeams
 
-# Create a BeautifulSoup object to parse the HTML content
-soup = BeautifulSoup(response.content, 'html.parser')
+def main():
+    con = sqlite3.connect("players.db")
+    cur = con.cursor()
 
-# Create player ID from url
-playerID = url.split("/")[-2] + "/" + url.split("/")[-1].split(".")[0]
+    fileName = open('playerlinks.txt', "r")
+    line_count = 0
 
-# Find the player's name
-name = soup.find("h1").text.strip()
+    with fileName as file:
+        for line in file:
+            line_count += 1
 
-# Find the player's position and strip colon
-position = soup.find("strong", string="Position").next_sibling.strip()
-position = position.replace(": ","")
+    for x in range(10):
+        with open('playerlinks.txt', "r") as file:
+            lines = file.readlines()
 
-try:
-    team = soup.find("strong", string="Team").find_next("a").text
-    team = team.split()[-1]
-    # print(team)
-except:
-    team = "FA"
+        url = lines[0].strip()
 
-# Find the player's college
-college = soup.find("strong", string='College').find_next("a").text
+        # Send an HTTP GET request to the URL
+        response = requests.get(url)
+
+        # Create a BeautifulSoup object to parse the HTML content
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Create player ID from url
+        playerID = url.split("/")[-2] + "/" + url.split("/")[-1].split(".")[0]
+
+        # Find the player's name
+        name = soup.find("h1").text.strip()
+
+        # Find the player's position and strip colon
+        position = soup.find("strong", string="Position").next_sibling.strip()
+        position = position.replace(": ","")
+
+        try:
+            team = soup.find("strong", string="Team").find_next("a").text
+            team = team.split()[-1]
+            # print(team)
+        except:
+            team = "FA"
+
+        # Find the player's college
+        college = soup.find("strong", string='College').find_next("a").text
 
 
-try:
-    draft_team = soup.find("strong", string='Draft').find_next().text
-    #print(draft_team)
+        try:
+            draft_team = soup.find("strong", string='Draft').find_next().text
+            #print(draft_team)
 
-    draft_year = soup.find("a",string=draft_team).find_next().text.split(" NFL Draft")[0]
+            draft_year = soup.find("a",string=draft_team).find_next().text.split(" NFL Draft")[0]
 
-    soup1 = BeautifulSoup(response.text, 'html.parser').text.split(" of the")[0].split("in the ")[1]
-    draft = re.findall(r'\d+',soup1)
-    round = draft[0]
-    pick = draft[1]
+            soup1 = BeautifulSoup(response.text, 'html.parser').text.split(" of the")[0].split("in the ")[1]
+            draft = re.findall(r'\d+',soup1)
+            round = draft[0]
+            pick = draft[1]
 
-    draft_team = draft_team.split()[-1]
-    # print(draft_team)
-    # print(draft_year)
-    # print(soup1)
-    # print(round)
-    # print(pick)
-except:
-    draft_year = "Undrafted"
-    draft_team = "Undrafted"
-    round = "Undrafted"
-    pick = "Undrafted"
-    pass
+            draft_team = draft_team.split()[-1]
+        except:
+            draft_year = "Undrafted"
+            draft_team = "Undrafted"
+            round = "Undrafted"
+            pick = "Undrafted"
+            pass
 
-# Create Teams array
-teams = []
+        # Create Teams array
+        teams = []
 
-# Loop through the rows and print the data
-table = soup.find("table", class_="stats_table")
-if table:
-    rows = table.find_all("tr")
-    for row in rows:
-        team_cell = row.find("td", {"data-stat": "team"})
-        if team_cell:
-            team_name = team_cell.get_text()
-            if team_name != "" and re.findall(r'[TM]+',team_name) != ['TM']:
-                teams.append(team_name)
-                #print(team_name)
-            else:
-                pass
-else:
-    print("Stats table not found.")
-    
-teams = list(set(teams))
+        # Loop through the rows and print the data
+        table = soup.find("table", class_="stats_table")
+        if table:
+            rows = table.find_all("tr")
+            for row in rows:
+                team_cell = row.find("td", {"data-stat": "team"})
+                #print(team_cell)
+                try:
+                    link = team_cell.find("a")
+                    title = link.get("title")
+                    if title:
+                        if title != "":
+                            teams.append(title)
+                        else:
+                            pass
+                except:
+                    pass
+                
+        else:
+            print("Stats table not found.")
+            
+        teams = list(set(teams))
+        masterTeam = []
 
-print(teams)
+        with open("teamfile.txt","r") as file:
+            for line in file:
+                masterTeam.append(line.strip())
 
-# f = open("players.txt", "a")
+        for team in teams:
+            masterTeam.append(team)
 
-# output = {
-#   "id": playerID,
-#   "name": name,
-#   "position": position,
-#   "college": college,
-#   "teams": teams,
-#   "draft":{
-#       "draftTeam": draft_team,
-#       "draftYear": draft_year,
-#       "draftRound": round,
-#       "draftPick": pick
-#   }
-# }
+        masterTeam = list(set(masterTeam))
+        masterTeam.sort()
+        #print(masterTeam)
 
-# print(output)
+        with open("teamfile.txt","w") as file:
+            for team in masterTeam:
+                file.writelines(team+"\n")
+        
+        # print(teams)
 
-# with open('players.json','a') as outfile:
-#     json.dump(output, outfile, indent=2)
-    
-print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
-# cur.execute(f"""
-#             INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
-#             """)
-# con.commit()
+        # teamFile = open("teamfile.txt","a")
+        # for team in teams:
+        #     teamFile.write(team+"\n")
+            
+
+        #x = convert_teams(teams)
+        #print(x)
+
+        print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
+        print(f'INSERT INTO playerTeams VALUES("{playerID}",")')
+        #cur.execute(f"""
+        #            INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
+        #            """)
+        #con.commit()
+
+        with open('playersScraped.txt', "a") as file:
+            file.writelines(url+"\n")
+
+        lines = lines[1:]
+        with open('playerlinks.txt', "w") as file:
+            file.writelines(lines)
+
+        time.sleep(10)
+
+main()

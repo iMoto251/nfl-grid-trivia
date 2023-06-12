@@ -5,9 +5,50 @@ import re
 import time
 
 teamdict = {
+    "Arizona Cardinals":"ARI",
+    "St. Louis Cardinals":"ARI",
+    "Phoenix Cardinals":"ARI",
     "Atlanta Falcons":"ATL",
+    "Baltimore Ravens":"BAL",
+    "Buffalo Bills":"BUF",
     "Carolina Panthers":"CAR",
-    "San Francisco 49ers":"SFO"
+    "Chicago Bears":"CHI",
+    "Cincinnati Bengals":"CIN",
+    "Cleveland Browns":"CLE",
+    "Dallas Cowboys":"DAL",
+    "Denver Broncos":"DEN",
+    "Detroit Lions":"DET",
+    "Green Bay Packers":"GNB",
+    "Houston Texans":"HOU",
+    "Indianapolis Colts":"IND",
+    "Baltimore Colts":"IND",
+    "Jacksonville Jaguars":"JAX",
+    "Kansas City Chiefs":"KAN",
+    "Las Vegas Raiders":"LVR",
+    "Oakland Raiders":"LVR",
+    "Los Angeles Raiders":"LVR",
+    "Los Angeles Chargers":"LAC",
+    "San Diego Chargers":"LAC",
+    "Los Angeles Rams":"LAR",
+    "St. Louis Rams":"LAR",
+    "Miami Dolphins":"MIA",
+    "Minnesota Vikings":"MIN",
+    "New England Patriots":"NWE",
+    "Boston Patriots":"NWE",
+    "New Orleans Saints":"NOR",
+    "New York Giants":"NYG",
+    "New York Jets":"NYJ",
+    "Philadelphia Eagles":"PHI",
+    "Pittsburgh Steelers":"PIT",
+    "San Francisco 49ers":"SFO",
+    "Seattle Seahawks":"SEA",
+    "Tampa Bay Buccaneers":"TAM",
+    "Tennessee Titans":"TEN",
+    "Houston Oilers":"TEN",
+    "Tennessee Oilers":"TEN",
+    "Washington Commanders":"WAS",
+    "Washington Redskins":"WAS",
+    "Washington Football Team":"WAS"
 }
 
 def convert_teams(teams):
@@ -55,7 +96,6 @@ def main():
         try:
             team = soup.find("strong", string="Team").find_next("a").text
             team = team.split()[-1]
-            # print(team)
         except:
             team = "FA"
 
@@ -65,8 +105,6 @@ def main():
 
         try:
             draft_team = soup.find("strong", string='Draft').find_next().text
-            #print(draft_team)
-
             draft_year = soup.find("a",string=draft_team).find_next().text.split(" NFL Draft")[0]
 
             soup1 = BeautifulSoup(response.text, 'html.parser').text.split(" of the")[0].split("in the ")[1]
@@ -106,30 +144,7 @@ def main():
         else:
             print("Stats table not found.")
             
-        teams = list(set(teams))
-        masterTeam = []
-
-        with open("teamfile.txt","r") as file:
-            for line in file:
-                masterTeam.append(line.strip())
-
-        for team in teams:
-            masterTeam.append(team)
-
-        masterTeam = list(set(masterTeam))
-        masterTeam.sort()
-        #print(masterTeam)
-
-        with open("teamfile.txt","w") as file:
-            for team in masterTeam:
-                file.writelines(team+"\n")
-        
-        # print(teams)
-
-        # teamFile = open("teamfile.txt","a")
-        # for team in teams:
-        #     teamFile.write(team+"\n")
-            
+        teams = list(set(teams))             
 
         #x = convert_teams(teams)
         #print(x)

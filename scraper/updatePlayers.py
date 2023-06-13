@@ -51,6 +51,41 @@ teamdict = {
     "Washington Football Team":"WAS"
 }
 
+snapCountLinks = [
+    'https://www.pro-football-reference.com/teams/buf/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/mia/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/nwe/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/nyj/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/jax/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/oti/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/clt/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/htx/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/cin/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/rav/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/pit/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/cle/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/kan/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/sdg/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/rai/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/den/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/phi/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/dal/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/nyg/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/was/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/tam/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/car/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/nor/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/atl/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/min/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/det/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/gnb/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/chi/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/sfo/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/sea/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/ram/2022-snap-counts.htm',
+    'https://www.pro-football-reference.com/teams/crd/2022-snap-counts.htm',
+]
+
 def convert_teams(teams):
     convTeams = []
 
@@ -58,7 +93,70 @@ def convert_teams(teams):
         convTeams.append(teamdict[team])
     return convTeams
 
-def insert_team(playerID, cur):
+def insert_player(playerID):
+    url = "https://www.pro-football-reference.com/players/" + playerID + ".htm"
+
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    name = soup.find("h1").text.strip()
+    position = soup.find("strong", string="Position").next_sibling.strip()
+    position = position.replace(": ","")
+    try:
+        team = soup.find("strong", string="Team").find_next("a").text
+        team = team.split()[-1]
+    except:
+        team = "FA"
+
+    college = soup.find("strong", string='College').find_next("a").text
+
+    try:
+        draft_team = soup.find("strong", string='Draft').find_next().text
+        draft_year = soup.find("a",string=draft_team).find_next().text.split(" NFL Draft")[0]
+
+        soup1 = BeautifulSoup(response.text, 'html.parser').text.split(" of the")[0].split("in the ")[1]
+        draft = re.findall(r'\d+',soup1)
+        round = draft[0]
+        pick = draft[1]
+
+        draft_team = draft_team.split()[-1]
+    except:
+        draft_year = "Undrafted"
+        draft_team = "Undrafted"
+        round = "Undrafted"
+        pick = "Undrafted"
+        pass
+
+    # Create Teams array
+    teams = []
+
+    # Loop through the rows and print the data
+    table = soup.find("table", class_="stats_table")
+    if table:
+        rows = table.find_all("tr")
+        for row in rows:
+            team_cell = row.find("td", {"data-stat": "team"})
+            #print(team_cell)
+            try:
+                link = team_cell.find("a")
+                title = link.get("title")
+                if title:
+                    if title != "":
+                        teams.append(title)
+                    else:
+                        pass
+            except:
+                pass
+            
+    else:
+        print("Stats table not found.")
+        
+    teams = list(set(teams))
+    x = convert_teams(teams)
+    print(x)
+    print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
+    time.sleep(20)
+
+def insert_team(playerID):
     url = "https://www.pro-football-reference.com/players/" + playerID + ".htm"
 
     response = requests.get(url)
@@ -191,126 +289,52 @@ def insert_team(playerID, cur):
                 playedWAS = "True"
             case _:
                 pass
+        #print(team)
 
-    cur.execute(f"""
+    print(f"""
+          DELETE FROM playerTeams where id='{playerID}'
+          """)
+    print(f"""
           INSERT INTO playerTeams VALUES ("{playerID}","{playedARI}","{playedATL}","{playedBAL}","{playedBUF}","{playedCAR}","{playedCHI}",
           "{playedCIN}","{playedCLE}","{playedDAL}","{playedDEN}","{playedDET}","{playedGNB}","{playedHOU}","{playedIND}","{playedJAX}",
           "{playedKAN}","{playedLVR}","{playedLAC}","{playedLAR}","{playedMIA}","{playedMIN}","{playedNWE}","{playedNOR}","{playedNYG}",
           "{playedNYJ}","{playedPHI}","{playedPIT}","{playedSFO}","{playedSEA}","{playedTAM}","{playedTEN}","{playedWAS}")
           """)
-    #time.sleep(5)
+    time.sleep(5)
 
 def main():
     con = sqlite3.connect("players.db")
     cur = con.cursor()
 
-    fileName = open('playerlinks.txt', "r")
-    line_count = 0
+    for url in snapCountLinks:
+        playerIDs = []
 
-    with fileName as file:
-        for line in file:
-            line_count += 1
-
-    for x in range(98):
-        with open('playerlinks.txt', "r") as file:
-            lines = file.readlines()
-
-        url = lines[0].strip()
-
-        # Send an HTTP GET request to the URL
         response = requests.get(url)
+        soup = BeautifulSoup(response.content,'html.parser')
 
-        # Create a BeautifulSoup object to parse the HTML content
-        soup = BeautifulSoup(response.content, 'html.parser')
+        playerLinks = soup.find("table", {"id":"snap_counts"})
+        if playerLinks:
+            rows = playerLinks.find_all("a")
+            for row in rows:
+                htm = re.findall(r'htm',str(row))
+                if htm:
+                    link = row.get("href")
+                    playerID = link.split("/")[-2] + "/" + link.split("/")[-1].split(".")[0]
+                    playerIDs.append(playerID)
+                    
 
-        # Create player ID from url
-        playerID = url.split("/")[-2] + "/" + url.split("/")[-1].split(".")[0]
+        for playerID in playerIDs:
+            id = cur.execute(f"SELECT id FROM players WHERE id='{playerID}'").fetchall()
 
-        # Find the player's name
-        name = soup.find("h1").text.strip()
-
-        # Find the player's position and strip colon
-        try:
-            position = soup.find("strong", string="Position").next_sibling.strip()
-            position = position.replace(": ","")
-            position = str(position).split("-")[0].split("/")[0]
-        except:
-            position = "Unknown"
-
-        try:
-            team = soup.find("strong", string="Team").find_next("a").text
-            team = team.split()[-1]
-        except:
-            team = "FA"
-
-        # Find the player's college
-        try:
-            college = soup.find("strong", string='College').find_next("a").text
-        except:
-            college = "Unknown"
-
-        try:
-            draft_team = soup.find("strong", string='Draft').find_next().text
-            draft_year = soup.find("strong", string='Draft').find_next("a").find_next("a").text.split(" NFL Draft")[0].split(" AFL Draft")[0]
-
-            soup1 = BeautifulSoup(response.text, 'html.parser').text.split(" of the")[0].split("in the ")[1]
-            draft = re.findall(r'\d+',soup1)
-            round = draft[0]
-            pick = draft[1]
-
-            draft_team = draft_team.split()[-1]
-        except:
-            draft_year = "Undrafted"
-            draft_team = "Undrafted"
-            round = "Undrafted"
-            pick = "Undrafted"
-            pass
-
-        if position == "QB":
-            pass
-
-        if position == "RB":
-            pass
-
-        if position == "WR" or position == "TE":
-            pass
-
-        if position == "RB":
-            pass
-
-
-        try:
-            cur.execute(f"""
-                        INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
-                        """)
-        except:
-            print("Player already in database")
-
-        try:
-            cur.execute(f"""
-                        INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
-                        """)
-        except:
-            print("Player already in database")
-
-        insert_team(playerID, cur)
-        con.commit()
-
-        #print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
-        #print(f'INSERT INTO playerTeams VALUES("{playerID}",")')
-        #cur.execute(f"""
-        #            INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
-        #            """)
-        #con.commit()
-
-        print(f"{x}: Added {name} to database")
-
-        with open('playersScraped.txt', "a") as file:
-            file.writelines(url+"\n")
-
-        lines = lines[1:]
-        with open('playerlinks.txt', "w") as file:
-            file.writelines(lines)
+            if id == []:
+                insert_player(playerID)
+                insert_team(playerID)
+                #print("Miss")
+                pass
+            else:
+                insert_team(playerID)
+                #print("Hit")
+                pass
 
         time.sleep(5)
 

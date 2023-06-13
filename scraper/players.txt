@@ -1,1 +1,25 @@
-{"id": "JenkMa99","name": "Malcolm Jenkins","position": "DB","college": "Ohio St.","teams":{"NOR": "Saints","PHI": "Eagles"}}
+CREATE TABLE "playerStats" (
+	"id"	TEXT,
+	"careerPassing"	INTEGER,
+    "careerPassing"	INTEGER,
+    "careerRushing"	INTEGER,
+    "careerReceiving"	INTEGER,
+    "careerReceptions"	INTEGER,
+    "bestPassing"	INTEGER,
+    "bestRushing"	INTEGER,
+    "bestReceiving"	INTEGER,
+    "bestReceptions"	INTEGER,
+    "num5000Passing"	INTEGER,
+    "num4000Passing"	INTEGER,
+    "num3000Passing"    INTEGER,
+    "num2000Rushing"	INTEGER,
+    "num1500Rushing"	INTEGER,
+    "num1250Rushing"	INTEGER,
+    "num1000Rushing"	INTEGER,
+    "num1750Receiving"	INTEGER,
+    "num1500Receiving"	INTEGER,
+    "num1250Receiving"	INTEGER,
+    "num1000Receiving"	INTEGER,
+    "num110Receptions"	INTEGER,
+    "num100Receptions"	INTEGER
+);

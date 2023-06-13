@@ -211,7 +211,7 @@ def main():
         for line in file:
             line_count += 1
 
-    for x in range(98):
+    for x in range(1):
         with open('playerlinks.txt', "r") as file:
             lines = file.readlines()
 
@@ -266,17 +266,227 @@ def main():
             pick = "Undrafted"
             pass
 
-        if position == "QB":
-            pass
+        careerPassing=0
+        careerRushing=0
+        careerReceiving=0
+        careerReceptions=0
+        bestPassing=0
+        bestRushing=0
+        bestReceiving=0
+        bestReceptions=0
+        num5000Passing=0
+        num4000Passing=0
+        num3000Passing=0
+        num2000Rushing=0
+        num1500Rushing=0
+        num1250Rushing=0
+        num1000Rushing=0
+        num1750Receiving=0
+        num1500Receiving=0
+        num1250Receiving=0
+        num1000Receiving=0
+        num110Receptions=0
+        num100Receptions=0
 
-        if position == "RB":
-            pass
+        if position == "QB" or position == "RB" or position == "WR" or position == "TE":
+            try: #Passing Table
+                careerPassing=0
+                careerRushing=0
+                careerReceiving=0
+                careerReceptions=0
+                table = soup.find("table", {"class":"stats_table","id":"passing"})
+                table = table.find("tbody")
+                if table:
+                    rows = table.find_all("tr")
+                    for row in rows:
+                        pass_yds = row.find("td", {"data-stat": "pass_yds"})
+                        pass_yds = str(pass_yds)
+                        pass_yds = re.findall(r'\d+',pass_yds)
+                        if pass_yds == []:
+                            pass
+                        else:
+                            pass_yds = int(pass_yds[0])
+                            if pass_yds > bestPassing:
+                                bestPassing = pass_yds
+                            if pass_yds >= 5000:
+                                num5000Passing += 1
+                            if pass_yds >= 4000:
+                                num4000Passing += 1
+                            if pass_yds >= 3000:
+                                num3000Passing += 1     
+                            careerPassing += pass_yds
+                            #print(pass_yds)
+                print(careerPassing)
+                print(bestPassing)
+                print(num5000Passing)
+                print(num4000Passing)
+                print(num3000Passing)
+            except:
+                print("Passing Table Not Found")
 
-        if position == "WR" or position == "TE":
-            pass
+            try: #Rushing and Receiving Table
+                careerPassing=0
+                careerRushing=0
+                careerReceiving=0
+                careerReceptions=0
+                table = soup.find("table", {"class":"stats_table","id":"rushing_and_receiving"})
+                table = table.find("tbody")
+                if table:
+                    rows = table.find_all("tr")
+                    for row in rows:
+                        rush_yds = row.find("td", {"data-stat": "rush_yds"})
+                        rush_yds = str(rush_yds)
+                        rush_yds = re.findall(r'\d+',rush_yds)
+                        if rush_yds == []:
+                            pass
+                        else:
+                            rush_yds = int(rush_yds[0])
+                            if rush_yds > bestRushing:
+                                bestRushing = rush_yds
+                            if rush_yds >= 2000:
+                                num2000Rushing += 1
+                            if rush_yds >= 1500:
+                                num1500Rushing += 1
+                            if rush_yds >= 1250:
+                                num1250Rushing += 1
+                            if rush_yds >= 1000:
+                                num1000Rushing += 1     
+                            careerRushing += rush_yds
+                            #print(rush_yds)
+                        rec_yds = row.find("td", {"data-stat": "rec_yds"})
+                        rec_yds = str(rec_yds)
+                        rec_yds = re.findall(r'\d+',rec_yds)
+                        if rec_yds == []:
+                            pass
+                        else:
+                            rec_yds = int(rec_yds[0])
+                            if rec_yds > bestReceiving:
+                                bestReceiving = rec_yds
+                            if rec_yds >= 1750:
+                                num1750Receiving += 1
+                            if rec_yds >= 1500:
+                                num1500Receiving += 1
+                            if rec_yds >= 1250:
+                                num1250Receiving += 1
+                            if rec_yds >= 1000:
+                                num1000Receiving += 1     
+                            careerReceiving += rec_yds
+                            #print(rush_yds)
+                        recs = row.find("td", {"data-stat": "rec"})
+                        recs = str(recs)
+                        recs = re.findall(r'\d+',recs)
+                        if recs == []:
+                            pass
+                        else:
+                            recs = int(recs[0])
+                            if recs > bestReceptions:
+                                bestReceptions = recs
+                            if recs >= 110:
+                                num110Receptions += 1
+                            if recs >= 100:
+                                num100Receptions += 1    
+                            careerReceptions += recs
+                            #print(rush_yds)
+                print(careerRushing)
+                print(bestRushing)
+                print(num2000Rushing)
+                print(num1500Rushing)
+                print(num1250Rushing)
+                print(num1000Rushing)
+                print(careerReceiving)
+                print(bestReceiving)
+                print(num1750Receiving)
+                print(num1500Receiving)
+                print(num1250Receiving)
+                print(num1000Receiving)
+                print(careerReceptions)
+                print(bestReceptions)
+                print(num110Receptions)
+                print(num100Receptions)
+            except:
+                print("Rushing and Receiving Table Not Found")
 
-        if position == "RB":
-            pass
+            try: #Receiving and Rushing Table
+                careerPassing=0
+                careerRushing=0
+                careerReceiving=0
+                careerReceptions=0
+                table = soup.find("table", {"class":"stats_table","id":"receiving_and_rushing"})
+                table = table.find("tbody")
+                if table:
+                    rows = table.find_all("tr")
+                    for row in rows:
+                        rush_yds = row.find("td", {"data-stat": "rush_yds"})
+                        rush_yds = str(rush_yds)
+                        rush_yds = re.findall(r'\d+',rush_yds)
+                        if rush_yds == []:
+                            pass
+                        else:
+                            rush_yds = int(rush_yds[0])
+                            if rush_yds > bestRushing:
+                                bestRushing = rush_yds
+                            if rush_yds >= 2000:
+                                num2000Rushing += 1
+                            if rush_yds >= 1500:
+                                num1500Rushing += 1
+                            if rush_yds >= 1250:
+                                num1250Rushing += 1
+                            if rush_yds >= 1000:
+                                num1000Rushing += 1     
+                            careerRushing += rush_yds
+                            #print(rush_yds)
+                        rec_yds = row.find("td", {"data-stat": "rec_yds"})
+                        rec_yds = str(rec_yds)
+                        rec_yds = re.findall(r'\d+',rec_yds)
+                        if rec_yds == []:
+                            pass
+                        else:
+                            rec_yds = int(rec_yds[0])
+                            if rec_yds > bestReceiving:
+                                bestReceiving = rec_yds
+                            if rec_yds >= 1750:
+                                num1750Receiving += 1
+                            if rec_yds >= 1500:
+                                num1500Receiving += 1
+                            if rec_yds >= 1250:
+                                num1250Receiving += 1
+                            if rec_yds >= 1000:
+                                num1000Receiving += 1     
+                            careerReceiving += rec_yds
+                            #print(rush_yds)
+                        recs = row.find("td", {"data-stat": "rec"})
+                        recs = str(recs)
+                        recs = re.findall(r'\d+',recs)
+                        if recs == []:
+                            pass
+                        else:
+                            recs = int(recs[0])
+                            if recs > bestReceptions:
+                                bestReceptions = recs
+                            if recs >= 110:
+                                num110Receptions += 1
+                            if recs >= 100:
+                                num100Receptions += 1    
+                            careerReceptions += recs
+                            #print(rush_yds)
+                print(careerRushing)
+                print(bestRushing)
+                print(num2000Rushing)
+                print(num1500Rushing)
+                print(num1250Rushing)
+                print(num1000Rushing)
+                print(careerReceiving)
+                print(bestReceiving)
+                print(num1750Receiving)
+                print(num1500Receiving)
+                print(num1250Receiving)
+                print(num1000Receiving)
+                print(careerReceptions)
+                print(bestReceptions)
+                print(num110Receptions)
+                print(num100Receptions)
+            except:
+                print("Receiving and Rushing Table Not Found")
 
 
         try:
@@ -284,14 +494,23 @@ def main():
                         INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
                         """)
         except:
-            print("Player already in database")
+            print("Player already in Players database")
 
-        try:
-            cur.execute(f"""
-                        INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
+        cur.execute(f"""
+                        INSERT INTO playerStats VALUES("{playerID}","{careerPassing}","{careerRushing}","{careerReceiving}","{careerReceptions}","{bestPassing}","{bestRushing}",
+                        "{bestReceiving}","{bestReceptions}","{num5000Passing}","{num4000Passing}","{num3000Passing}","{num2000Rushing}","{num1500Rushing}","{num1250Rushing}","{num1000Rushing}",
+                        "{num1750Receiving}","{num1500Receiving}","{num1250Receiving}","{num1000Receiving}","{num110Receptions}","{num100Receptions}")
                         """)
-        except:
-            print("Player already in database")
+
+        # try:
+        #     try:
+        #         cur.execute("DELETE FROM playerStats where id='{playerID}'")
+        #     except:
+        #         pass
+            
+        # except:
+        #     print("Player already in Stats database with error deleting")
+
 
         insert_team(playerID, cur)
         con.commit()
@@ -301,6 +520,11 @@ def main():
         #cur.execute(f"""
         #            INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
         #            """)
+        # print(f"""
+        #   INSERT INTO playerStats VALUES("{playerID}","{careerPassing}","{careerRushing}","{careerReceiving}","{careerReceptions}","{bestPassing}","{bestRushing}",
+        #   "{bestReceiving}","{bestReceptions}","{num5000Passing}","{num4000Passing}","{num3000Passing}","{num2000Rushing}","{num1500Rushing}","{num1250Rushing}","{num1000Rushing}",
+        #   "{num1750Receiving}","{num1500Receiving}","{num1250Receiving}","{num1000Receiving}","{num110Receptions}","{num100Receptions}"))
+        #   """)
         #con.commit()
 
         print(f"{x}: Added {name} to database")

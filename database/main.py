@@ -201,7 +201,7 @@ def insert_team(playerID, cur):
     #time.sleep(5)
 
 def main():
-    con = sqlite3.connect("players.db")
+    con = sqlite3.connect("database/players.db")
     cur = con.cursor()
 
     fileName = open('playerlinks.txt', "r")

@@ -215,7 +215,7 @@ def main():
         for line in file:
             line_count += 1
 
-    for x in range(1):
+    for x in range(1000):
         with open('playerlinks.txt', "r") as file:
             lines = file.readlines()
 

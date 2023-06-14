@@ -59,7 +59,7 @@ def convert_teams(teams):
         convTeams.append(teamdict[team])
     return convTeams
 
-def insert_team(playerID, cur):
+def insert_team(playerID, name, cur):
     url = "https://www.pro-football-reference.com/players/" + playerID + ".htm"
 
     response = requests.get(url)
@@ -195,7 +195,7 @@ def insert_team(playerID, cur):
 
     try:
         cur.execute(f"""
-            INSERT INTO playerTeams VALUES ("{playerID}","{playedARI}","{playedATL}","{playedBAL}","{playedBUF}","{playedCAR}","{playedCHI}",
+            INSERT INTO playerTeams VALUES ("{playerID}","{name}","{playedARI}","{playedATL}","{playedBAL}","{playedBUF}","{playedCAR}","{playedCHI}",
             "{playedCIN}","{playedCLE}","{playedDAL}","{playedDEN}","{playedDET}","{playedGNB}","{playedHOU}","{playedIND}","{playedJAX}",
             "{playedKAN}","{playedLVR}","{playedLAC}","{playedLAR}","{playedMIA}","{playedMIN}","{playedNWE}","{playedNOR}","{playedNYG}",
             "{playedNYJ}","{playedPHI}","{playedPIT}","{playedSFO}","{playedSEA}","{playedTAM}","{playedTEN}","{playedWAS}")
@@ -404,7 +404,7 @@ def main():
                             if recs >= 100:
                                 num100Receptions += 1    
                             careerReceptions += recs
-                        rush_tds = row.find("td", {"data-stat": "rec"})
+                        rush_tds = row.find("td", {"data-stat": "rush_td"})
                         rush_tds = str(rush_tds)
                         rush_tds = re.findall(r'\d+',rush_tds)
                         if rush_tds == []:
@@ -418,7 +418,7 @@ def main():
                             if rush_tds >= 15:
                                 num15RushingTD += 1    
                             careerRushingTD += rush_tds
-                        rec_tds = row.find("td", {"data-stat": "rec"})
+                        rec_tds = row.find("td", {"data-stat": "rec_td"})
                         rec_tds = str(rec_tds)
                         rec_tds = re.findall(r'\d+',rec_tds)
                         if rec_tds == []:
@@ -534,7 +534,7 @@ def main():
 
         try:
             cur.execute(f"""
-                            INSERT INTO playerStats VALUES("{playerID}","{careerPassing}","{careerPassingTD}","{careerRushing}","{careerRushingTD}","{careerReceiving}","{careerReceivingTD}",
+                            INSERT INTO playerStats VALUES("{playerID}","{name}","{careerPassing}","{careerPassingTD}","{careerRushing}","{careerRushingTD}","{careerReceiving}","{careerReceivingTD}",
                             "{careerReceptions}","{bestPassing}","{bestPassingTD}","{bestRushing}","{bestRushingTD}","{bestReceiving}","{bestReceivingTD}","{bestReceptions}","{num5000Passing}",
                             "{num4000Passing}","{num3000Passing}","{num2000Rushing}","{num1500Rushing}","{num1250Rushing}","{num1000Rushing}","{num1750Receiving}","{num1500Receiving}",
                             "{num1250Receiving}","{num1000Receiving}","{num110Receptions}","{num100Receptions}","{num40PassingTD}","{num30PassingTD}","{num20RushingTD}","{num15RushingTD}",
@@ -553,7 +553,7 @@ def main():
         #     print("Player already in Stats database with error deleting")
 
 
-        insert_team(playerID, cur)
+        insert_team(playerID, name, cur)
         con.commit()
 
         #print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
@@ -568,7 +568,7 @@ def main():
         #   """)
         #con.commit()
 
-        print(f"{x}: Added {name} to database")
+        print(f"{x}: Added {name}: {position} to database")
 
         with open('playersScraped.txt', "a") as file:
             file.writelines(url+"\n")

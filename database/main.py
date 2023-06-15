@@ -193,15 +193,12 @@ def insert_team(playerID, name, cur):
             case _:
                 pass
 
-    try:
         cur.execute(f"""
             INSERT INTO playerTeams VALUES ("{playerID}","{name}","{playedARI}","{playedATL}","{playedBAL}","{playedBUF}","{playedCAR}","{playedCHI}",
             "{playedCIN}","{playedCLE}","{playedDAL}","{playedDEN}","{playedDET}","{playedGNB}","{playedHOU}","{playedIND}","{playedJAX}",
             "{playedKAN}","{playedLVR}","{playedLAC}","{playedLAR}","{playedMIA}","{playedMIN}","{playedNWE}","{playedNOR}","{playedNYG}",
             "{playedNYJ}","{playedPHI}","{playedPIT}","{playedSFO}","{playedSEA}","{playedTAM}","{playedTEN}","{playedWAS}")
             """)
-    except:
-        pass
     #time.sleep(5)
 
 def main():
@@ -492,7 +489,7 @@ def main():
                             if recs >= 100:
                                 num100Receptions += 1    
                             careerReceptions += recs
-                        rush_tds = row.find("td", {"data-stat": "rec"})
+                        rush_tds = row.find("td", {"data-stat": "rush_td"})
                         rush_tds = str(rush_tds)
                         rush_tds = re.findall(r'\d+',rush_tds)
                         if rush_tds == []:
@@ -506,7 +503,7 @@ def main():
                             if rush_tds >= 15:
                                 num15RushingTD += 1    
                             careerRushingTD += rush_tds
-                        rec_tds = row.find("td", {"data-stat": "rec"})
+                        rec_tds = row.find("td", {"data-stat": "rec_td"})
                         rec_tds = str(rec_tds)
                         rec_tds = re.findall(r'\d+',rec_tds)
                         if rec_tds == []:

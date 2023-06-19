@@ -1,5 +1,4 @@
 import * as React from 'react';
-//import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import "./css/Game.css"
 
 function SelectorNFL(){

@@ -4,10 +4,14 @@ import sqlite3
 import re
 import time
 
+con = sqlite3.connect("players.db")
+cur = con.cursor()
+
 teamdict = {
     "Arizona Cardinals":"ARI",
     "St. Louis Cardinals":"ARI",
     "Phoenix Cardinals":"ARI",
+    "Chicago Cardinals":"ARI",
     "Atlanta Falcons":"ATL",
     "Baltimore Ravens":"BAL",
     "Buffalo Bills":"BUF",
@@ -39,6 +43,7 @@ teamdict = {
     "New Orleans Saints":"NOR",
     "New York Giants":"NYG",
     "New York Jets":"NYJ",
+    "New York Titans":"NYJ",
     "Philadelphia Eagles":"PHI",
     "Pittsburgh Steelers":"PIT",
     "San Francisco 49ers":"SFO",
@@ -59,7 +64,7 @@ def convert_teams(teams):
         convTeams.append(teamdict[team])
     return convTeams
 
-def insert_team(playerID, name, cur):
+def insert_team(playerID, name):
     url = "https://www.pro-football-reference.com/players/" + playerID + ".htm"
 
     response = requests.get(url)
@@ -192,18 +197,17 @@ def insert_team(playerID, name, cur):
                 playedWAS = "True"
             case _:
                 pass
-
-        cur.execute(f"""
-            INSERT INTO playerTeams VALUES ("{playerID}","{name}","{playedARI}","{playedATL}","{playedBAL}","{playedBUF}","{playedCAR}","{playedCHI}",
-            "{playedCIN}","{playedCLE}","{playedDAL}","{playedDEN}","{playedDET}","{playedGNB}","{playedHOU}","{playedIND}","{playedJAX}",
-            "{playedKAN}","{playedLVR}","{playedLAC}","{playedLAR}","{playedMIA}","{playedMIN}","{playedNWE}","{playedNOR}","{playedNYG}",
-            "{playedNYJ}","{playedPHI}","{playedPIT}","{playedSFO}","{playedSEA}","{playedTAM}","{playedTEN}","{playedWAS}")
-            """)
+        
+    cur.execute(f"""
+        INSERT INTO playerTeams VALUES ("{playerID}","{name}","{playedARI}","{playedATL}","{playedBAL}","{playedBUF}","{playedCAR}","{playedCHI}",
+        "{playedCIN}","{playedCLE}","{playedDAL}","{playedDEN}","{playedDET}","{playedGNB}","{playedHOU}","{playedIND}","{playedJAX}",
+        "{playedKAN}","{playedLVR}","{playedLAC}","{playedLAR}","{playedMIA}","{playedMIN}","{playedNWE}","{playedNOR}","{playedNYG}",
+        "{playedNYJ}","{playedPHI}","{playedPIT}","{playedSFO}","{playedSEA}","{playedTAM}","{playedTEN}","{playedWAS}")
+        """)
     #time.sleep(5)
 
 def main():
-    con = sqlite3.connect("players.db")
-    cur = con.cursor()
+    
 
     fileName = open('playerlinks.txt', "r")
     line_count = 0
@@ -212,7 +216,9 @@ def main():
         for line in file:
             line_count += 1
 
-    for x in range(1000):
+    #print(line_count)
+
+    for x in range(line_count):
         with open('playerlinks.txt', "r") as file:
             lines = file.readlines()
 
@@ -226,7 +232,7 @@ def main():
         soup = BeautifulSoup(response.content, 'html.parser')
 
         # Create player ID from url
-        playerID = url.split("/")[-2] + "/" + url.split("/")[-1].split(".")[0]
+        playerID = url.split("/")[-2] + "/" + url.split("/")[-1].split(".htm")[0]
 
         # Find the player's name
         name = soup.find("h1").text.strip()
@@ -268,6 +274,28 @@ def main():
             pick = "Undrafted"
             pass
 
+        yearsActive = []
+        yearStart = 0
+        yearEnd = 0
+
+        try:
+            activeTable = soup.find("table")
+            activeTable = soup.find("tbody")
+            if activeTable:
+                rows = activeTable.find_all("tr")
+                for row in rows:
+                    lastyear = row.find("th",{"data-stat":"year_id"}).text
+                    lastyear = re.findall(r'\d+',lastyear)
+                    if lastyear != []:
+                        lastyear = int(lastyear[0])
+                        yearsActive.append(lastyear)
+
+            actLen = len(yearsActive)
+            yearStart = yearsActive[0]
+            yearEnd = yearsActive[actLen-1]
+        except:
+            pass
+        
         careerPassing=0
         careerPassingTD=0
         careerRushing=0
@@ -524,7 +552,7 @@ def main():
 
         try:
             cur.execute(f"""
-                        INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
+                        INSERT INTO players VALUES ("{playerID}","{name}","{position}","{actLen}","{yearStart}","{yearEnd}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
                         """)
         except:
             print("Player already in Players database")
@@ -550,7 +578,7 @@ def main():
         #     print("Player already in Stats database with error deleting")
 
 
-        insert_team(playerID, name, cur)
+        insert_team(playerID, name)
         con.commit()
 
         #print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
@@ -565,7 +593,7 @@ def main():
         #   """)
         #con.commit()
 
-        print(f"{x}: Added {name}: {position} to database")
+        print(f"{x+1}: Added {name}: {position} to database")
 
         with open('playersScraped.txt', "a") as file:
             file.writelines(url+"\n")
@@ -574,6 +602,6 @@ def main():
         with open('playerlinks.txt', "w") as file:
             file.writelines(lines)
 
-        time.sleep(10)
+        time.sleep(7)
 
 main()

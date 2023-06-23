@@ -19,6 +19,14 @@ body{
     width: 100%;
 }
 
+.game5{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .selectorBoxes{
     width: 15vw;
     height: 3vw;

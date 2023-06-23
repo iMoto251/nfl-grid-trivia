@@ -1,8 +1,0 @@
-UPDATE players SET college='Unknown' WHERE id='A/AddiTu00';
-UPDATE players SET college='Unknown' WHERE id='B/BattTr00';
-UPDATE players SET college='Unknown' WHERE id='B/BaxxCa20';
-UPDATE players SET college="Unknown" WHERE id="B/BrowMi01";
-UPDATE players SET college="Unknown" WHERE id="D/DaniKa00";
-UPDATE players SET college="Unknown" WHERE id="G/GutiMa00";
-UPDATE players SET college="Unknown" WHERE id="H/HardDa01";
-UPDATE players SET college="Unknown" WHERE id="H/HousJa00";

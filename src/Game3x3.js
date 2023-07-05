@@ -777,24 +777,58 @@ function SelectorColleges(){
     )
 }
 
-function SelectorStats(){
+function SeasonSelectorStats(){
     return(
-        <optgroup label="Stat Category">
+        <optgroup label="Single Season Stat Category">
             <option value="pass5000">5000 Yard Passing Season</option>
             <option value="pass4000">4000 Yard Passing Season</option>
             <option value="pass3000">3000 Yard Passing Season</option>
+            <option value="pass35TD">35 Pass TD Season</option>
+            <option value="pass30TD">30 Pass TD Season</option>
+            <option value="pass25TD">25 Pass TD Season</option>
             <option value="rush2000">2000 Yard Rushing Season</option>
             <option value="rush1500">1500 Yard Rushing Season</option>
             <option value="rush1250">1250 Yard Rushing Season</option>
             <option value="rush1000">1000 Yard Rushing Season</option>
+            <option value="rush20TD">20 Rush TD Season</option>
+            <option value="rush15TD">15 Rush TD Season</option>
+            <option value="rush10TD">10 Rush TD Season</option>
             <option value="rec1750">1750 Yard Receiving Season</option>
             <option value="rec1500">1500 Yard Receiving Season</option>
             <option value="rec1250">1250 Yard Receiving Season</option>
             <option value="rec1000">1000 Yard Receiving Season</option>
+            <option value="rec15TD">15 Receiving TD Season</option>
+            <option value="rec10TD">10 Receiving TD Season</option>
             <option value="recep110">110 Reception Season</option>
             <option value="recep100">100 Reception Season</option>
         </optgroup>
     )
+}
+
+function CareerSelectorStats(){
+    return(
+        <optgroup label="Career Stat Category">
+            <option value="careerPassYds50000">50000 Career Pass Yds</option>
+            <option value="careerPassYds30000">30000 Career Pass Yds</option>
+            <option value="careerPassYds20000">20000 Career Pass Yds</option>
+            <option value="careerPassTD400">400 Career Pass TD</option>
+            <option value="careerPassTD300">300 Career Pass TD</option>
+            <option value="careerPassTD200">200 Career Pass TD</option>
+            <option value="careerRushYds10000">10000 Career Rush Yds</option>
+            <option value="careerRushYds7500">7500 Career Rush Yds</option>
+            <option value="careerRushYds5000">5000 Career Rush Yds</option>
+            <option value="careerRushTD100">100 Career Rush TD</option>
+            <option value="careerRushTD75">75 Career Rush TD</option>
+            <option value="careerRushTD50">50 Career Rush TD</option>
+            <option value="careerRecYds12500">12500 Career Rec Yds</option>
+            <option value="careerRecYds10000">10000 Career Rec Yds</option>
+            <option value="careerRecYds7500">7500 Career Rec Yds</option>
+            <option value="careerRecTD100">100 Career Rec TD</option>
+            <option value="careerRecTD75">75 Career Rec TD</option>
+            <option value="careerRecTD50">50 Career Rec TD</option>   
+        </optgroup>
+    )
+    
 }
 
 function Game3x3(){
@@ -859,7 +893,7 @@ function Game3x3(){
         $select6.value = gridOptions[5]
     }
 
-    async function checkChoices(){
+    async function testGrid(){
         let data = {
             topleft: document.querySelector("#topleft").value,
             topmiddle: document.querySelector("#topmiddle").value,
@@ -876,14 +910,42 @@ function Game3x3(){
             },
             body: JSON.stringify(data),
         });
-        //console.log(res);
+        console.log(res);
         try {
             const received = await res.json();
-            //console.log(received);
+            console.log(received);
             return received;
         }
         catch(error) {
-            //console.log('ERROR: '+ error);
+            console.log('ERROR: '+ error);
+        }
+    }
+
+    async function checkAnswers(){
+        let data = {
+            topleft: document.querySelector("#topleft").value,
+            topmiddle: document.querySelector("#topmiddle").value,
+            topright: document.querySelector("#topright").value,
+            lefttop: document.querySelector("#lefttop").value,
+            leftmiddle: document.querySelector("#leftmiddle").value,
+            leftbottom: document.querySelector("#leftbottom").value
+        }
+        const res = await fetch("/checkanswers", {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        console.log(res);
+        try {
+            const received = await res.json();
+            console.log(received);
+            return received;
+        }
+        catch(error) {
+            console.log('ERROR: '+ error);
         }
     }
 
@@ -892,14 +954,15 @@ function Game3x3(){
             <div className="game">
             <div className="choiceCell">
                 {/* <form action="/post" method="post"><button type="submit">Connected?</button></form> */}
-                <button id="choiceButton" className='choiceButtons'>Test Grid</button>
-                <button id="choiceButton" className='choiceButtons' onClick={checkChoices}>Check Choices</button>
+                <button id="choiceButton" className='choiceButtons' onClick={testGrid}>Test Grid</button>
+                <button id="choiceButton" className='choiceButtons' onClick={checkAnswers}>Check Choices</button>
                 <button id="randomize" className='choiceButtons' onClick={randomize}>Randomize</button>
             </div>
             <div className="choiceCell">
                 <select id="topleft" className='selectorBoxes'>
                     <SelectorNFL/>
-                    <SelectorStats/>
+                    <SeasonSelectorStats/>
+                    <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -907,7 +970,8 @@ function Game3x3(){
             <div className="choiceCell">
                 <select id="topmiddle" className='selectorBoxes'>
                     <SelectorNFL/>
-                    <SelectorStats/>
+                    <SeasonSelectorStats/>
+                    <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -915,7 +979,8 @@ function Game3x3(){
             <div className="choiceCell">
                 <select id="topright" className='selectorBoxes'>
                     <SelectorNFL/>
-                    <SelectorStats/>
+                    <SeasonSelectorStats/>
+                    <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -923,7 +988,8 @@ function Game3x3(){
             <div className="choiceCell">
                 <select id="lefttop" className='selectorBoxes'>
                     <SelectorNFL/>
-                    <SelectorStats/>
+                    <SeasonSelectorStats/>
+                    <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -967,7 +1033,8 @@ function Game3x3(){
             <div className="choiceCell">
                 <select id="leftmiddle" className='selectorBoxes'>
                     <SelectorNFL/>
-                    <SelectorStats/>
+                    <SeasonSelectorStats/>
+                    <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -1008,7 +1075,8 @@ function Game3x3(){
             <div className="choiceCell">
                 <select id="leftbottom" className='selectorBoxes'>
                     <SelectorNFL/>
-                    <SelectorStats/>
+                    <SeasonSelectorStats/>
+                    <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -1182,202 +1250,19 @@ const selections = [
     "TAM",
     "TEN",
     "WAS",
-    "ARI",
-    "ATL",
-    "BAL",
-    "BUF",
-    "CAR",
-    "CHI",
-    "CIN",
-    "CLE",
-    "DAL",
-    "DEN",
-    "DET",
-    "GNB",
-    "HOU",
-    "IND",
-    "JAX",
-    "KAN",
-    "LVR",
-    "LAC",
-    "LAR",
-    "MIA",
-    "MIN",
-    "NWE",
-    "NOR",
-    "NYG",
-    "NYJ",
-    "PHI",
-    "PIT",
-    "SFO",
-    "SEA",
-    "TAM",
-    "TEN",
-    "WAS",
-    "ARI",
-    "ATL",
-    "BAL",
-    "BUF",
-    "CAR",
-    "CHI",
-    "CIN",
-    "CLE",
-    "DAL",
-    "DEN",
-    "DET",
-    "GNB",
-    "HOU",
-    "IND",
-    "JAX",
-    "KAN",
-    "LVR",
-    "LAC",
-    "LAR",
-    "MIA",
-    "MIN",
-    "NWE",
-    "NOR",
-    "NYG",
-    "NYJ",
-    "PHI",
-    "PIT",
-    "SFO",
-    "SEA",
-    "TAM",
-    "TEN",
-    "WAS",
-    "ARI",
-    "ATL",
-    "BAL",
-    "BUF",
-    "CAR",
-    "CHI",
-    "CIN",
-    "CLE",
-    "DAL",
-    "DEN",
-    "DET",
-    "GNB",
-    "HOU",
-    "IND",
-    "JAX",
-    "KAN",
-    "LVR",
-    "LAC",
-    "LAR",
-    "MIA",
-    "MIN",
-    "NWE",
-    "NOR",
-    "NYG",
-    "NYJ",
-    "PHI",
-    "PIT",
-    "SFO",
-    "SEA",
-    "TAM",
-    "TEN",
-    "WAS",
-    "ARI",
-    "ATL",
-    "BAL",
-    "BUF",
-    "CAR",
-    "CHI",
-    "CIN",
-    "CLE",
-    "DAL",
-    "DEN",
-    "DET",
-    "GNB",
-    "HOU",
-    "IND",
-    "JAX",
-    "KAN",
-    "LVR",
-    "LAC",
-    "LAR",
-    "MIA",
-    "MIN",
-    "NWE",
-    "NOR",
-    "NYG",
-    "NYJ",
-    "PHI",
-    "PIT",
-    "SFO",
-    "SEA",
-    "TAM",
-    "TEN",
-    "WAS",
-    "ARI",
-    "ATL",
-    "BAL",
-    "BUF",
-    "CAR",
-    "CHI",
-    "CIN",
-    "CLE",
-    "DAL",
-    "DEN",
-    "DET",
-    "GNB",
-    "HOU",
-    "IND",
-    "JAX",
-    "KAN",
-    "LVR",
-    "LAC",
-    "LAR",
-    "MIA",
-    "MIN",
-    "NWE",
-    "NOR",
-    "NYG",
-    "NYJ",
-    "PHI",
-    "PIT",
-    "SFO",
-    "SEA",
-    "TAM",
-    "TEN",
-    "WAS",
-    "ARI",
-    "ATL",
-    "BAL",
-    "BUF",
-    "CAR",
-    "CHI",
-    "CIN",
-    "CLE",
-    "DAL",
-    "DEN",
-    "DET",
-    "GNB",
-    "HOU",
-    "IND",
-    "JAX",
-    "KAN",
-    "LVR",
-    "LAC",
-    "LAR",
-    "MIA",
-    "MIN",
-    "NWE",
-    "NOR",
-    "NYG",
-    "NYJ",
-    "PHI",
-    "PIT",
-    "SFO",
-    "SEA",
-    "TAM",
-    "TEN",
-    "WAS",
     "pass3000",
     "rush1000",
     "rec1000",
     "recep100",
+    "pass25TD",
+    "rush10TD",
+    "rec10TD",
+    "careerPassYds30000",
+    "careerPassTD200",
+    "careerRushYds5000",
+    "careerRushTD50",
+    "careerRecYds7500",
+    "careerRecTD50",
     "Alabama",
     "Arizona",
     "Arizona St.",

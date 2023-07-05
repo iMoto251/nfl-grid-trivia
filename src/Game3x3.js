@@ -2,8 +2,6 @@ import * as React from 'react';
 import "./css/Game.css"
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { TextField } from "@mui/material";
-import axios from "axios";
-
 
 const OPTIONS_LIMIT = 100;
 const defaultFilterOptions = createFilterOptions();
@@ -799,16 +797,7 @@ function SelectorStats(){
     )
 }
 
-// function checkChoices(){
-// }
-
 function Game3x3(){
-    const handleGuess = () =>{
-        axios.post("http://localhost:8080", {
-            playerName: document.querySelector("#oneone")
-        })
-    }
-
 
     function randomize(){
         const $select1 = document.querySelector('#topleft');
@@ -870,13 +859,41 @@ function Game3x3(){
         $select6.value = gridOptions[5]
     }
 
+    async function checkChoices(){
+        let data = {
+            topleft: document.querySelector("#topleft").value,
+            topmiddle: document.querySelector("#topmiddle").value,
+            topright: document.querySelector("#topright").value,
+            lefttop: document.querySelector("#lefttop").value,
+            leftmiddle: document.querySelector("#leftmiddle").value,
+            leftbottom: document.querySelector("#leftbottom").value
+        }
+        const res = await fetch("/checkchoices", {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        //console.log(res);
+        try {
+            const received = await res.json();
+            //console.log(received);
+            return received;
+        }
+        catch(error) {
+            //console.log('ERROR: '+ error);
+        }
+    }
+
     return(
         <div className="game-container">
             <div className="game">
             <div className="choiceCell">
-                <form action="../../post" method="post"><button type="submit">Connected?</button></form>
+                {/* <form action="/post" method="post"><button type="submit">Connected?</button></form> */}
                 <button id="choiceButton" className='choiceButtons'>Test Grid</button>
-                <form><button id="choiceButton" className='choiceButtons'>Check Choices</button></form>
+                <button id="choiceButton" className='choiceButtons' onClick={checkChoices}>Check Choices</button>
                 <button id="randomize" className='choiceButtons' onClick={randomize}>Randomize</button>
             </div>
             <div className="choiceCell">
@@ -919,7 +936,7 @@ function Game3x3(){
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
                     renderInput={(params) => (
-                        <TextField {...params} label="Player 1" variant="outlined" onSubmit={handleGuess}/>
+                        <TextField {...params} label="Player 1" variant="outlined" />
                     )}
                 />
             </div>

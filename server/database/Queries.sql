@@ -1,8 +1,8 @@
 -- College Team and Pro Team
-select players.id,players.name,players.college,playerTeams.playedNOR
+select players.id,players.name,players.college,playerTeams.playedBUF
 from players
 INNER JOIN playerTeams ON players.id=playerTeams.id
-where players.college='LSU' and playerTeams.playedNOR='True';
+where players.college='Air Force' and playerTeams.playedBUF='True';
 
 -- College Team and Stat
 select players.id, players.name, players.college, playerStats.careerReceptions
@@ -14,3 +14,6 @@ where players.college='LSU' and playerStats.careerReceptions > 10;
 select id, name, playedNOR, playedTAM
 from playerTeams
 where playedNOR='True' and playedTAM='True';
+
+-- NFL and Stat
+SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.playedARI='True' and playerStats.bestPassing<3000;

@@ -62,3 +62,31 @@ body{
     border-style: solid;
     border-color: black;
 }
+
+#oneoneinputcell{
+    background-color: gray;
+}
+#onetwoinputcell{
+    background-color: gray;
+}
+#onethreeinputcell{
+    background-color: gray;
+}
+#twooneinputcell{
+    background-color: gray;
+}
+#twotwoinputcell{
+    background-color: gray;
+}
+#twothreeinputcell{
+    background-color: gray;
+}
+#threeoneinputcell{
+    background-color: gray;
+}
+#threetwoinputcell{
+    background-color: gray;
+}
+#threethreeinputcell{
+    background-color: gray;
+}

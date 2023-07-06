@@ -1,0 +1,92 @@
+body{
+    background-color: gray;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.game-container{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 1vh;
+}
+  
+.game{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.game5{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.selectorBoxes{
+    width: 15vw;
+    height: 3vw;
+    max-width: 300px;
+    max-height: 50px;
+    border: none;
+    border-radius: 7px;
+    background-color: #282c34;
+    color: white;
+    font-size: 1em;
+    padding-left: 10px;
+    margin: 5px;
+}
+
+.choiceButtons{
+    margin: 5px;
+    height: 3vw;
+    max-width: 300px;
+    max-height: 50px;
+    border: none;
+    border-radius: 7px;
+    background-color: #000000;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.inputCell{
+    display: flex;
+    height: 10vh;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-color: black;
+}
+
+#oneoneinputcell{
+    background-color: gray;
+}
+#onetwoinputcell{
+    background-color: gray;
+}
+#onethreeinputcell{
+    background-color: gray;
+}
+#twooneinputcell{
+    background-color: gray;
+}
+#twotwoinputcell{
+    background-color: gray;
+}
+#twothreeinputcell{
+    background-color: gray;
+}
+#threeoneinputcell{
+    background-color: gray;
+}
+#threetwoinputcell{
+    background-color: gray;
+}
+#threethreeinputcell{
+    background-color: gray;
+}

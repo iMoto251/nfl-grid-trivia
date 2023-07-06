@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/nfl-grid-trivia/static/css/main.c79ad312.css",
+    "main.js": "/nfl-grid-trivia/static/js/main.c1e23400.js",
+    "static/js/651.f3c5e079.chunk.js": "/nfl-grid-trivia/static/js/651.f3c5e079.chunk.js",
+    "static/media/league.svg.webp": "/nfl-grid-trivia/static/media/league.svg.16db807260edc9fd0af3.webp",
+    "index.html": "/nfl-grid-trivia/index.html",
+    "main.c79ad312.css.map": "/nfl-grid-trivia/static/css/main.c79ad312.css.map",
+    "main.c1e23400.js.map": "/nfl-grid-trivia/static/js/main.c1e23400.js.map",
+    "651.f3c5e079.chunk.js.map": "/nfl-grid-trivia/static/js/651.f3c5e079.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c79ad312.css",
+    "static/js/main.c1e23400.js"
+  ]
+}

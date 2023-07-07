@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import "./css/Game.css"
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { TextField } from "@mui/material";
@@ -1286,6 +1287,10 @@ function Game3x3(){
         }
     }
 
+    useEffect(() => {
+        randomize();
+      }, []);
+
     return(
         <div className="game-container">
             <div className="game">
@@ -1469,7 +1474,7 @@ function Game3x3(){
             </div>
                 <p id="hud"></p>
             </div>
-            
+                
         </div>
     )
 }

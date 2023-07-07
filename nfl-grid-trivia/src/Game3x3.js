@@ -946,7 +946,7 @@ function Game3x3(){
         
         try {
             const received = await res.json();
-            //console.log(received);
+            console.log(received);
             
             return received;
         }
@@ -992,7 +992,7 @@ function Game3x3(){
             document.getElementById('threethreeAnswers').innerHTML = received.box9 + " possible answers"
             console.log(received)
             //console.log(received);
-            return received;
+            //return received;
         }
         catch(error) {
             console.log('ERROR: '+ error);
@@ -1000,9 +1000,9 @@ function Game3x3(){
         return 0;
     }
 
-    async function randomTestCheck(){
-        await randomize();
+    async function testCheck(){
         await testGrid();
+        setTimeout(await checkAnswers(), 1000)
     }
 
     async function testAnswer1(){
@@ -1287,12 +1287,14 @@ function Game3x3(){
         }
     }
 
-    useEffect(() => {
-        // randomize();
-        // testGrid();
-        // checkAnswers();
+    async function loadFunction(){
+        await randomize();
+        await testGrid();
+        setTimeout(await checkAnswers(),1000);
+    }
 
-        randomize().then(testGrid().then(checkAnswers()))
+    useEffect(() => {
+        loadFunction();
 
       }, []);
 
@@ -1301,9 +1303,8 @@ function Game3x3(){
             <div className="game">
             <div className="choiceCell">
                 <button id="randomize" className='choiceButtons' onClick={randomize} type='reset'>Randomize</button>
-                <button id="choiceButton" className='choiceButtons' onClick={testGrid}>Custom Grid</button>
-                <button id="choiceButton" className='choiceButtons' onClick={checkAnswers}>Set Grid</button>
-                {/* <button onClick={randomTestCheck}>Query Results</button> */}
+                {/* <button id="choiceButton" className='choiceButtons' onClick={testGrid}>Custom Grid</button> */}
+                <button id="choiceButton" className='choiceButtons' onClick={testCheck}>Set Grid</button>
 
             </div>
             <div className="choiceCell">

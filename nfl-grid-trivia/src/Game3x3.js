@@ -1288,14 +1288,19 @@ function Game3x3(){
     }
 
     useEffect(() => {
-        randomize();
+        // randomize();
+        // testGrid();
+        // checkAnswers();
+
+        randomize().then(testGrid().then(checkAnswers()))
+
       }, []);
 
     return(
         <div className="game-container">
             <div className="game">
             <div className="choiceCell">
-                <button id="randomize" className='choiceButtons' onClick={randomTestCheck} type='reset'>Randomize</button>
+                <button id="randomize" className='choiceButtons' onClick={randomize} type='reset'>Randomize</button>
                 <button id="choiceButton" className='choiceButtons' onClick={testGrid}>Custom Grid</button>
                 <button id="choiceButton" className='choiceButtons' onClick={checkAnswers}>Set Grid</button>
                 {/* <button onClick={randomTestCheck}>Query Results</button> */}

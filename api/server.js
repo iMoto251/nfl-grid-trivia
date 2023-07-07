@@ -67,7 +67,7 @@ app.post("/checkchoices", (req,res) => {
     }
     correctAnswers.push(answerArray)
   }
-  return 0;
+  res.send(JSON.stringify("QueryGood"))
   //return(res.send(JSON.stringify(x)))
 })
 

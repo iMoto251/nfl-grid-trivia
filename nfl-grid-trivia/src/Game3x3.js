@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import "./css/Game.css"
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { TextField } from "@mui/material";
@@ -833,8 +833,10 @@ function CareerSelectorStats(){
 }
 
 function Game3x3(){
+    const [value, setValue] = useState('');
 
     async function randomize(){
+        handleClear();
         const $select1 = document.querySelector('#topleft');
         const $select2 = document.querySelector('#topmiddle');
         const $select3 = document.querySelector('#topright');
@@ -912,15 +914,15 @@ function Game3x3(){
         document.getElementById('threetwoinputcell').style.backgroundColor = "#808080";
         document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
 
-        document.getElementById('oneone').value=""
-        document.getElementById('onetwo').value=""
-        document.getElementById('onethree').value=""
-        document.getElementById('twoone').value=""
-        document.getElementById('twotwo').value=""
-        document.getElementById('twothree').value=""
-        document.getElementById('threeone').value=""
-        document.getElementById('threetwo').value=""
-        document.getElementById('threethree').value=""
+        // document.getElementById('oneone').value=""
+        // document.getElementById('onetwo').value=""
+        // document.getElementById('onethree').value=""
+        // document.getElementById('twoone').value=""
+        // document.getElementById('twotwo').value=""
+        // document.getElementById('twothree').value=""
+        // document.getElementById('threeone').value=""
+        // document.getElementById('threetwo').value=""
+        // document.getElementById('threethree').value=""
 
         return 0;
     }
@@ -1298,6 +1300,10 @@ function Game3x3(){
 
       }, []);
 
+    const handleClear = () =>{
+        setValue('')
+    }
+
     return(
         <div className="game-container">
             <div className="game">
@@ -1347,6 +1353,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='oneone'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1360,6 +1370,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='onetwo'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1373,6 +1387,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='onethree'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1395,6 +1413,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='twoone'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1408,6 +1430,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='twotwo'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1421,6 +1447,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='twothree'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1443,6 +1473,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='threeone'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1456,6 +1490,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='threetwo'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1469,6 +1507,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='threethree'
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}

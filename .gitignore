@@ -3,6 +3,7 @@
 # dependencies
 api/node_modules
 nfl-grid-trivia/node_modules
+nfl-grid-trivia/build
 /.pnp
 .pnp.js
 

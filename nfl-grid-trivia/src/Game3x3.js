@@ -1297,7 +1297,7 @@ function Game3x3(){
 
     useEffect(() => {
         loadFunction();
-
+        // eslint-disable-next-line
       }, []);
 
     const handleClear = () =>{

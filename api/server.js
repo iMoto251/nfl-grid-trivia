@@ -5,6 +5,8 @@ const fs = require('fs')
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '/public')))
+
 const sqlite3 = require('sqlite3').verbose();
 const dbFile = path.resolve(__dirname, 'database/players.sqlite')
 //var dbFile = 'C:\\Users\\laneb\\Documents\\GitHub\\nfl-grid-trivia\\src\\server\\database\\players.sqlite';
@@ -19,13 +21,13 @@ var db = new sqlite3.Database(dbFile);
 app.use(cors());
 app.use(express.json());
 
-app.get('/',(req,res) =>{
-    const body = req.body
-    console.log(body)
+// app.get('/',(req,res) =>{
+//     const body = req.body
+//     console.log(body)
 
-    res.send("Good")
-    //res.send("Hello World!")
-})
+//     res.send("Good")
+//     //res.send("Hello World!")
+// })
 
 let correctAnswers = []
 

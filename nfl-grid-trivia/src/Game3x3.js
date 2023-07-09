@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import "./css/Game.css"
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { TextField } from "@mui/material";
 
 const OPTIONS_LIMIT = 100;
 const defaultFilterOptions = createFilterOptions();
-
-
 
 const filterOptions = (options, state) => {
   return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
@@ -833,8 +831,18 @@ function CareerSelectorStats(){
 }
 
 function Game3x3(){
+    const [value1, setValue1] = useState('');
+    const [value2, setValue2] = useState('');
+    const [value3, setValue3] = useState('');
+    const [value4, setValue4] = useState('');
+    const [value5, setValue5] = useState('');
+    const [value6, setValue6] = useState('');
+    const [value7, setValue7] = useState('');
+    const [value8, setValue8] = useState('');
+    const [value9, setValue9] = useState('');
 
     async function randomize(){
+        handleClear();
         const $select1 = document.querySelector('#topleft');
         const $select2 = document.querySelector('#topmiddle');
         const $select3 = document.querySelector('#topright');
@@ -893,34 +901,7 @@ function Game3x3(){
         $select5.value = gridOptions[4]
         $select6.value = gridOptions[5]
 
-        document.getElementById('oneoneAnswers').innerHTML = ""
-        document.getElementById('onetwoAnswers').innerHTML = ""
-        document.getElementById('onethreeAnswers').innerHTML = ""
-        document.getElementById('twooneAnswers').innerHTML = ""
-        document.getElementById('twotwoAnswers').innerHTML = ""
-        document.getElementById('twothreeAnswers').innerHTML = ""
-        document.getElementById('threeoneAnswers').innerHTML = ""
-        document.getElementById('threetwoAnswers').innerHTML = ""
-        document.getElementById('threethreeAnswers').innerHTML = ""
-        document.getElementById('oneoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onethreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twooneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twotwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twothreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threeoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
-
-        document.getElementById('oneone').value=""
-        document.getElementById('onetwo').value=""
-        document.getElementById('onethree').value=""
-        document.getElementById('twoone').value=""
-        document.getElementById('twotwo').value=""
-        document.getElementById('twothree').value=""
-        document.getElementById('threeone').value=""
-        document.getElementById('threetwo').value=""
-        document.getElementById('threethree').value=""
+        
 
         return 0;
     }
@@ -942,12 +923,10 @@ function Game3x3(){
             },
             body: JSON.stringify(data),
         });
-        //console.log(res);
         
         try {
             const received = await res.json();
-            console.log(received);
-            
+            console.log(received);            
             return received;
         }
         catch(error) {
@@ -972,7 +951,6 @@ function Game3x3(){
             },
             body: JSON.stringify(data),
         });
-        //console.log(res);
         try {
             const received = await res.json();
 
@@ -991,8 +969,6 @@ function Game3x3(){
             document.getElementById('threetwoAnswers').innerHTML = received.box8 + " possible answers"
             document.getElementById('threethreeAnswers').innerHTML = received.box9 + " possible answers"
             console.log(received)
-            //console.log(received);
-            //return received;
         }
         catch(error) {
             console.log('ERROR: '+ error);
@@ -1001,8 +977,11 @@ function Game3x3(){
     }
 
     async function testCheck(){
-        await testGrid();
-        setTimeout(await checkAnswers(), 1000)
+        handleClear();
+        await testGrid()
+        setTimeout(() => {
+            checkAnswers()
+        }, 250)
     }
 
     async function testAnswer1(){
@@ -1290,13 +1269,44 @@ function Game3x3(){
     async function loadFunction(){
         await randomize();
         await testGrid();
-        setTimeout(await checkAnswers(),1000);
+        setTimeout(await checkAnswers(),2000);
     }
 
     useEffect(() => {
         loadFunction();
-
+        // eslint-disable-next-line
       }, []);
+
+    const handleClear = () =>{
+        setValue1('')
+        setValue2('')
+        setValue3('')
+        setValue4('')
+        setValue5('')
+        setValue6('')
+        setValue7('')
+        setValue8('')
+        setValue9('')
+
+        document.getElementById('oneoneAnswers').innerHTML = ""
+        document.getElementById('onetwoAnswers').innerHTML = ""
+        document.getElementById('onethreeAnswers').innerHTML = ""
+        document.getElementById('twooneAnswers').innerHTML = ""
+        document.getElementById('twotwoAnswers').innerHTML = ""
+        document.getElementById('twothreeAnswers').innerHTML = ""
+        document.getElementById('threeoneAnswers').innerHTML = ""
+        document.getElementById('threetwoAnswers').innerHTML = ""
+        document.getElementById('threethreeAnswers').innerHTML = ""
+        document.getElementById('oneoneinputcell').style.backgroundColor = "#808080";
+        document.getElementById('onetwoinputcell').style.backgroundColor = "#808080";
+        document.getElementById('onethreeinputcell').style.backgroundColor = "#808080";
+        document.getElementById('twooneinputcell').style.backgroundColor = "#808080";
+        document.getElementById('twotwoinputcell').style.backgroundColor = "#808080";
+        document.getElementById('twothreeinputcell').style.backgroundColor = "#808080";
+        document.getElementById('threeoneinputcell').style.backgroundColor = "#808080";
+        document.getElementById('threetwoinputcell').style.backgroundColor = "#808080";
+        document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
+    }
 
     return(
         <div className="game-container">
@@ -1347,6 +1357,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='oneone'
+                    value={value1}
+                    onChange={(event, newValue) => {
+                        setValue1(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1360,6 +1374,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='onetwo'
+                    value={value2}
+                    onChange={(event, newValue) => {
+                        setValue2(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1373,6 +1391,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='onethree'
+                    value={value3}
+                    onChange={(event, newValue) => {
+                        setValue3(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1395,6 +1417,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='twoone'
+                    value={value4}
+                    onChange={(event, newValue) => {
+                        setValue4(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1408,6 +1434,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='twotwo'
+                    value={value5}
+                    onChange={(event, newValue) => {
+                        setValue5(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1421,6 +1451,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='twothree'
+                    value={value6}
+                    onChange={(event, newValue) => {
+                        setValue6(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1443,6 +1477,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='threeone'
+                    value={value7}
+                    onChange={(event, newValue) => {
+                        setValue7(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1456,6 +1494,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='threetwo'
+                    value={value8}
+                    onChange={(event, newValue) => {
+                        setValue8(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}
@@ -1469,6 +1511,10 @@ function Game3x3(){
                 <Autocomplete
                     filterOptions={filterOptions}
                     id='threethree'
+                    value={value9}
+                    onChange={(event, newValue) => {
+                        setValue9(newValue);
+                    }}
                     options={options}
                     getOptionLabel={(option) => option.label}
                     style={{ width: 300 }}

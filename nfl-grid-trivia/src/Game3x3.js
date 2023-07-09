@@ -901,24 +901,7 @@ function Game3x3(){
         $select5.value = gridOptions[4]
         $select6.value = gridOptions[5]
 
-        document.getElementById('oneoneAnswers').innerHTML = ""
-        document.getElementById('onetwoAnswers').innerHTML = ""
-        document.getElementById('onethreeAnswers').innerHTML = ""
-        document.getElementById('twooneAnswers').innerHTML = ""
-        document.getElementById('twotwoAnswers').innerHTML = ""
-        document.getElementById('twothreeAnswers').innerHTML = ""
-        document.getElementById('threeoneAnswers').innerHTML = ""
-        document.getElementById('threetwoAnswers').innerHTML = ""
-        document.getElementById('threethreeAnswers').innerHTML = ""
-        document.getElementById('oneoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onethreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twooneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twotwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twothreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threeoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
+        
 
         return 0;
     }
@@ -1304,6 +1287,25 @@ function Game3x3(){
         setValue7('')
         setValue8('')
         setValue9('')
+
+        document.getElementById('oneoneAnswers').innerHTML = ""
+        document.getElementById('onetwoAnswers').innerHTML = ""
+        document.getElementById('onethreeAnswers').innerHTML = ""
+        document.getElementById('twooneAnswers').innerHTML = ""
+        document.getElementById('twotwoAnswers').innerHTML = ""
+        document.getElementById('twothreeAnswers').innerHTML = ""
+        document.getElementById('threeoneAnswers').innerHTML = ""
+        document.getElementById('threetwoAnswers').innerHTML = ""
+        document.getElementById('threethreeAnswers').innerHTML = ""
+        document.getElementById('oneoneinputcell').style.backgroundColor = "#808080";
+        document.getElementById('onetwoinputcell').style.backgroundColor = "#808080";
+        document.getElementById('onethreeinputcell').style.backgroundColor = "#808080";
+        document.getElementById('twooneinputcell').style.backgroundColor = "#808080";
+        document.getElementById('twotwoinputcell').style.backgroundColor = "#808080";
+        document.getElementById('twothreeinputcell').style.backgroundColor = "#808080";
+        document.getElementById('threeoneinputcell').style.backgroundColor = "#808080";
+        document.getElementById('threetwoinputcell').style.backgroundColor = "#808080";
+        document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
     }
 
     return(

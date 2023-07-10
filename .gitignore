@@ -2,10 +2,9 @@
 
 # dependencies
 api/node_modules
-node_modules
 nfl-grid-trivia/node_modules
 nfl-grid-trivia/build
-api/public/*
+node_modules/
 /.pnp
 .pnp.js
 
@@ -27,4 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 database/playersScraped.txt
 players.db
-
+api/node_modules/.package-lock.json
+node_modules/.bin/acorn

@@ -1018,9 +1018,9 @@ function Game3x3(){
         
     }
 
-    async function testAnswer2(){
-        let data = {answer: document.querySelector("#onetwo").value, box: 2}
-        if(document.querySelector("#onetwo").value !== ""){
+    async function testAnswer2(answerChoice){
+        let data = {answer: answerChoice, box: 2}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1049,9 +1049,9 @@ function Game3x3(){
         }
     }
 
-    async function testAnswer3(){
-        let data = {answer: document.querySelector("#onethree").value, box: 3}
-        if(document.querySelector("#onethree").value !== ""){
+    async function testAnswer3(answerChoice){
+        let data = {answer: answerChoice, box: 3}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1080,9 +1080,9 @@ function Game3x3(){
         }
     }
 
-    async function testAnswer4(){
-        let data = {answer: document.querySelector("#twoone").value, box: 4}
-        if(document.querySelector("#twoone").value !== ""){
+    async function testAnswer4(answerChoice){
+        let data = {answer: answerChoice, box: 4}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1111,9 +1111,9 @@ function Game3x3(){
         }
     }
 
-    async function testAnswer5(){
-        let data = {answer: document.querySelector("#twotwo").value, box: 5}
-        if(document.querySelector("#twotwo").value !== ""){
+    async function testAnswer5(answerChoice){
+        let data = {answer: answerChoice, box: 5}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1142,9 +1142,9 @@ function Game3x3(){
         }
     }
 
-    async function testAnswer6(){
-        let data = {answer: document.querySelector("#twothree").value, box: 6}
-        if(document.querySelector("#twothree").value !== ""){
+    async function testAnswer6(answerChoice){
+        let data = {answer: answerChoice, box: 6}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1173,9 +1173,9 @@ function Game3x3(){
         }
     }
 
-    async function testAnswer7(){
-        let data = {answer: document.querySelector("#threeone").value, box: 7}
-        if(document.querySelector("#threeone").value !== ""){
+    async function testAnswer7(answerChoice){
+        let data = {answer: answerChoice, box: 7}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1204,9 +1204,9 @@ function Game3x3(){
         }
     }
 
-    async function testAnswer8(){
-        let data = {answer: document.querySelector("#threetwo").value, box: 8}
-        if(document.querySelector("#threetwo").value !== ""){
+    async function testAnswer8(answerChoice){
+        let data = {answer: answerChoice, box: 8}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1235,9 +1235,9 @@ function Game3x3(){
         }
     }
 
-    async function testAnswer9(){
-        let data = {answer: document.querySelector("#threethree").value, box: 9}
-        if(document.querySelector("#threethree").value !== ""){
+    async function testAnswer9(answerChoice){
+        let data = {answer: answerChoice, box: 9}
+        if(answerChoice !== ""){
             const res = await fetch("/testanswers", {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -1379,6 +1379,7 @@ function Game3x3(){
                     value={value2}
                     onChange={(event, newValue) => {
                         setValue2(newValue);
+                        testAnswer2(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}
@@ -1396,6 +1397,7 @@ function Game3x3(){
                     value={value3}
                     onChange={(event, newValue) => {
                         setValue3(newValue);
+                        testAnswer3(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}
@@ -1422,6 +1424,7 @@ function Game3x3(){
                     value={value4}
                     onChange={(event, newValue) => {
                         setValue4(newValue);
+                        testAnswer4(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}
@@ -1439,6 +1442,7 @@ function Game3x3(){
                     value={value5}
                     onChange={(event, newValue) => {
                         setValue5(newValue);
+                        testAnswer5(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}
@@ -1456,6 +1460,7 @@ function Game3x3(){
                     value={value6}
                     onChange={(event, newValue) => {
                         setValue6(newValue);
+                        testAnswer6(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}
@@ -1482,6 +1487,7 @@ function Game3x3(){
                     value={value7}
                     onChange={(event, newValue) => {
                         setValue7(newValue);
+                        testAnswer7(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}
@@ -1499,6 +1505,7 @@ function Game3x3(){
                     value={value8}
                     onChange={(event, newValue) => {
                         setValue8(newValue);
+                        testAnswer8(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}
@@ -1516,6 +1523,7 @@ function Game3x3(){
                     value={value9}
                     onChange={(event, newValue) => {
                         setValue9(newValue);
+                        testAnswer9(newValue.label);
                     }}
                     options={options}
                     getOptionLabel={(option) => option.label}

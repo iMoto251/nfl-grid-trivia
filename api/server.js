@@ -9,73 +9,42 @@ app.use(express.static(path.join(__dirname, '/public')))
 
 const sqlite3 = require('sqlite3').verbose();
 const dbFile = path.resolve(__dirname, 'database/players.sqlite')
-//var dbFile = 'C:\\Users\\laneb\\Documents\\GitHub\\nfl-grid-trivia\\src\\server\\database\\players.sqlite';
 var dbExists = fs.existsSync(dbFile);
 
 if(!dbExists){
     fs.openSync(dbFile, 'w');
 }
-//const db = new sqlite3.Database(dbsource, sqlite3.OPEN_READONLY)
 
 var db = new sqlite3.Database(dbFile);
 app.use(cors());
 app.use(express.json());
 
-// app.get('/',(req,res) =>{
-//     const body = req.body
-//     console.log(body)
-
-//     res.send("Good")
-//     //res.send("Hello World!")
-// })
 
 let correctAnswers = []
 
 app.post("/checkchoices", (req,res) => {
   correctAnswers = []
-  //const body = req.body
-  //console.log(body)
-
-  //res.send(JSON.stringify("Good"))
-
   let sql = buildQuery(req.body)
-  //console.log(sql)
-  //let x;
   
   for(let i = 0;i<sql.length;i++){
     let answerArray = []
-    if(sql[i] === '2 Colleges'){
-      //console.log("Query not possible, 2 colleges")
-    } else if(sql[i] === '2 Stats'){
-      //console.log("Query not possible, 2 stats")
-    } else {
-      db.all(sql[i], [],(err,rows) =>{
-        //x = rows
-        //console.log(rows)
-        if(rows.length < 5){
-          //console.log("Less than 5")
-          rows.forEach((row)=>{
-            answerArray.push(row.name)
-            //console.log(row.name)
-          })
-        } else {
-          //console.log(rows)
-          rows.forEach((row)=>{
-            answerArray.push(row.name)
-            //console.log(row.name)
-          })
-        }
-      })
-    }
+    db.all(sql[i], [],(err,rows) =>{
+      if(rows===undefined){
+        answerArray.push()
+      } else {
+        rows.forEach((row)=>{
+          answerArray.push(row.name)
+        })
+      }
+    })
     correctAnswers.push(answerArray)
   }
   res.send(JSON.stringify("QueryGood"))
-  //return(res.send(JSON.stringify(x)))
 })
 
 app.post("/checkanswers", (req,res) =>{
   for(let i = 0;i<correctAnswers.length;i++){
-    //console.log(correctAnswers[i].length)
+    //console.log(correctAnswers[i])
     if(i === correctAnswers.length-1){
       
     }
@@ -101,9 +70,7 @@ app.post("/testanswers", (req,res) =>{
     res.send(JSON.stringify("Correct"))
   } else {
     res.send(JSON.stringify("Incorrect"))
-  }
-  //console.log(correctAnswers[req.body.box-1])
-  
+  }  
 })
 
 function pickStatCat(selection){
@@ -323,7 +290,13 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.lefttop)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topleft)[0]
+      let statNum1 = pickStatCat(body.topleft)[1]
+      let statCat2 = pickStatCat(body.lefttop)[0]
+      let statNum2 = pickStatCat(body.lefttop)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+      //playerBoxes.push('2 Stats')
     }
   } else {
     console.log("Invalid category")
@@ -377,7 +350,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.lefttop)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topmiddle)[0]
+      let statNum1 = pickStatCat(body.topmiddle)[1]
+      let statCat2 = pickStatCat(body.lefttop)[0]
+      let statNum2 = pickStatCat(body.lefttop)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
@@ -431,7 +409,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.lefttop)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topright)[0]
+      let statNum1 = pickStatCat(body.topright)[1]
+      let statCat2 = pickStatCat(body.lefttop)[0]
+      let statNum2 = pickStatCat(body.lefttop)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
@@ -485,7 +468,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.leftmiddle)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topleft)[0]
+      let statNum1 = pickStatCat(body.topleft)[1]
+      let statCat2 = pickStatCat(body.leftmiddle)[0]
+      let statNum2 = pickStatCat(body.leftmiddle)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
@@ -539,7 +527,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.leftmiddle)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topmiddle)[0]
+      let statNum1 = pickStatCat(body.topmiddle)[1]
+      let statCat2 = pickStatCat(body.leftmiddle)[0]
+      let statNum2 = pickStatCat(body.leftmiddle)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
@@ -593,7 +586,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.leftmiddle)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topright)[0]
+      let statNum1 = pickStatCat(body.topright)[1]
+      let statCat2 = pickStatCat(body.leftmiddle)[0]
+      let statNum2 = pickStatCat(body.leftmiddle)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
@@ -647,7 +645,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.leftbottom)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topleft)[0]
+      let statNum1 = pickStatCat(body.topleft)[1]
+      let statCat2 = pickStatCat(body.leftbottom)[0]
+      let statNum2 = pickStatCat(body.leftbottom)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
@@ -701,7 +704,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.leftbottom)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topmiddle)[0]
+      let statNum1 = pickStatCat(body.topmiddle)[1]
+      let statCat2 = pickStatCat(body.leftbottom)[0]
+      let statNum2 = pickStatCat(body.leftbottom)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
@@ -755,7 +763,12 @@ function buildQuery(body){
 
       playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
     } else if(statCategories.includes(body.leftbottom)){ //Stat + Stat
-      playerBoxes.push('2 Stats')
+      let statCat1 = pickStatCat(body.topright)[0]
+      let statNum1 = pickStatCat(body.topright)[1]
+      let statCat2 = pickStatCat(body.leftbottom)[0]
+      let statNum2 = pickStatCat(body.leftbottom)[1]
+
+      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")

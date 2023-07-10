@@ -26,5 +26,4 @@ yarn-debug.log*
 yarn-error.log*
 database/playersScraped.txt
 players.db
-api/node_modules/.package-lock.json
-api/public/*
+

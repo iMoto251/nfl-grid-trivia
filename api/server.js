@@ -22,6 +22,11 @@ app.use(express.json());
 
 let correctAnswers = []
 
+// app.post("/dailyGame", (req,res) =>{
+//   console.log("Daily Choices")
+  
+// })
+
 app.post("/checkchoices", (req,res) => {
   correctAnswers = []
   let sql = buildQuery(req.body)

@@ -1308,12 +1308,32 @@ function Game3x3(){
         document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
     }
 
+    // async function dailyGrid(){
+    //     const res = await fetch("/dailyGame", {
+    //         method: 'POST',
+    //         credentials: 'same-origin',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         //body: JSON.stringify(data),
+    //     });
+
+    //     try {
+    //         const received = await res.json();
+    //         //console.log(received);            
+    //         return received;
+    //     }
+    //     catch(error) {
+    //         console.log('ERROR: '+ error);
+    //     }
+    // }
+
     return(
         <div className="game-container">
             <div className="game">
             <div className="choiceCell">
+                {/* <button id="choiceButton" className='choiceButtons' onClick={dailyGrid}>Custom Grid</button> */}
                 <button id="randomize" className='choiceButtons' onClick={randomize} type='reset'>Randomize</button>
-                {/* <button id="choiceButton" className='choiceButtons' onClick={testGrid}>Custom Grid</button> */}
                 <button id="choiceButton" className='choiceButtons' onClick={testCheck}>Set Grid</button>
 
             </div>

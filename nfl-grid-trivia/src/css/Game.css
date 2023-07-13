@@ -38,8 +38,8 @@ body{
 }
 
 .logoIMG{
-    max-width: 6rem;
     max-height: 6rem;
+    max-width: 8rem;
 }
 
 .choiceButtons{

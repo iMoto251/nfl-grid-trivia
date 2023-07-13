@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import "./css/Game.css"
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { TextField } from "@mui/material";
+import logo from "./resources/images/league.svg.webp"
+import logo2 from "./resources/images/league.png"
+
 
 const OPTIONS_LIMIT = 100;
 const defaultFilterOptions = createFilterOptions();
@@ -841,6 +844,36 @@ function Game3x3(){
     const [value8, setValue8] = useState('');
     const [value9, setValue9] = useState('');
 
+    async function hideBoxes(){
+        document.getElementById("topleft").style.display = "none";
+        document.getElementById("topmiddle").style.display = "none";
+        document.getElementById("topright").style.display = "none";
+        document.getElementById("lefttop").style.display = "none";
+        document.getElementById("leftmiddle").style.display = "none";
+        document.getElementById("leftbottom").style.display = "none";
+        showLogos()
+    }
+
+    async function showBoxes(){
+        document.getElementById("topleft").style.display = "inline-grid";
+        document.getElementById("topmiddle").style.display = "inline-grid";
+        document.getElementById("topright").style.display = "inline-grid";
+        document.getElementById("lefttop").style.display = "inline-grid";
+        document.getElementById("leftmiddle").style.display = "inline-grid";
+        document.getElementById("leftbottom").style.display = "inline-grid";
+        hideLogos()
+    }
+
+    async function showLogos(){
+        document.getElementById("topleftimg").style.display = "inline-grid";
+        document.getElementById("topleftimg").src = "./resources/images/league.svg.webp";
+    }
+
+    async function hideLogos(){
+        //document.getElementById("topleftimg").style.display = "none";
+        document.getElementById("topleftimg").src = "./resources/images/league.png";
+    }
+
     async function randomize(){
         handleClear();
         const $select1 = document.querySelector('#topleft');
@@ -1267,6 +1300,7 @@ function Game3x3(){
     }
 
     async function loadFunction(){
+        hideBoxes()
         await randomize();
         await testGrid();
         setTimeout(await checkAnswers(),2000);
@@ -1332,7 +1366,8 @@ function Game3x3(){
         <div className="game-container">
             <div className="game">
             <div className="choiceCell">
-                {/* <button id="choiceButton" className='choiceButtons' onClick={dailyGrid}>Custom Grid</button> */}
+            <button id="choiceButton" className='choiceButtons' onClick={showBoxes}>show</button>
+                <button id="choiceButton" className='choiceButtons' onClick={hideBoxes}>hide</button>
                 <button id="randomize" className='choiceButtons' onClick={randomize} type='reset'>Randomize</button>
                 <button id="choiceButton" className='choiceButtons' onClick={testCheck}>Set Grid</button>
 
@@ -1345,6 +1380,7 @@ function Game3x3(){
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img src="/resources/images/league.png" id='topleftimg' alt="logo"></img>
             </div>
             <div className="choiceCell">
                 <select id="topmiddle" className='selectorBoxes' >

@@ -64,30 +64,6 @@ body{
     flex-direction: column;
 }
 
-#oneoneinputcell{
-    background-color: gray;
-}
-#onetwoinputcell{
-    background-color: gray;
-}
-#onethreeinputcell{
-    background-color: gray;
-}
-#twooneinputcell{
-    background-color: gray;
-}
-#twotwoinputcell{
-    background-color: gray;
-}
-#twothreeinputcell{
-    background-color: gray;
-}
-#threeoneinputcell{
-    background-color: gray;
-}
-#threetwoinputcell{
-    background-color: gray;
-}
-#threethreeinputcell{
+#oneoneinputcell, #onetwoinputcell, #onethreeinputcell, #twooneinputcell, #twotwoinputcell, #twothreeinputcell, #threeoneinputcell, #threetwoinputcell, #threethreeinputcell{
     background-color: gray;
 }

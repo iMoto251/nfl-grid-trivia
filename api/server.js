@@ -3,56 +3,56 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs')
 
-const app = express();
+  const app = express();
 
 app.use(express.static(path.join(__dirname, '/public')))
 
 const sqlite3 = require('sqlite3').verbose();
 const dbFile = path.resolve(__dirname, 'database/players.sqlite')
-var dbExists = fs.existsSync(dbFile);
+  var dbExists = fs.existsSync(dbFile);
 
-if(!dbExists){
-    fs.openSync(dbFile, 'w');
+if (!dbExists) {
+  fs.openSync(dbFile, 'w');
 }
 
 var db = new sqlite3.Database(dbFile);
 app.use(cors());
 app.use(express.json());
 
-
 let correctAnswers = []
+let logos = []
 
 // app.post("/dailyGame", (req,res) =>{
 //   console.log("Daily Choices")
-  
+
 // })
 
-app.post("/checkchoices", (req,res) => {
+app.post("/checkchoices", (req, res) => {
   correctAnswers = []
   let sql = buildQuery(req.body)
-  
-  for(let i = 0;i<sql.length;i++){
-    let answerArray = []
-    db.all(sql[i], [],(err,rows) =>{
-      if(rows===undefined){
-        answerArray.push()
-      } else {
-        rows.forEach((row)=>{
-          answerArray.push(row.name)
-        })
-      }
-    })
-    correctAnswers.push(answerArray)
-  }
-  res.send(JSON.stringify("QueryGood"))
-})
 
-app.post("/checkanswers", (req,res) =>{
-  for(let i = 0;i<correctAnswers.length;i++){
-    //console.log(correctAnswers[i])
-    if(i === correctAnswers.length-1){
-      
+    for (let i = 0; i < sql.length; i++) {
+      let answerArray = []
+      db.all(sql[i], [], (err, rows) => {
+        if (rows === undefined) {
+          answerArray.push()
+        } else {
+          rows.forEach((row) => {
+            answerArray.push(row.name)
+          })
+        }
+      })
+      correctAnswers.push(answerArray)
     }
+
+    getLogo(req.body)
+    res.send(JSON.stringify("QueryGood"))
+})
+logo:
+app.post("/checkanswers", (req, res) => {
+  for (let i = 0; i < correctAnswers.length; i++) {
+    //console.log(correctAnswers[i])
+    if (i === correctAnswers.length - 1) {}
   }
   var obj = {
     box1: correctAnswers[0].length,
@@ -70,717 +70,747 @@ app.post("/checkanswers", (req,res) =>{
   return 0;
 })
 
-app.post("/testanswers", (req,res) =>{
-  if(correctAnswers[req.body.box-1].includes(req.body.answer)){
+app.post("/testanswers", (req, res) => {
+  if (correctAnswers[req.body.box - 1].includes(req.body.answer)) {
     res.send(JSON.stringify("Correct"))
   } else {
     res.send(JSON.stringify("Incorrect"))
-  }  
+  }
 })
 
-function pickStatCat(selection){
-  let statCat=''
-  let statNum=''
+function pickStatCat(selection) {
+  let statCat = ''
+    let statNum = ''
 
-  switch(selection){
+    switch (selection) {
     case "pass5000":
       statCat = 'bestPassing'
-      statNum = '5000'
-      break;
+        statNum = '5000'
+        break;
     case "pass4000":
       statCat = 'bestPassing'
-      statNum = '4000'
-      break;
+        statNum = '4000'
+        break;
     case "pass3000":
       statCat = 'bestPassing'
-      statNum = '3000'
-      break;
+        statNum = '3000'
+        break;
     case "pass35TD":
       statCat = 'bestPassingTD'
-      statNum = '35'
-      break;
+        statNum = '35'
+        break;
     case "pass30TD":
       statCat = 'bestPassingTD'
-      statNum = '30'
-      break;
+        statNum = '30'
+        break;
     case "pass25TD":
       statCat = 'bestPassingTD'
-      statNum = '25'
-      break;
+        statNum = '25'
+        break;
     case "rush2000":
       statCat = 'bestRushing'
-      statNum = '2000'
-      break;
+        statNum = '2000'
+        break;
     case "rush1500":
       statCat = 'bestRushing'
-      statNum = '1500'
-      break;
+        statNum = '1500'
+        break;
     case "rush1250":
       statCat = 'bestRushing'
-      statNum = '1250'
-      break;
+        statNum = '1250'
+        break;
     case "rush1000":
       statCat = 'bestRushing'
-      statNum = '1000'
-      break;
+        statNum = '1000'
+        break;
     case "rush20TD":
       statCat = 'bestRushingTD'
-      statNum = '20'
-      break;
+        statNum = '20'
+        break;
     case "rush15TD":
       statCat = 'bestRushingTD'
-      statNum = '15'
-      break;
+        statNum = '15'
+        break;
     case "rush10TD":
       statCat = 'bestRushingTD'
-      statNum = '10'
-      break;
+        statNum = '10'
+        break;
     case "rec1750":
       statCat = 'bestReceiving'
-      statNum = '1750'
-      break;
+        statNum = '1750'
+        break;
     case "rec1500":
       statCat = 'bestReceiving'
-      statNum = '1500'
-      break;
+        statNum = '1500'
+        break;
     case "rec1250":
       statCat = 'bestReceiving'
-      statNum = '1250'
-      break;
+        statNum = '1250'
+        break;
     case "rec1000":
       statCat = 'bestReceiving'
-      statNum = '1000'
-      break;
+        statNum = '1000'
+        break;
     case "rec15TD":
       statCat = 'bestReceivingTD'
-      statNum = '15'
-      break;
+        statNum = '15'
+        break;
     case "rec10TD":
       statCat = 'bestReceivingTD'
-      statNum = '10'
-      break;
+        statNum = '10'
+        break;
     case "recep110":
       statCat = 'bestReceptions'
-      statNum = '110'
-      break;
+        statNum = '110'
+        break;
     case "recep100":
       statCat = 'bestReceptions'
-      statNum = '100'
-      break;
+        statNum = '100'
+        break;
     case "careerPassYds50000":
       statCat = 'careerPassing'
-      statNum = '50000'
-      break;
+        statNum = '50000'
+        break;
     case "careerPassYds30000":
       statCat = 'careerPassing'
-      statNum = '30000'
-      break;
+        statNum = '30000'
+        break;
     case "careerPassYds20000":
       statCat = 'careerPassing'
-      statNum = '20000'
-      break;
+        statNum = '20000'
+        break;
     case "careerPassTD400":
       statCat = 'careerPassingTD'
-      statNum = '400'
-      break;
+        statNum = '400'
+        break;
     case "careerPassTD300":
       statCat = 'careerPassingTD'
-      statNum = '300'
-      break;
+        statNum = '300'
+        break;
     case "careerPassTD200":
       statCat = 'careerPassingTD'
-      statNum = '200'
-      break;
+        statNum = '200'
+        break;
     case "careerRushYds10000":
       statCat = 'careerRushing'
-      statNum = '10000'
-      break;
+        statNum = '10000'
+        break;
     case "careerRushYds7500":
       statCat = 'careerRushing'
-      statNum = '7500'
-      break;
+        statNum = '7500'
+        break;
     case "careerRushYds5000":
       statCat = 'careerRushing'
-      statNum = '5000'
-      break;
+        statNum = '5000'
+        break;
     case "careerRushTD100":
       statCat = 'careerRushingTD'
-      statNum = '100'
-      break;
+        statNum = '100'
+        break;
     case "careerRushTD75":
       statCat = 'careerRushingTD'
-      statNum = '75'
-      break;
+        statNum = '75'
+        break;
     case "careerRushTD50":
       statCat = 'careerRushingTD'
-      statNum = '50'
-      break;
+        statNum = '50'
+        break;
     case "careerRecYds12500":
       statCat = 'careerReceiving'
-      statNum = '12500'
-      break;
+        statNum = '12500'
+        break;
     case "careerRecYds10000":
       statCat = 'careerReceiving'
-      statNum = '10000'
-      break;
+        statNum = '10000'
+        break;
     case "careerRecYds7500":
       statCat = 'careerReceiving'
-      statNum = '7500'
-      break;
+        statNum = '7500'
+        break;
     case "careerRecTD100":
       statCat = 'careerReceivingTD'
-      statNum = '100'
-      break;
+        statNum = '100'
+        break;
     case "careerRecTD75":
       statCat = 'careerReceivingTD'
-      statNum = '75'
-      break;
+        statNum = '75'
+        break;
     case "careerRecTD50":
       statCat = 'careerReceivingTD'
-      statNum = '50'
-      break;
-  }
+        statNum = '50'
+        break;
+    }
 
-  return[statCat, statNum]
+    return [statCat, statNum]
 }
 
-function buildQuery(body){
+function buildQuery(body) {
   let playerBoxes = []
 
   //Box 1 Query
-  if(nflTeams.includes(body.topleft)){ // NFL + Others
-    if(nflTeams.includes(body.lefttop)){ // NFL + NFL
+  if (nflTeams.includes(body.topleft)) { // NFL + Others
+    if (nflTeams.includes(body.lefttop)) { // NFL + NFL
       let team1 = body.topleft
-      let team2 = body.lefttop
+        let team2 = body.lefttop
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.lefttop)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.lefttop)) { //NFL + Stat
       let nflteam = body.topleft
-      let statCat = pickStatCat(body.lefttop)[0]
-      let statNum = pickStatCat(body.lefttop)[1]
+        let statCat = pickStatCat(body.lefttop)[0]
+        let statNum = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //NFL + College
       let nflteam = body.topleft
-      let collegeteam = body.lefttop
+        let collegeteam = body.lefttop
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topleft)){//College + Others
-    if(nflTeams.includes(body.lefttop)){ //College + NFL
+  } else if (collegeTeams.includes(body.topleft)) { //College + Others
+    if (nflTeams.includes(body.lefttop)) { //College + NFL
       let collegeteam = body.topleft
-      let nflteam = body.lefttop
+        let nflteam = body.lefttop
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.lefttop)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.lefttop)) { //College + Stat
       let collegeteam = body.topleft
-      let statCat = pickStatCat(body.lefttop)[0]
-      let statNum = pickStatCat(body.lefttop)[1]
+        let statCat = pickStatCat(body.lefttop)[0]
+        let statNum = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topleft)){//Stat + Others
-    if(nflTeams.includes(body.lefttop)){ // Stat + NFL
+  } else if (statCategories.includes(body.topleft)) { //Stat + Others
+    if (nflTeams.includes(body.lefttop)) { // Stat + NFL
       let nflteam = body.lefttop
-      let statCat = pickStatCat(body.topleft)[0]
-      let statNum = pickStatCat(body.topleft)[1]
+        let statCat = pickStatCat(body.topleft)[0]
+        let statNum = pickStatCat(body.topleft)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //Stat + College
       let collegeteam = body.lefttop
-      let statCat = pickStatCat(body.topleft)[0]
-      let statNum = pickStatCat(body.topleft)[1]
+        let statCat = pickStatCat(body.topleft)[0]
+        let statNum = pickStatCat(body.topleft)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.lefttop)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.lefttop)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topleft)[0]
-      let statNum1 = pickStatCat(body.topleft)[1]
-      let statCat2 = pickStatCat(body.lefttop)[0]
-      let statNum2 = pickStatCat(body.lefttop)[1]
+        let statNum1 = pickStatCat(body.topleft)[1]
+        let statCat2 = pickStatCat(body.lefttop)[0]
+        let statNum2 = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
-      //playerBoxes.push('2 Stats')
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        //playerBoxes.push('2 Stats')
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 2 Query
-  if(nflTeams.includes(body.topmiddle)){ // NFL + Others
-    if(nflTeams.includes(body.lefttop)){ // NFL + NFL
+  if (nflTeams.includes(body.topmiddle)) { // NFL + Others
+    if (nflTeams.includes(body.lefttop)) { // NFL + NFL
       let team1 = body.topmiddle
-      let team2 = body.lefttop
+        let team2 = body.lefttop
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.lefttop)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.lefttop)) { //NFL + Stat
       let nflteam = body.topmiddle
-      let statCat = pickStatCat(body.lefttop)[0]
-      let statNum = pickStatCat(body.lefttop)[1]
+        let statCat = pickStatCat(body.lefttop)[0]
+        let statNum = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //NFL + College
       let nflteam = body.topmiddle
-      let collegeteam = body.lefttop
+        let collegeteam = body.lefttop
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topmiddle)){//College + Others
-    if(nflTeams.includes(body.lefttop)){ //College + NFL
+  } else if (collegeTeams.includes(body.topmiddle)) { //College + Others
+    if (nflTeams.includes(body.lefttop)) { //College + NFL
       let collegeteam = body.topmiddle
-      let nflteam = body.lefttop
+        let nflteam = body.lefttop
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.lefttop)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.lefttop)) { //College + Stat
       let collegeteam = body.topmiddle
-      let statCat = pickStatCat(body.lefttop)[0]
-      let statNum = pickStatCat(body.lefttop)[1]
+        let statCat = pickStatCat(body.lefttop)[0]
+        let statNum = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topmiddle)){//Stat + Others
-    if(nflTeams.includes(body.lefttop)){ // Stat + NFL
+  } else if (statCategories.includes(body.topmiddle)) { //Stat + Others
+    if (nflTeams.includes(body.lefttop)) { // Stat + NFL
       let nflteam = body.lefttop
-      let statCat = pickStatCat(body.topmiddle)[0]
-      let statNum = pickStatCat(body.topmiddle)[1]
+        let statCat = pickStatCat(body.topmiddle)[0]
+        let statNum = pickStatCat(body.topmiddle)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //Stat + College
       let collegeteam = body.lefttop
-      let statCat = pickStatCat(body.topmiddle)[0]
-      let statNum = pickStatCat(body.topmiddle)[1]
+        let statCat = pickStatCat(body.topmiddle)[0]
+        let statNum = pickStatCat(body.topmiddle)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.lefttop)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.lefttop)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topmiddle)[0]
-      let statNum1 = pickStatCat(body.topmiddle)[1]
-      let statCat2 = pickStatCat(body.lefttop)[0]
-      let statNum2 = pickStatCat(body.lefttop)[1]
+        let statNum1 = pickStatCat(body.topmiddle)[1]
+        let statCat2 = pickStatCat(body.lefttop)[0]
+        let statNum2 = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 3 Query
-  if(nflTeams.includes(body.topright)){ // NFL + Others
-    if(nflTeams.includes(body.lefttop)){ // NFL + NFL
+  if (nflTeams.includes(body.topright)) { // NFL + Others
+    if (nflTeams.includes(body.lefttop)) { // NFL + NFL
       let team1 = body.topright
-      let team2 = body.lefttop
+        let team2 = body.lefttop
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.lefttop)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.lefttop)) { //NFL + Stat
       let nflteam = body.topright
-      let statCat = pickStatCat(body.lefttop)[0]
-      let statNum = pickStatCat(body.lefttop)[1]
+        let statCat = pickStatCat(body.lefttop)[0]
+        let statNum = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //NFL + College
       let nflteam = body.topright
-      let collegeteam = body.lefttop
+        let collegeteam = body.lefttop
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topright)){//College + Others
-    if(nflTeams.includes(body.lefttop)){ //College + NFL
+  } else if (collegeTeams.includes(body.topright)) { //College + Others
+    if (nflTeams.includes(body.lefttop)) { //College + NFL
       let collegeteam = body.topright
-      let nflteam = body.lefttop
+        let nflteam = body.lefttop
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.lefttop)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.lefttop)) { //College + Stat
       let collegeteam = body.topright
-      let statCat = pickStatCat(body.lefttop)[0]
-      let statNum = pickStatCat(body.lefttop)[1]
+        let statCat = pickStatCat(body.lefttop)[0]
+        let statNum = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topright)){//Stat + Others
-    if(nflTeams.includes(body.lefttop)){ // Stat + NFL
+  } else if (statCategories.includes(body.topright)) { //Stat + Others
+    if (nflTeams.includes(body.lefttop)) { // Stat + NFL
       let nflteam = body.lefttop
-      let statCat = pickStatCat(body.topright)[0]
-      let statNum = pickStatCat(body.topright)[1]
+        let statCat = pickStatCat(body.topright)[0]
+        let statNum = pickStatCat(body.topright)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.lefttop)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.lefttop)) { //Stat + College
       let collegeteam = body.lefttop
-      let statCat = pickStatCat(body.topright)[0]
-      let statNum = pickStatCat(body.topright)[1]
+        let statCat = pickStatCat(body.topright)[0]
+        let statNum = pickStatCat(body.topright)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.lefttop)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.lefttop)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topright)[0]
-      let statNum1 = pickStatCat(body.topright)[1]
-      let statCat2 = pickStatCat(body.lefttop)[0]
-      let statNum2 = pickStatCat(body.lefttop)[1]
+        let statNum1 = pickStatCat(body.topright)[1]
+        let statCat2 = pickStatCat(body.lefttop)[0]
+        let statNum2 = pickStatCat(body.lefttop)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 4 Query
-  if(nflTeams.includes(body.topleft)){ // NFL + Others
-    if(nflTeams.includes(body.leftmiddle)){ // NFL + NFL
+  if (nflTeams.includes(body.topleft)) { // NFL + Others
+    if (nflTeams.includes(body.leftmiddle)) { // NFL + NFL
       let team1 = body.topleft
-      let team2 = body.leftmiddle
+        let team2 = body.leftmiddle
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.leftmiddle)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.leftmiddle)) { //NFL + Stat
       let nflteam = body.topleft
-      let statCat = pickStatCat(body.leftmiddle)[0]
-      let statNum = pickStatCat(body.leftmiddle)[1]
+        let statCat = pickStatCat(body.leftmiddle)[0]
+        let statNum = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //NFL + College
       let nflteam = body.topleft
-      let collegeteam = body.leftmiddle
+        let collegeteam = body.leftmiddle
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topleft)){//College + Others
-    if(nflTeams.includes(body.leftmiddle)){ //College + NFL
+  } else if (collegeTeams.includes(body.topleft)) { //College + Others
+    if (nflTeams.includes(body.leftmiddle)) { //College + NFL
       let collegeteam = body.topleft
-      let nflteam = body.leftmiddle
+        let nflteam = body.leftmiddle
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.leftmiddle)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.leftmiddle)) { //College + Stat
       let collegeteam = body.topleft
-      let statCat = pickStatCat(body.leftmiddle)[0]
-      let statNum = pickStatCat(body.leftmiddle)[1]
+        let statCat = pickStatCat(body.leftmiddle)[0]
+        let statNum = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topleft)){//Stat + Others
-    if(nflTeams.includes(body.leftmiddle)){ // Stat + NFL
+  } else if (statCategories.includes(body.topleft)) { //Stat + Others
+    if (nflTeams.includes(body.leftmiddle)) { // Stat + NFL
       let nflteam = body.leftmiddle
-      let statCat = pickStatCat(body.topleft)[0]
-      let statNum = pickStatCat(body.topleft)[1]
+        let statCat = pickStatCat(body.topleft)[0]
+        let statNum = pickStatCat(body.topleft)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //Stat + College
       let collegeteam = body.leftmiddle
-      let statCat = pickStatCat(body.topleft)[0]
-      let statNum = pickStatCat(body.topleft)[1]
+        let statCat = pickStatCat(body.topleft)[0]
+        let statNum = pickStatCat(body.topleft)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.leftmiddle)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.leftmiddle)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topleft)[0]
-      let statNum1 = pickStatCat(body.topleft)[1]
-      let statCat2 = pickStatCat(body.leftmiddle)[0]
-      let statNum2 = pickStatCat(body.leftmiddle)[1]
+        let statNum1 = pickStatCat(body.topleft)[1]
+        let statCat2 = pickStatCat(body.leftmiddle)[0]
+        let statNum2 = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 5 Query
-  if(nflTeams.includes(body.topmiddle)){ // NFL + Others
-    if(nflTeams.includes(body.leftmiddle)){ // NFL + NFL
+  if (nflTeams.includes(body.topmiddle)) { // NFL + Others
+    if (nflTeams.includes(body.leftmiddle)) { // NFL + NFL
       let team1 = body.topmiddle
-      let team2 = body.leftmiddle
+        let team2 = body.leftmiddle
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.leftmiddle)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.leftmiddle)) { //NFL + Stat
       let nflteam = body.topmiddle
-      let statCat = pickStatCat(body.leftmiddle)[0]
-      let statNum = pickStatCat(body.leftmiddle)[1]
+        let statCat = pickStatCat(body.leftmiddle)[0]
+        let statNum = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //NFL + College
       let nflteam = body.topmiddle
-      let collegeteam = body.leftmiddle
+        let collegeteam = body.leftmiddle
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topmiddle)){//College + Others
-    if(nflTeams.includes(body.leftmiddle)){ //College + NFL
+  } else if (collegeTeams.includes(body.topmiddle)) { //College + Others
+    if (nflTeams.includes(body.leftmiddle)) { //College + NFL
       let collegeteam = body.topmiddle
-      let nflteam = body.leftmiddle
+        let nflteam = body.leftmiddle
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.leftmiddle)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.leftmiddle)) { //College + Stat
       let collegeteam = body.topmiddle
-      let statCat = pickStatCat(body.leftmiddle)[0]
-      let statNum = pickStatCat(body.leftmiddle)[1]
+        let statCat = pickStatCat(body.leftmiddle)[0]
+        let statNum = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topmiddle)){//Stat + Others
-    if(nflTeams.includes(body.leftmiddle)){ // Stat + NFL
+  } else if (statCategories.includes(body.topmiddle)) { //Stat + Others
+    if (nflTeams.includes(body.leftmiddle)) { // Stat + NFL
       let nflteam = body.leftmiddle
-      let statCat = pickStatCat(body.topmiddle)[0]
-      let statNum = pickStatCat(body.topmiddle)[1]
+        let statCat = pickStatCat(body.topmiddle)[0]
+        let statNum = pickStatCat(body.topmiddle)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //Stat + College
       let collegeteam = body.leftmiddle
-      let statCat = pickStatCat(body.topmiddle)[0]
-      let statNum = pickStatCat(body.topmiddle)[1]
+        let statCat = pickStatCat(body.topmiddle)[0]
+        let statNum = pickStatCat(body.topmiddle)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.leftmiddle)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.leftmiddle)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topmiddle)[0]
-      let statNum1 = pickStatCat(body.topmiddle)[1]
-      let statCat2 = pickStatCat(body.leftmiddle)[0]
-      let statNum2 = pickStatCat(body.leftmiddle)[1]
+        let statNum1 = pickStatCat(body.topmiddle)[1]
+        let statCat2 = pickStatCat(body.leftmiddle)[0]
+        let statNum2 = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 6 Query
-  if(nflTeams.includes(body.topright)){ // NFL + Others
-    if(nflTeams.includes(body.leftmiddle)){ // NFL + NFL
+  if (nflTeams.includes(body.topright)) { // NFL + Others
+    if (nflTeams.includes(body.leftmiddle)) { // NFL + NFL
       let team1 = body.topright
-      let team2 = body.leftmiddle
+        let team2 = body.leftmiddle
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.leftmiddle)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.leftmiddle)) { //NFL + Stat
       let nflteam = body.topright
-      let statCat = pickStatCat(body.leftmiddle)[0]
-      let statNum = pickStatCat(body.leftmiddle)[1]
+        let statCat = pickStatCat(body.leftmiddle)[0]
+        let statNum = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //NFL + College
       let nflteam = body.topright
-      let collegeteam = body.leftmiddle
+        let collegeteam = body.leftmiddle
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topright)){//College + Others
-    if(nflTeams.includes(body.leftmiddle)){ //College + NFL
+  } else if (collegeTeams.includes(body.topright)) { //College + Others
+    if (nflTeams.includes(body.leftmiddle)) { //College + NFL
       let collegeteam = body.topright
-      let nflteam = body.leftmiddle
+        let nflteam = body.leftmiddle
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.leftmiddle)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.leftmiddle)) { //College + Stat
       let collegeteam = body.topright
-      let statCat = pickStatCat(body.leftmiddle)[0]
-      let statNum = pickStatCat(body.leftmiddle)[1]
+        let statCat = pickStatCat(body.leftmiddle)[0]
+        let statNum = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topright)){//Stat + Others
-    if(nflTeams.includes(body.leftmiddle)){ // Stat + NFL
+  } else if (statCategories.includes(body.topright)) { //Stat + Others
+    if (nflTeams.includes(body.leftmiddle)) { // Stat + NFL
       let nflteam = body.leftmiddle
-      let statCat = pickStatCat(body.topright)[0]
-      let statNum = pickStatCat(body.topright)[1]
+        let statCat = pickStatCat(body.topright)[0]
+        let statNum = pickStatCat(body.topright)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftmiddle)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftmiddle)) { //Stat + College
       let collegeteam = body.leftmiddle
-      let statCat = pickStatCat(body.topright)[0]
-      let statNum = pickStatCat(body.topright)[1]
+        let statCat = pickStatCat(body.topright)[0]
+        let statNum = pickStatCat(body.topright)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.leftmiddle)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.leftmiddle)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topright)[0]
-      let statNum1 = pickStatCat(body.topright)[1]
-      let statCat2 = pickStatCat(body.leftmiddle)[0]
-      let statNum2 = pickStatCat(body.leftmiddle)[1]
+        let statNum1 = pickStatCat(body.topright)[1]
+        let statCat2 = pickStatCat(body.leftmiddle)[0]
+        let statNum2 = pickStatCat(body.leftmiddle)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 7 Query
-  if(nflTeams.includes(body.topleft)){ // NFL + Others
-    if(nflTeams.includes(body.leftbottom)){ // NFL + NFL
+  if (nflTeams.includes(body.topleft)) { // NFL + Others
+    if (nflTeams.includes(body.leftbottom)) { // NFL + NFL
       let team1 = body.topleft
-      let team2 = body.leftbottom
+        let team2 = body.leftbottom
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.leftbottom)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.leftbottom)) { //NFL + Stat
       let nflteam = body.topleft
-      let statCat = pickStatCat(body.leftbottom)[0]
-      let statNum = pickStatCat(body.leftbottom)[1]
+        let statCat = pickStatCat(body.leftbottom)[0]
+        let statNum = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //NFL + College
       let nflteam = body.topleft
-      let collegeteam = body.leftbottom
+        let collegeteam = body.leftbottom
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topleft)){//College + Others
-    if(nflTeams.includes(body.leftbottom)){ //College + NFL
+  } else if (collegeTeams.includes(body.topleft)) { //College + Others
+    if (nflTeams.includes(body.leftbottom)) { //College + NFL
       let collegeteam = body.topleft
-      let nflteam = body.leftbottom
+        let nflteam = body.leftbottom
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.leftbottom)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.leftbottom)) { //College + Stat
       let collegeteam = body.topleft
-      let statCat = pickStatCat(body.leftbottom)[0]
-      let statNum = pickStatCat(body.leftbottom)[1]
+        let statCat = pickStatCat(body.leftbottom)[0]
+        let statNum = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topleft)){//Stat + Others
-    if(nflTeams.includes(body.leftbottom)){ // Stat + NFL
+  } else if (statCategories.includes(body.topleft)) { //Stat + Others
+    if (nflTeams.includes(body.leftbottom)) { // Stat + NFL
       let nflteam = body.leftbottom
-      let statCat = pickStatCat(body.topleft)[0]
-      let statNum = pickStatCat(body.topleft)[1]
+        let statCat = pickStatCat(body.topleft)[0]
+        let statNum = pickStatCat(body.topleft)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //Stat + College
       let collegeteam = body.leftbottom
-      let statCat = pickStatCat(body.topleft)[0]
-      let statNum = pickStatCat(body.topleft)[1]
+        let statCat = pickStatCat(body.topleft)[0]
+        let statNum = pickStatCat(body.topleft)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.leftbottom)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.leftbottom)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topleft)[0]
-      let statNum1 = pickStatCat(body.topleft)[1]
-      let statCat2 = pickStatCat(body.leftbottom)[0]
-      let statNum2 = pickStatCat(body.leftbottom)[1]
+        let statNum1 = pickStatCat(body.topleft)[1]
+        let statCat2 = pickStatCat(body.leftbottom)[0]
+        let statNum2 = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 8 Query
-  if(nflTeams.includes(body.topmiddle)){ // NFL + Others
-    if(nflTeams.includes(body.leftbottom)){ // NFL + NFL
+  if (nflTeams.includes(body.topmiddle)) { // NFL + Others
+    if (nflTeams.includes(body.leftbottom)) { // NFL + NFL
       let team1 = body.topmiddle
-      let team2 = body.leftbottom
+        let team2 = body.leftbottom
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.leftbottom)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.leftbottom)) { //NFL + Stat
       let nflteam = body.topmiddle
-      let statCat = pickStatCat(body.leftbottom)[0]
-      let statNum = pickStatCat(body.leftbottom)[1]
+        let statCat = pickStatCat(body.leftbottom)[0]
+        let statNum = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //NFL + College
       let nflteam = body.topmiddle
-      let collegeteam = body.leftbottom
+        let collegeteam = body.leftbottom
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topmiddle)){//College + Others
-    if(nflTeams.includes(body.leftbottom)){ //College + NFL
+  } else if (collegeTeams.includes(body.topmiddle)) { //College + Others
+    if (nflTeams.includes(body.leftbottom)) { //College + NFL
       let collegeteam = body.topmiddle
-      let nflteam = body.leftbottom
+        let nflteam = body.leftbottom
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.leftbottom)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.leftbottom)) { //College + Stat
       let collegeteam = body.topmiddle
-      let statCat = pickStatCat(body.leftbottom)[0]
-      let statNum = pickStatCat(body.leftbottom)[1]
+        let statCat = pickStatCat(body.leftbottom)[0]
+        let statNum = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topmiddle)){//Stat + Others
-    if(nflTeams.includes(body.leftbottom)){ // Stat + NFL
+  } else if (statCategories.includes(body.topmiddle)) { //Stat + Others
+    if (nflTeams.includes(body.leftbottom)) { // Stat + NFL
       let nflteam = body.leftbottom
-      let statCat = pickStatCat(body.topmiddle)[0]
-      let statNum = pickStatCat(body.topmiddle)[1]
+        let statCat = pickStatCat(body.topmiddle)[0]
+        let statNum = pickStatCat(body.topmiddle)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //Stat + College
       let collegeteam = body.leftbottom
-      let statCat = pickStatCat(body.topmiddle)[0]
-      let statNum = pickStatCat(body.topmiddle)[1]
+        let statCat = pickStatCat(body.topmiddle)[0]
+        let statNum = pickStatCat(body.topmiddle)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.leftbottom)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.leftbottom)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topmiddle)[0]
-      let statNum1 = pickStatCat(body.topmiddle)[1]
-      let statCat2 = pickStatCat(body.leftbottom)[0]
-      let statNum2 = pickStatCat(body.leftbottom)[1]
+        let statNum1 = pickStatCat(body.topmiddle)[1]
+        let statCat2 = pickStatCat(body.leftbottom)[0]
+        let statNum2 = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
   //Box 9 Query
-  if(nflTeams.includes(body.topright)){ // NFL + Others
-    if(nflTeams.includes(body.leftbottom)){ // NFL + NFL
+  if (nflTeams.includes(body.topright)) { // NFL + Others
+    if (nflTeams.includes(body.leftbottom)) { // NFL + NFL
       let team1 = body.topright
-      let team2 = body.leftbottom
+        let team2 = body.leftbottom
 
-      playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
-    } else if(statCategories.includes(body.leftbottom)){ //NFL + Stat
+        playerBoxes.push(`SELECT name FROM playerTEAMS where played${team1}='True' and played${team2}='True';`)
+    } else if (statCategories.includes(body.leftbottom)) { //NFL + Stat
       let nflteam = body.topright
-      let statCat = pickStatCat(body.leftbottom)[0]
-      let statNum = pickStatCat(body.leftbottom)[1]
+        let statCat = pickStatCat(body.leftbottom)[0]
+        let statNum = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //NFL + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //NFL + College
       let nflteam = body.topright
-      let collegeteam = body.leftbottom
+        let collegeteam = body.leftbottom
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
     }
-  } else if(collegeTeams.includes(body.topright)){//College + Others
-    if(nflTeams.includes(body.leftbottom)){ //College + NFL
+  } else if (collegeTeams.includes(body.topright)) { //College + Others
+    if (nflTeams.includes(body.leftbottom)) { //College + NFL
       let collegeteam = body.topright
-      let nflteam = body.leftbottom
+        let nflteam = body.leftbottom
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
-    } else if(statCategories.includes(body.leftbottom)){ //College + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerTeams ON players.id=playerTeams.id WHERE players.college='${collegeteam}' and playerTeams.played${nflteam}='True';`)
+    } else if (statCategories.includes(body.leftbottom)) { //College + Stat
       let collegeteam = body.topright
-      let statCat = pickStatCat(body.leftbottom)[0]
-      let statNum = pickStatCat(body.leftbottom)[1]
+        let statCat = pickStatCat(body.leftbottom)[0]
+        let statNum = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //College + College
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //College + College
       playerBoxes.push('2 Colleges')
     }
-  } else if(statCategories.includes(body.topright)){//Stat + Others
-    if(nflTeams.includes(body.leftbottom)){ // Stat + NFL
+  } else if (statCategories.includes(body.topright)) { //Stat + Others
+    if (nflTeams.includes(body.leftbottom)) { // Stat + NFL
       let nflteam = body.leftbottom
-      let statCat = pickStatCat(body.topright)[0]
-      let statNum = pickStatCat(body.topright)[1]
+        let statCat = pickStatCat(body.topright)[0]
+        let statNum = pickStatCat(body.topright)[1]
 
-      playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
-    } else if(collegeTeams.includes(body.leftbottom)){ //Stat + College
+        playerBoxes.push(`SELECT playerStats.name FROM playerStats INNER JOIN playerTeams ON playerStats.id=playerTeams.id WHERE playerTeams.played${nflteam}='True' and playerStats.${statCat}>${statNum};`)
+    } else if (collegeTeams.includes(body.leftbottom)) { //Stat + College
       let collegeteam = body.leftbottom
-      let statCat = pickStatCat(body.topright)[0]
-      let statNum = pickStatCat(body.topright)[1]
+        let statCat = pickStatCat(body.topright)[0]
+        let statNum = pickStatCat(body.topright)[1]
 
-      playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
-    } else if(statCategories.includes(body.leftbottom)){ //Stat + Stat
+        playerBoxes.push(`SELECT players.name FROM players INNER JOIN playerStats ON players.id=playerStats.id WHERE players.college='${collegeteam}' and playerStats.${statCat}>${statNum};`)
+    } else if (statCategories.includes(body.leftbottom)) { //Stat + Stat
       let statCat1 = pickStatCat(body.topright)[0]
-      let statNum1 = pickStatCat(body.topright)[1]
-      let statCat2 = pickStatCat(body.leftbottom)[0]
-      let statNum2 = pickStatCat(body.leftbottom)[1]
+        let statNum1 = pickStatCat(body.topright)[1]
+        let statCat2 = pickStatCat(body.leftbottom)[0]
+        let statNum2 = pickStatCat(body.leftbottom)[1]
 
-      playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
+        playerBoxes.push(`SELECT name FROM playerStats WHERE ${statCat1}>${statNum1} AND ${statCat2}>${statNum2}`)
     }
   } else {
     console.log("Invalid category")
   }
 
+  return (playerBoxes)
+}
 
-  return(playerBoxes)
+function getLogo(body) {
+  let teamArr = [
+    body.topleft,
+    body.topmiddle,
+    body.topright,
+    body.lefttop,
+    body.leftmiddle,
+    body.leftbottom
+  ]
+
+  for (let i = 0; i < teamArr.length; i++) {
+    logos.push(logoSelectionFunction(teamArr[i]))
+  }
+
+}
+
+function logoSelectionFunction(team) {
+  let logo = ''
+
+    switch (team) {
+    case 'ARI':
+      logo = ''
+        break;
+    case "ARI":
+      logo = ''
+        break;
+    }
+
+    return logo
 }
 
 const PORT = process.env.PORT || 5000;

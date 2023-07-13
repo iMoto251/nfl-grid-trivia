@@ -866,12 +866,20 @@ function Game3x3(){
 
     async function showLogos(){
         document.getElementById("topleftimg").style.display = "inline-grid";
-        document.getElementById("topleftimg").src = "./resources/images/league.svg.webp";
+        document.getElementById("topmiddleimg").style.display = "inline-grid";
+        document.getElementById("toprightimg").style.display = "inline-grid";
+        document.getElementById("lefttopimg").style.display = "inline-grid";
+        document.getElementById("leftmiddleimg").style.display = "inline-grid";
+        document.getElementById("leftbottomimg").style.display = "inline-grid";
     }
 
     async function hideLogos(){
-        //document.getElementById("topleftimg").style.display = "none";
-        document.getElementById("topleftimg").src = "./resources/images/league.png";
+        document.getElementById("topleftimg").style.display = "none";
+        document.getElementById("topmiddleimg").style.display = "none";
+        document.getElementById("toprightimg").style.display = "none";
+        document.getElementById("lefttopimg").style.display = "none";
+        document.getElementById("leftmiddleimg").style.display = "none";
+        document.getElementById("leftbottomimg").style.display = "none";
     }
 
     async function randomize(){
@@ -1034,12 +1042,18 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('oneoneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('oneonebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('oneonebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('oneoneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('oneonebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('oneonebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
+                document.getElementById("oneoneinputcell").style.display = "none";
                 return 0;
             }
             catch(error) {
@@ -1048,6 +1062,7 @@ function Game3x3(){
         } else {
 
         }
+
         
     }
 
@@ -1299,7 +1314,27 @@ function Game3x3(){
         }
     }
 
+    async function showBox1(){
+        document.getElementById("oneoneinputcell").style.display = "flex";
+        blur()
+    }
+
+    async function noBlur(){
+        document.getElementById("guessBoxes").style.backdropFilter = "blur(0px)";
+        document.getElementById("guessBoxes").style.backgroundColor = "rgba(0, 0, 0, 0.0)";
+        document.getElementById("guessBoxes").style.width = "0";
+        document.getElementById("guessBoxes").style.height = "0";
+    }
+
+    async function blur(){
+        document.getElementById("guessBoxes").style.backdropFilter = "blur(1px)";
+        document.getElementById("guessBoxes").style.backgroundColor = "rgba(0, 0, 0, 0.1)";
+        document.getElementById("guessBoxes").style.width = "100vw";
+        document.getElementById("guessBoxes").style.height = "100vw";
+    }
+
     async function loadFunction(){
+        noBlur()
         hideBoxes()
         await randomize();
         await testGrid();
@@ -1331,15 +1366,18 @@ function Game3x3(){
         document.getElementById('threeoneAnswers').innerHTML = ""
         document.getElementById('threetwoAnswers').innerHTML = ""
         document.getElementById('threethreeAnswers').innerHTML = ""
-        document.getElementById('oneoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onethreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twooneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twotwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twothreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threeoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
+        document.getElementById('oneoneinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('onetwoinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('onethreeinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('twooneinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('twotwoinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('twothreeinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('threeoneinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('threetwoinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('threethreeinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+
+        document.getElementById('oneonebutton').innerHTML = ""
+        document.getElementById('oneonebutton').style.backgroundColor = "rgb(32, 46, 75)";
     }
 
     // async function dailyGrid(){
@@ -1364,13 +1402,177 @@ function Game3x3(){
 
     return(
         <div className="game-container">
+            <div id="guessBoxes">
+                <div className="inputCell" id="oneoneinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='oneone'
+                        value={value1}
+                        onChange={(event, newValue) => {
+                            setValue1(newValue);
+                            testAnswer1(newValue.label);
+                            //setTimeout(console.log(newValue.label),1000)
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 1" variant="outlined"/>
+                        )}
+                    />
+                    <p id='oneoneAnswers'></p>
+                </div>
+                <div className="inputCell" id="onetwoinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='onetwo'
+                        value={value2}
+                        onChange={(event, newValue) => {
+                            setValue2(newValue);
+                            testAnswer2(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 2" variant="outlined" onBlur={testAnswer2}/>
+                        )}
+                    />
+                    <p id='onetwoAnswers'></p>
+                </div>
+                <div className="inputCell" id="onethreeinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='onethree'
+                        value={value3}
+                        onChange={(event, newValue) => {
+                            setValue3(newValue);
+                            testAnswer3(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 3" variant="outlined" onBlur={testAnswer3}/>
+                        )}
+                    />
+                    <p id='onethreeAnswers'></p>
+                </div>
+                <div className="inputCell" id="twooneinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='twoone'
+                        value={value4}
+                        onChange={(event, newValue) => {
+                            setValue4(newValue);
+                            testAnswer4(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 4" variant="outlined" onBlur={testAnswer4}/>
+                        )}
+                    />
+                    <p id='twooneAnswers'></p>
+                </div>
+                <div className="inputCell" id="twotwoinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='twotwo'
+                        value={value5}
+                        onChange={(event, newValue) => {
+                            setValue5(newValue);
+                            testAnswer5(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 5" variant="outlined" onBlur={testAnswer5}/>
+                        )}
+                    />
+                    <p id='twotwoAnswers'></p>
+                </div>
+                <div className="inputCell" id="twothreeinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='twothree'
+                        value={value6}
+                        onChange={(event, newValue) => {
+                            setValue6(newValue);
+                            testAnswer6(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 6" variant="outlined" onBlur={testAnswer6}/>
+                        )}
+                    />
+                    <p id='twothreeAnswers'></p>
+                </div>
+                <div className="inputCell" id="threeoneinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='threeone'
+                        value={value7}
+                        onChange={(event, newValue) => {
+                            setValue7(newValue);
+                            testAnswer7(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 7" variant="outlined" onBlur={testAnswer7}/>
+                        )}
+                    />
+                    <p id='threeoneAnswers'></p>
+                </div>
+                <div className="inputCell" id="threetwoinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='threetwo'
+                        value={value8}
+                        onChange={(event, newValue) => {
+                            setValue8(newValue);
+                            testAnswer8(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 8" variant="outlined" onBlur={testAnswer8}/>
+                        )}
+                    />
+                    <p id='threetwoAnswers'></p>
+                </div>
+                <div className="inputCell" id="threethreeinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='threethree'
+                        value={value9}
+                        onChange={(event, newValue) => {
+                            setValue9(newValue);
+                            testAnswer9(newValue.label);
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 9" variant="outlined" onBlur={testAnswer9}/>
+                        )}
+                    />
+                    <p id='threethreeAnswers'></p>
+                </div>
+            </div>
             <div className="game">
             <div className="choiceCell">
             <button id="choiceButton" className='choiceButtons' onClick={showBoxes}>show</button>
                 <button id="choiceButton" className='choiceButtons' onClick={hideBoxes}>hide</button>
                 <button id="randomize" className='choiceButtons' onClick={randomize} type='reset'>Randomize</button>
                 <button id="choiceButton" className='choiceButtons' onClick={testCheck}>Set Grid</button>
-
             </div>
             <div className="choiceCell">
                 <select id="topleft" className='selectorBoxes' >
@@ -1380,7 +1582,7 @@ function Game3x3(){
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
-                <img src="/resources/images/league.png" id='topleftimg' alt="logo"></img>
+                <img className='logoIMG' src="/resources/images/league.png" id='topleftimg' alt="logo"></img>
             </div>
             <div className="choiceCell">
                 <select id="topmiddle" className='selectorBoxes' >
@@ -1390,6 +1592,7 @@ function Game3x3(){
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='logoIMG' src="/resources/images/league.png" id='topmiddleimg' alt="logo"></img>
             </div>
             <div className="choiceCell">
                 <select id="topright" className='selectorBoxes' >
@@ -1399,6 +1602,7 @@ function Game3x3(){
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='logoIMG' src="/resources/images/league.png" id='toprightimg' alt="logo"></img>
             </div>
             <div className="choiceCell">
                 <select id="lefttop" className='selectorBoxes' >
@@ -1408,62 +1612,11 @@ function Game3x3(){
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='logoIMG' src="/resources/images/league.png" id='lefttopimg' alt="logo"></img>
             </div>
-            <div className="inputCell" id="oneoneinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='oneone'
-                    value={value1}
-                    onChange={(event, newValue) => {
-                        setValue1(newValue);
-                        testAnswer1(newValue.label);
-                        //setTimeout(console.log(newValue.label),1000)
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 1" variant="outlined"/>
-                    )}
-                />
-                <p id='oneoneAnswers'></p>
-            </div>
-            <div className="inputCell" id="onetwoinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='onetwo'
-                    value={value2}
-                    onChange={(event, newValue) => {
-                        setValue2(newValue);
-                        testAnswer2(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 2" variant="outlined" onBlur={testAnswer2}/>
-                    )}
-                />
-                <p id='onetwoAnswers'></p>
-            </div>
-            <div className="inputCell" id="onethreeinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='onethree'
-                    value={value3}
-                    onChange={(event, newValue) => {
-                        setValue3(newValue);
-                        testAnswer3(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 3" variant="outlined" onBlur={testAnswer3}/>
-                    )}
-                />
-                <p id='onethreeAnswers'></p>
-            </div>
+            <button id='oneonebutton' className='guessButtons' onClick={showBox1}></button>
+            <button className='guessButtons'></button>
+            <button className='guessButtons'></button>
             <div className="choiceCell">
                 <select id="leftmiddle" className='selectorBoxes' >
                     <SelectorNFL/>
@@ -1472,61 +1625,11 @@ function Game3x3(){
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='logoIMG' src="/resources/images/league.png" id='leftmiddleimg' alt="logo"></img>
             </div>
-            <div className="inputCell" id="twooneinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='twoone'
-                    value={value4}
-                    onChange={(event, newValue) => {
-                        setValue4(newValue);
-                        testAnswer4(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 4" variant="outlined" onBlur={testAnswer4}/>
-                    )}
-                />
-                <p id='twooneAnswers'></p>
-            </div>
-            <div className="inputCell" id="twotwoinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='twotwo'
-                    value={value5}
-                    onChange={(event, newValue) => {
-                        setValue5(newValue);
-                        testAnswer5(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 5" variant="outlined" onBlur={testAnswer5}/>
-                    )}
-                />
-                <p id='twotwoAnswers'></p>
-            </div>
-            <div className="inputCell" id="twothreeinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='twothree'
-                    value={value6}
-                    onChange={(event, newValue) => {
-                        setValue6(newValue);
-                        testAnswer6(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 6" variant="outlined" onBlur={testAnswer6}/>
-                    )}
-                />
-                <p id='twothreeAnswers'></p>
-            </div>
+            <button className='guessButtons'></button>
+            <button className='guessButtons'></button>
+            <button className='guessButtons'></button>
             <div className="choiceCell">
                 <select id="leftbottom" className='selectorBoxes' >
                     <SelectorNFL/>
@@ -1535,61 +1638,11 @@ function Game3x3(){
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='logoIMG' src="/resources/images/league.png" id='leftbottomimg' alt="logo"></img>
             </div>
-            <div className="inputCell" id="threeoneinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='threeone'
-                    value={value7}
-                    onChange={(event, newValue) => {
-                        setValue7(newValue);
-                        testAnswer7(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 7" variant="outlined" onBlur={testAnswer7}/>
-                    )}
-                />
-                <p id='threeoneAnswers'></p>
-            </div>
-            <div className="inputCell" id="threetwoinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='threetwo'
-                    value={value8}
-                    onChange={(event, newValue) => {
-                        setValue8(newValue);
-                        testAnswer8(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 8" variant="outlined" onBlur={testAnswer8}/>
-                    )}
-                />
-                <p id='threetwoAnswers'></p>
-            </div>
-            <div className="inputCell" id="threethreeinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='threethree'
-                    value={value9}
-                    onChange={(event, newValue) => {
-                        setValue9(newValue);
-                        testAnswer9(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 9" variant="outlined" onBlur={testAnswer9}/>
-                    )}
-                />
-                <p id='threethreeAnswers'></p>
-            </div>
+            <button className='guessButtons'></button>
+            <button className='guessButtons'></button>
+            <button className='guessButtons'></button>
                 <p id="hud"></p>
             </div>
                 

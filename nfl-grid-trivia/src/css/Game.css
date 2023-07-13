@@ -1,7 +1,5 @@
 body{
-    background-color: gray;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    background-color: rgb(33, 34, 48);
 }
 
 .game-container{
@@ -28,7 +26,7 @@ body{
 }
 
 .selectorBoxes{
-    width: 15vw;
+    width: 11rem;
     height: 3vw;
     max-width: 300px;
     max-height: 50px;
@@ -37,8 +35,11 @@ body{
     background-color: #282c34;
     color: white;
     font-size: 1em;
-    padding-left: 10px;
-    margin: 5px;
+}
+
+.logoIMG{
+    max-width: 6rem;
+    max-height: 6rem;
 }
 
 .choiceButtons{
@@ -62,8 +63,37 @@ body{
     border-style: solid;
     border-color: black;
     flex-direction: column;
+    position: fixed;
+    top: 10%;
+    right: 45%;
+    border-radius: 1rem;
+    background-color: rgb(32, 46, 75);
+}
+
+#guessBoxes{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+}
+
+.guessButtons{
+    width: 12rem;
+    height: 12rem;
+    border-radius: 1rem;
+    background-color: rgb(32, 46, 75);
+    padding: 1px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    font-size: 2rem;
 }
 
 #oneoneinputcell, #onetwoinputcell, #onethreeinputcell, #twooneinputcell, #twotwoinputcell, #twothreeinputcell, #threeoneinputcell, #threetwoinputcell, #threethreeinputcell{
-    background-color: gray;
+    display: none;
+    background-color: green;
 }

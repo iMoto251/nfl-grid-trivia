@@ -74,8 +74,6 @@ app.post("/checkanswers", (req, res) => {
     box9: correctAnswers[8].length
   }
   res.send(JSON.stringify(obj))
-  console.log("------------------------------------------------------------------------")
-    console.log(correctAnswers)
   return 0;
 })
 

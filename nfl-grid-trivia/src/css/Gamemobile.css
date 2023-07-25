@@ -3,14 +3,14 @@ body{
     overflow: hidden;
 }
 
-.game-container{
+.mobilegame-container{
     justify-content: center;
     align-items: center;
     display: flex;
     margin-top: 1vh;
 }
   
-.game{
+.mobilegame{
     display: grid;
     grid-template-columns: auto auto auto auto;
     justify-content: center;
@@ -18,26 +18,26 @@ body{
     width: 100%;
 }
 
-.selectorBoxes{
-    width: 11rem;
-    height: 3vw;
-    max-width: 300px;
-    max-height: 50px;
+.mobileselectorBoxes{
+    width: 5rem;
+    height: 2rem;
+    overflow: hidden;
+    white-space: pre;
+    text-overflow: ellipsis;
     border: none;
     border-radius: 7px;
     background-color: rgb(12, 42, 70);
     color: white;
-    font-size: 1em;
+    word-wrap: break-word;
 }
 
-.logoIMG{
-    max-height: 6rem;
-    max-width: 8rem;
+.mobilelogoIMG{
+    max-height: 5rem;
+    max-width: 5rem;
 }
 
-.choiceButtons{
+.mobilechoiceButtons{
     margin: 5px;
-    height: 3vw;
     max-width: 300px;
     max-height: 50px;
     border: none;
@@ -48,7 +48,8 @@ body{
     cursor: pointer;
 }
 
-.inputCell{
+.mobileinputCell{
+    color: white;
     display: flex;
     height: 15vh;
     justify-content: center;
@@ -58,12 +59,12 @@ body{
     flex-direction: column;
     position: fixed;
     top: 10%;
-    right: 40%;
+    right: 10%;
     border-radius: 1rem;
     background-color: rgb(12, 42, 70);
 }
 
-#guessBoxes{
+#mobileguessBoxes{
     position: fixed;
     top: 0;
     left: 0;
@@ -74,27 +75,27 @@ body{
     backdrop-filter: blur(1px);
 }
 
-.guessButtons{
-    width: 12rem;
-    height: 12rem;
+.mobileguessButtons{
+    width: 5.5rem;
+    height: 5.5rem;
     border-radius: 1rem;
     background-color: rgb(12, 42, 70);
     padding: 1px;
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    font-size: 2rem;
+    font-size: 1rem;
 }
 
 
 
-#oneoneinputcell, #onetwoinputcell, #onethreeinputcell, #twooneinputcell, #twotwoinputcell, #twothreeinputcell, #threeoneinputcell, #threetwoinputcell, #threethreeinputcell{
+#mobileoneoneinputcell, #mobileonetwoinputcell, #mobileonethreeinputcell, #mobiletwooneinputcell, #mobiletwotwoinputcell, #mobiletwothreeinputcell, #mobilethreeoneinputcell, #mobilethreetwoinputcell, #mobilethreethreeinputcell{
     display: none;
 }
 
-#topleftstat,#topmiddlestat,#toprightstat,#lefttopstat,#leftmiddlestat,#leftbottomstat{
-    max-width: 8rem;
-    max-height: 6rem;
+#mobiletopleftstat,#mobiletopmiddlestat,#mobiletoprightstat,#mobilelefttopstat,#mobileleftmiddlestat,#mobileleftbottomstat{
+    max-width: 5rem;
+    max-height: 5rem;
     color: white;
-    font-size: 1.45rem;
+    font-size: .85rem;
 }

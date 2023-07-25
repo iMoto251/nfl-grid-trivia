@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react';
 import "./css/Game.css"
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { TextField } from "@mui/material";
-import logo from "./resources/images/league.svg.webp"
-import logo2 from "./resources/images/league.png"
-
 
 const OPTIONS_LIMIT = 100;
 const defaultFilterOptions = createFilterOptions();
@@ -13,6 +10,7 @@ const defaultFilterOptions = createFilterOptions();
 const filterOptions = (options, state) => {
   return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
 };
+
 
 function SelectorNFL(){
     return(
@@ -851,7 +849,6 @@ function Game3x3(){
         document.getElementById("lefttop").style.display = "none";
         document.getElementById("leftmiddle").style.display = "none";
         document.getElementById("leftbottom").style.display = "none";
-        showLogos()
     }
 
     async function showBoxes(){
@@ -861,16 +858,6 @@ function Game3x3(){
         document.getElementById("lefttop").style.display = "inline-grid";
         document.getElementById("leftmiddle").style.display = "inline-grid";
         document.getElementById("leftbottom").style.display = "inline-grid";
-        hideLogos()
-    }
-
-    async function showLogos(){
-        document.getElementById("topleftimg").style.display = "inline-grid";
-        document.getElementById("topmiddleimg").style.display = "inline-grid";
-        document.getElementById("toprightimg").style.display = "inline-grid";
-        document.getElementById("lefttopimg").style.display = "inline-grid";
-        document.getElementById("leftmiddleimg").style.display = "inline-grid";
-        document.getElementById("leftbottomimg").style.display = "inline-grid";
     }
 
     async function hideLogos(){
@@ -880,10 +867,19 @@ function Game3x3(){
         document.getElementById("lefttopimg").style.display = "none";
         document.getElementById("leftmiddleimg").style.display = "none";
         document.getElementById("leftbottomimg").style.display = "none";
+        document.getElementById("topleftstat").style.display = "none";
+        document.getElementById("topmiddlestat").style.display = "none";
+        document.getElementById("toprightstat").style.display = "none";
+        document.getElementById("lefttopstat").style.display = "none";
+        document.getElementById("leftmiddlestat").style.display = "none";
+        document.getElementById("leftbottomstat").style.display = "none";
+        document.getElementById('choiceButton').style.display = '';
     }
 
     async function randomize(){
         handleClear();
+        hideLogos()
+        showBoxes()
         const $select1 = document.querySelector('#topleft');
         const $select2 = document.querySelector('#topmiddle');
         const $select3 = document.querySelector('#topright');
@@ -967,6 +963,56 @@ function Game3x3(){
         
         try {
             const received = await res.json();
+            if(received.logo1.includes("http")){
+                document.getElementById('topleftimg').src = received.logo1
+                document.getElementById('topleftimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('topleftimg').style.display = "none"
+                document.getElementById('topleftstat').style.display = "inline-grid"
+                document.getElementById('topleftstat').innerHTML = received.logo1
+            }
+            if(received.logo2.includes("http")){
+                document.getElementById('topmiddleimg').src = received.logo2
+                document.getElementById('topmiddleimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('topmiddleimg').style.display = "none"
+                document.getElementById('topmiddlestat').style.display = "inline-grid"
+                document.getElementById('topmiddlestat').innerHTML = received.logo2
+            }
+            if(received.logo3.includes("http")){
+                document.getElementById('toprightimg').src = received.logo3
+                document.getElementById('toprightimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('toprightimg').style.display = "none"
+                document.getElementById('toprightstat').style.display = "inline-grid"
+                document.getElementById('toprightstat').innerHTML = received.logo3
+            }
+            if(received.logo4.includes("http")){
+                document.getElementById('lefttopimg').src = received.logo4
+                document.getElementById('lefttopimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('lefttopimg').style.display = "none"
+                document.getElementById('lefttopstat').style.display = "inline-grid"
+                document.getElementById('lefttopstat').innerHTML = received.logo4
+            }
+            if(received.logo5.includes("http")){
+                document.getElementById('leftmiddleimg').src = received.logo5
+                document.getElementById('leftmiddleimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('leftmiddleimg').style.display = "none"
+                document.getElementById('leftmiddlestat').style.display = "inline-grid"
+                document.getElementById('leftmiddlestat').innerHTML = received.logo5
+            }
+            if(received.logo6.includes("http")){
+                document.getElementById('leftbottomimg').src = received.logo6
+                document.getElementById('leftbottomimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('leftbottomimg').style.display = "none"
+                document.getElementById('leftbottomstat').style.display = "inline-grid"
+                document.getElementById('leftbottomstat').innerHTML = received.logo6
+            }
+
+            hideBoxes()
             //console.log(received);            
             return received;
         }
@@ -1023,6 +1069,7 @@ function Game3x3(){
         setTimeout(() => {
             checkAnswers()
         }, 250)
+        document.getElementById('choiceButton').style.display = 'none';
     }
 
     async function testAnswer1(answerChoice){
@@ -1053,7 +1100,6 @@ function Game3x3(){
                 }
                 //console.log(received);
                 noBlur()
-                document.getElementById("oneoneinputcell").style.display = "none";
                 return 0;
             }
             catch(error) {
@@ -1083,12 +1129,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('onetwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('onetwobutton').style.backgroundColor = "#50C878";
+                    document.getElementById('onetwobutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('onetwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('onetwobutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('onetwobutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1114,12 +1165,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('onethreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('onethreebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('onethreebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('onethreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('onethreebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('onethreebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1145,12 +1201,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('twooneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('twoonebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('twoonebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('twooneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('twoonebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('twoonebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1176,12 +1237,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('twotwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('twotwobutton').style.backgroundColor = "#50C878";
+                    document.getElementById('twotwobutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('twotwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('twotwobutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('twotwobutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1207,12 +1273,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('twothreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('twothreebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('twothreebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('twothreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('twothreebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('twothreebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1238,12 +1309,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('threeoneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('threeonebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('threeonebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('threeoneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('threeonebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('threeonebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1269,12 +1345,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('threetwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('threetwobutton').style.backgroundColor = "#50C878";
+                    document.getElementById('threetwobutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('threetwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('threetwobutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('threetwobutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1300,12 +1381,17 @@ function Game3x3(){
 
                 if(received === 'Correct'){
                     document.getElementById('threethreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('threethreebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('threethreebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
                     document.getElementById('threethreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('threethreebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('threethreebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1317,6 +1403,55 @@ function Game3x3(){
     async function showBox1(){
         document.getElementById("oneoneinputcell").style.display = "flex";
         blur()
+        document.getElementById("oneone").focus()
+    }
+
+    async function showBox2(){
+        document.getElementById("onetwoinputcell").style.display = "flex";
+        blur()
+        document.getElementById("onetwo").focus()
+    }
+
+    async function showBox3(){
+        document.getElementById("onethreeinputcell").style.display = "flex";
+        blur()
+        document.getElementById("onethree").focus()
+    }
+
+    async function showBox4(){
+        document.getElementById("twooneinputcell").style.display = "flex";
+        blur()
+        document.getElementById("twoone").focus()
+    }
+
+    async function showBox5(){
+        document.getElementById("twotwoinputcell").style.display = "flex";
+        blur()
+        document.getElementById("twotwo").focus()
+    }
+
+    async function showBox6(){
+        document.getElementById("twothreeinputcell").style.display = "flex";
+        blur()
+        document.getElementById("twothree").focus()
+    }
+
+    async function showBox7(){
+        document.getElementById("threeoneinputcell").style.display = "flex";
+        blur()
+        document.getElementById("threeone").focus()
+    }
+
+    async function showBox8(){
+        document.getElementById("threetwoinputcell").style.display = "flex";
+        blur()
+        document.getElementById("threetwo").focus()
+    }
+
+    async function showBox9(){
+        document.getElementById("threethreeinputcell").style.display = "flex";
+        blur()
+        document.getElementById("threethree").focus()
     }
 
     async function noBlur(){
@@ -1324,6 +1459,16 @@ function Game3x3(){
         document.getElementById("guessBoxes").style.backgroundColor = "rgba(0, 0, 0, 0.0)";
         document.getElementById("guessBoxes").style.width = "0";
         document.getElementById("guessBoxes").style.height = "0";
+        document.getElementById("oneoneinputcell").style.display = "none";
+        document.getElementById("onetwoinputcell").style.display = "none";
+        document.getElementById("onethreeinputcell").style.display = "none";
+        document.getElementById("twooneinputcell").style.display = "none";
+        document.getElementById("twotwoinputcell").style.display = "none";
+        document.getElementById("twothreeinputcell").style.display = "none";
+        document.getElementById("threeoneinputcell").style.display = "none";
+        document.getElementById("threetwoinputcell").style.display = "none";
+        document.getElementById("threethreeinputcell").style.display = "none";
+
     }
 
     async function blur(){
@@ -1335,7 +1480,7 @@ function Game3x3(){
 
     async function loadFunction(){
         noBlur()
-        hideBoxes()
+        showBoxes()
         await randomize();
         await testGrid();
         setTimeout(await checkAnswers(),2000);
@@ -1366,18 +1511,34 @@ function Game3x3(){
         document.getElementById('threeoneAnswers').innerHTML = ""
         document.getElementById('threetwoAnswers').innerHTML = ""
         document.getElementById('threethreeAnswers').innerHTML = ""
-        document.getElementById('oneoneinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('onetwoinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('onethreeinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('twooneinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('twotwoinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('twothreeinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('threeoneinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('threetwoinputcell').style.backgroundColor = "rgb(32, 46, 75)";
-        document.getElementById('threethreeinputcell').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('oneoneinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('onetwoinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('onethreeinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('twooneinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('twotwoinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('twothreeinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('threeoneinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('threetwoinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('threethreeinputcell').style.backgroundColor = "rgb(12, 42, 70)";
 
         document.getElementById('oneonebutton').innerHTML = ""
-        document.getElementById('oneonebutton').style.backgroundColor = "rgb(32, 46, 75)";
+        document.getElementById('oneonebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('onetwobutton').innerHTML = ""
+        document.getElementById('onetwobutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('onethreebutton').innerHTML = ""
+        document.getElementById('onethreebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('twoonebutton').innerHTML = ""
+        document.getElementById('twoonebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('twotwobutton').innerHTML = ""
+        document.getElementById('twotwobutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('twothreebutton').innerHTML = ""
+        document.getElementById('twothreebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('threeonebutton').innerHTML = ""
+        document.getElementById('threeonebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('threetwobutton').innerHTML = ""
+        document.getElementById('threetwobutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('threethreebutton').innerHTML = ""
+        document.getElementById('threethreebutton').style.backgroundColor = "rgb(12, 42, 70)";
     }
 
     // async function dailyGrid(){
@@ -1409,15 +1570,18 @@ function Game3x3(){
                         id='oneone'
                         value={value1}
                         onChange={(event, newValue) => {
-                            setValue1(newValue);
-                            testAnswer1(newValue.label);
-                            //setTimeout(console.log(newValue.label),1000)
+                            if(newValue===""){
+
+                            } else{
+                                setValue1(newValue);
+                                testAnswer1(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 1" variant="outlined"/>
+                            <TextField {...params} label="Player 1" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='oneoneAnswers'></p>
@@ -1428,14 +1592,18 @@ function Game3x3(){
                         id='onetwo'
                         value={value2}
                         onChange={(event, newValue) => {
-                            setValue2(newValue);
-                            testAnswer2(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue2(newValue);
+                                testAnswer2(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 2" variant="outlined" onBlur={testAnswer2}/>
+                            <TextField {...params} label="Player 2" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='onetwoAnswers'></p>
@@ -1446,14 +1614,18 @@ function Game3x3(){
                         id='onethree'
                         value={value3}
                         onChange={(event, newValue) => {
-                            setValue3(newValue);
-                            testAnswer3(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue3(newValue);
+                                testAnswer3(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 3" variant="outlined" onBlur={testAnswer3}/>
+                            <TextField {...params} label="Player 3" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='onethreeAnswers'></p>
@@ -1464,14 +1636,18 @@ function Game3x3(){
                         id='twoone'
                         value={value4}
                         onChange={(event, newValue) => {
-                            setValue4(newValue);
-                            testAnswer4(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue4(newValue);
+                                testAnswer4(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 4" variant="outlined" onBlur={testAnswer4}/>
+                            <TextField {...params} label="Player 4" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='twooneAnswers'></p>
@@ -1482,14 +1658,18 @@ function Game3x3(){
                         id='twotwo'
                         value={value5}
                         onChange={(event, newValue) => {
-                            setValue5(newValue);
-                            testAnswer5(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue5(newValue);
+                                testAnswer5(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 5" variant="outlined" onBlur={testAnswer5}/>
+                            <TextField {...params} label="Player 5" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='twotwoAnswers'></p>
@@ -1500,14 +1680,18 @@ function Game3x3(){
                         id='twothree'
                         value={value6}
                         onChange={(event, newValue) => {
-                            setValue6(newValue);
-                            testAnswer6(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue6(newValue);
+                                testAnswer6(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 6" variant="outlined" onBlur={testAnswer6}/>
+                            <TextField {...params} label="Player 6" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='twothreeAnswers'></p>
@@ -1518,14 +1702,18 @@ function Game3x3(){
                         id='threeone'
                         value={value7}
                         onChange={(event, newValue) => {
-                            setValue7(newValue);
-                            testAnswer7(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue7(newValue);
+                                testAnswer7(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 7" variant="outlined" onBlur={testAnswer7}/>
+                            <TextField {...params} label="Player 7" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='threeoneAnswers'></p>
@@ -1536,14 +1724,18 @@ function Game3x3(){
                         id='threetwo'
                         value={value8}
                         onChange={(event, newValue) => {
-                            setValue8(newValue);
-                            testAnswer8(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue8(newValue);
+                                testAnswer8(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 8" variant="outlined" onBlur={testAnswer8}/>
+                            <TextField {...params} label="Player 8" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='threetwoAnswers'></p>
@@ -1554,14 +1746,18 @@ function Game3x3(){
                         id='threethree'
                         value={value9}
                         onChange={(event, newValue) => {
-                            setValue9(newValue);
-                            testAnswer9(newValue.label);
+                            if(newValue===""){
+
+                            } else{
+                                setValue9(newValue);
+                                testAnswer9(newValue.label);
+                            }
                         }}
                         options={options}
                         getOptionLabel={(option) => option.label}
                         style={{ width: 300 }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Player 9" variant="outlined" onBlur={testAnswer9}/>
+                            <TextField {...params} label="Player 9" variant="outlined" onBlur={noBlur}/>
                         )}
                     />
                     <p id='threethreeAnswers'></p>
@@ -1569,8 +1765,8 @@ function Game3x3(){
             </div>
             <div className="game">
             <div className="choiceCell">
-            <button id="choiceButton" className='choiceButtons' onClick={showBoxes}>show</button>
-                <button id="choiceButton" className='choiceButtons' onClick={hideBoxes}>hide</button>
+                {/* <button id="choiceButton" className='choiceButtons' onClick={showBoxes}>show</button>
+                <button id="choiceButton" className='choiceButtons' onClick={hideBoxes}>hide</button> */}
                 <button id="randomize" className='choiceButtons' onClick={randomize} type='reset'>Randomize</button>
                 <button id="choiceButton" className='choiceButtons' onClick={testCheck}>Set Grid</button>
             </div>
@@ -1583,6 +1779,7 @@ function Game3x3(){
                     <SelectorColleges/>
                 </select>
                 <img className='logoIMG' src="/resources/images/league.png" id='topleftimg' alt="logo"></img>
+                <p id='topleftstat'></p>
             </div>
             <div className="choiceCell">
                 <select id="topmiddle" className='selectorBoxes' >
@@ -1593,6 +1790,7 @@ function Game3x3(){
                     <SelectorColleges/>
                 </select>
                 <img className='logoIMG' src="/resources/images/league.png" id='topmiddleimg' alt="logo"></img>
+                <p id='topmiddlestat'></p>
             </div>
             <div className="choiceCell">
                 <select id="topright" className='selectorBoxes' >
@@ -1603,6 +1801,7 @@ function Game3x3(){
                     <SelectorColleges/>
                 </select>
                 <img className='logoIMG' src="/resources/images/league.png" id='toprightimg' alt="logo"></img>
+                <p id='toprightstat'></p>
             </div>
             <div className="choiceCell">
                 <select id="lefttop" className='selectorBoxes' >
@@ -1613,10 +1812,11 @@ function Game3x3(){
                     <SelectorColleges/>
                 </select>
                 <img className='logoIMG' src="/resources/images/league.png" id='lefttopimg' alt="logo"></img>
+                <p id='lefttopstat'></p>
             </div>
             <button id='oneonebutton' className='guessButtons' onClick={showBox1}></button>
-            <button className='guessButtons'></button>
-            <button className='guessButtons'></button>
+            <button id='onetwobutton' className='guessButtons' onClick={showBox2}></button>
+            <button id='onethreebutton' className='guessButtons' onClick={showBox3}></button>
             <div className="choiceCell">
                 <select id="leftmiddle" className='selectorBoxes' >
                     <SelectorNFL/>
@@ -1626,10 +1826,11 @@ function Game3x3(){
                     <SelectorColleges/>
                 </select>
                 <img className='logoIMG' src="/resources/images/league.png" id='leftmiddleimg' alt="logo"></img>
+                <p id='leftmiddlestat'></p>
             </div>
-            <button className='guessButtons'></button>
-            <button className='guessButtons'></button>
-            <button className='guessButtons'></button>
+            <button id='twoonebutton' className='guessButtons' onClick={showBox4}></button>
+            <button id='twotwobutton' className='guessButtons' onClick={showBox5}></button>
+            <button id='twothreebutton' className='guessButtons' onClick={showBox6}></button>
             <div className="choiceCell">
                 <select id="leftbottom" className='selectorBoxes' >
                     <SelectorNFL/>
@@ -1639,10 +1840,11 @@ function Game3x3(){
                     <SelectorColleges/>
                 </select>
                 <img className='logoIMG' src="/resources/images/league.png" id='leftbottomimg' alt="logo"></img>
+                <p id='leftbottomstat'></p>
             </div>
-            <button className='guessButtons'></button>
-            <button className='guessButtons'></button>
-            <button className='guessButtons'></button>
+            <button id='threeonebutton' className='guessButtons' onClick={showBox7}></button>
+            <button id='threetwobutton' className='guessButtons' onClick={showBox8}></button>
+            <button id='threethreebutton' className='guessButtons' onClick={showBox9}></button>
                 <p id="hud"></p>
             </div>
                 
@@ -1653,6 +1855,70 @@ function Game3x3(){
 export default Game3x3;
 
 const selections = [
+    "ARI",
+    "ATL",
+    "BAL",
+    "BUF",
+    "CAR",
+    "CHI",
+    "CIN",
+    "CLE",
+    "DAL",
+    "DEN",
+    "DET",
+    "GNB",
+    "HOU",
+    "IND",
+    "JAX",
+    "KAN",
+    "LVR",
+    "LAC",
+    "LAR",
+    "MIA",
+    "MIN",
+    "NWE",
+    "NOR",
+    "NYG",
+    "NYJ",
+    "PHI",
+    "PIT",
+    "SFO",
+    "SEA",
+    "TAM",
+    "TEN",
+    "WAS",
+    "ARI",
+    "ATL",
+    "BAL",
+    "BUF",
+    "CAR",
+    "CHI",
+    "CIN",
+    "CLE",
+    "DAL",
+    "DEN",
+    "DET",
+    "GNB",
+    "HOU",
+    "IND",
+    "JAX",
+    "KAN",
+    "LVR",
+    "LAC",
+    "LAR",
+    "MIA",
+    "MIN",
+    "NWE",
+    "NOR",
+    "NYG",
+    "NYJ",
+    "PHI",
+    "PIT",
+    "SFO",
+    "SEA",
+    "TAM",
+    "TEN",
+    "WAS",
     "ARI",
     "ATL",
     "BAL",

@@ -2235,7 +2235,7 @@ function logoSelectionFunction(team) {
         logo = "https://teamcolorcodes.com/wp-content/uploads/2022/06/Ohio-Northern-University-Polar-Bears-logo-1.png"
             break;
     case "Ohio St.":
-        logo = "https://assets.stickpng.com/images/61487cb5d329bb0004dbd330.png"
+        logo = "https://1000logos.net/wp-content/uploads/2018/01/Ohio-State-Logo.png"
             break;
     case "Ohio Wesleyan":
         logo = "https://www.owu.edu/files/resources/medium_bishopbacker-2.png"

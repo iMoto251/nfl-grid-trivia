@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.8e778121.css",
-    "main.js": "/static/js/main.11f2f1ae.js",
+    "main.css": "/static/css/main.5264096d.css",
+    "main.js": "/static/js/main.4dfa5e62.js",
     "static/js/945.0739a59b.chunk.js": "/static/js/945.0739a59b.chunk.js",
     "static/media/league.svg.webp": "/static/media/league.svg.16db807260edc9fd0af3.webp",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.8e778121.css",
-    "static/js/main.11f2f1ae.js"
+    "static/css/main.5264096d.css",
+    "static/js/main.4dfa5e62.js"
   ]
 }

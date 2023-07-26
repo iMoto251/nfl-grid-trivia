@@ -571,30 +571,9 @@ def main():
         except:
             print("Player already in Stats database")
 
-        # try:
-        #     try:
-        #         cur.execute("DELETE FROM playerStats where id='{playerID}'")
-        #     except:
-        #         pass
-            
-        # except:
-        #     print("Player already in Stats database with error deleting")
-
 
         insert_team(playerID, name)
         con.commit()
-
-        #print(f'INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")')
-        #print(f'INSERT INTO playerTeams VALUES("{playerID}",")')
-        #cur.execute(f"""
-        #            INSERT INTO players VALUES ("{playerID}","{name}","{position}","{team}","{college}","{draft_year}","{draft_team}","{round}","{pick}")
-        #            """)
-        # print(f"""
-        #   INSERT INTO playerStats VALUES("{playerID}","{careerPassing}","{careerRushing}","{careerReceiving}","{careerReceptions}","{bestPassing}","{bestRushing}",
-        #   "{bestReceiving}","{bestReceptions}","{num5000Passing}","{num4000Passing}","{num3000Passing}","{num2000Rushing}","{num1500Rushing}","{num1250Rushing}","{num1000Rushing}",
-        #   "{num1750Receiving}","{num1500Receiving}","{num1250Receiving}","{num1000Receiving}","{num110Receptions}","{num100Receptions}"))
-        #   """)
-        #con.commit()
 
         print(f"{x+1}: Added {name}: {position} to database")
 

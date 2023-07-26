@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import "./css/GameMobile.css"
+import "./css/Gamemobile.css"
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { TextField } from "@mui/material";
 
 const OPTIONS_LIMIT = 100;
 const defaultFilterOptions = createFilterOptions();
 
-export default Game3x3mobile;
-
 const filterOptions = (options, state) => {
   return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
 };
+
 
 function SelectorNFL(){
     return(
@@ -843,14 +842,50 @@ function Game3x3mobile(){
     const [value8, setValue8] = useState('');
     const [value9, setValue9] = useState('');
 
+    async function hideBoxes(){
+        document.getElementById("mobiletopleft").style.display = "none";
+        document.getElementById("mobiletopmiddle").style.display = "none";
+        document.getElementById("mobiletopright").style.display = "none";
+        document.getElementById("mobilelefttop").style.display = "none";
+        document.getElementById("mobileleftmiddle").style.display = "none";
+        document.getElementById("mobileleftbottom").style.display = "none";
+    }
+
+    async function showBoxes(){
+        document.getElementById("mobiletopleft").style.display = "inline-grid";
+        document.getElementById("mobiletopmiddle").style.display = "inline-grid";
+        document.getElementById("mobiletopright").style.display = "inline-grid";
+        document.getElementById("mobilelefttop").style.display = "inline-grid";
+        document.getElementById("mobileleftmiddle").style.display = "inline-grid";
+        document.getElementById("mobileleftbottom").style.display = "inline-grid";
+    }
+
+    async function hideLogos(){
+        document.getElementById("mobiletopleftimg").style.display = "none";
+        document.getElementById("mobiletopmiddleimg").style.display = "none";
+        document.getElementById("mobiletoprightimg").style.display = "none";
+        document.getElementById("mobilelefttopimg").style.display = "none";
+        document.getElementById("mobileleftmiddleimg").style.display = "none";
+        document.getElementById("mobileleftbottomimg").style.display = "none";
+        document.getElementById("mobiletopleftstat").style.display = "none";
+        document.getElementById("mobiletopmiddlestat").style.display = "none";
+        document.getElementById("mobiletoprightstat").style.display = "none";
+        document.getElementById("mobilelefttopstat").style.display = "none";
+        document.getElementById("mobileleftmiddlestat").style.display = "none";
+        document.getElementById("mobileleftbottomstat").style.display = "none";
+        document.getElementById('choiceButton').style.display = '';
+    }
+
     async function randomize(){
         handleClear();
-        const $select1 = document.querySelector('#topleft');
-        const $select2 = document.querySelector('#topmiddle');
-        const $select3 = document.querySelector('#topright');
-        const $select4 = document.querySelector('#lefttop');
-        const $select5 = document.querySelector('#leftmiddle');
-        const $select6 = document.querySelector('#leftbottom');
+        hideLogos()
+        showBoxes()
+        const $select1 = document.querySelector('#mobiletopleft');
+        const $select2 = document.querySelector('#mobiletopmiddle');
+        const $select3 = document.querySelector('#mobiletopright');
+        const $select4 = document.querySelector('#mobilelefttop');
+        const $select5 = document.querySelector('#mobileleftmiddle');
+        const $select6 = document.querySelector('#mobileleftbottom');
 
         let gridOptions = []
         let optionsLen = 6;
@@ -910,12 +945,12 @@ function Game3x3mobile(){
 
     async function testGrid(){
         let data = {
-            topleft: document.querySelector("#topleft").value,
-            topmiddle: document.querySelector("#topmiddle").value,
-            topright: document.querySelector("#topright").value,
-            lefttop: document.querySelector("#lefttop").value,
-            leftmiddle: document.querySelector("#leftmiddle").value,
-            leftbottom: document.querySelector("#leftbottom").value
+            mobiletopleft: document.querySelector("#mobiletopleft").value,
+            mobiletopmiddle: document.querySelector("#mobiletopmiddle").value,
+            mobiletopright: document.querySelector("#mobiletopright").value,
+            mobilelefttop: document.querySelector("#mobilelefttop").value,
+            mobileleftmiddle: document.querySelector("#mobileleftmiddle").value,
+            mobileleftbottom: document.querySelector("#mobileleftbottom").value
         }
         const res = await fetch("/checkchoices", {
             method: 'POST',
@@ -928,6 +963,56 @@ function Game3x3mobile(){
         
         try {
             const received = await res.json();
+            if(received.logo1.includes("http")){
+                document.getElementById('mobiletopleftimg').src = received.logo1
+                document.getElementById('mobiletopleftimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('mobiletopleftimg').style.display = "none"
+                document.getElementById('mobiletopleftstat').style.display = "inline-grid"
+                document.getElementById('mobiletopleftstat').innerHTML = received.logo1
+            }
+            if(received.logo2.includes("http")){
+                document.getElementById('mobiletopmiddleimg').src = received.logo2
+                document.getElementById('mobiletopmiddleimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('mobiletopmiddleimg').style.display = "none"
+                document.getElementById('mobiletopmiddlestat').style.display = "inline-grid"
+                document.getElementById('mobiletopmiddlestat').innerHTML = received.logo2
+            }
+            if(received.logo3.includes("http")){
+                document.getElementById('mobiletoprightimg').src = received.logo3
+                document.getElementById('mobiletoprightimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('mobiletoprightimg').style.display = "none"
+                document.getElementById('mobiletoprightstat').style.display = "inline-grid"
+                document.getElementById('mobiletoprightstat').innerHTML = received.logo3
+            }
+            if(received.logo4.includes("http")){
+                document.getElementById('mobilelefttopimg').src = received.logo4
+                document.getElementById('mobilelefttopimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('mobilelefttopimg').style.display = "none"
+                document.getElementById('mobilelefttopstat').style.display = "inline-grid"
+                document.getElementById('mobilelefttopstat').innerHTML = received.logo4
+            }
+            if(received.logo5.includes("http")){
+                document.getElementById('mobileleftmiddleimg').src = received.logo5
+                document.getElementById('mobileleftmiddleimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('mobileleftmiddleimg').style.display = "none"
+                document.getElementById('mobileleftmiddlestat').style.display = "inline-grid"
+                document.getElementById('mobileleftmiddlestat').innerHTML = received.logo5
+            }
+            if(received.logo6.includes("http")){
+                document.getElementById('mobileleftbottomimg').src = received.logo6
+                document.getElementById('mobileleftbottomimg').style.display = "inline-grid"
+            } else{
+                document.getElementById('mobileleftbottomimg').style.display = "none"
+                document.getElementById('mobileleftbottomstat').style.display = "inline-grid"
+                document.getElementById('mobileleftbottomstat').innerHTML = received.logo6
+            }
+
+            hideBoxes()
             //console.log(received);            
             return received;
         }
@@ -938,12 +1023,12 @@ function Game3x3mobile(){
 
     async function checkAnswers(){
         let data = {
-            topleft: document.querySelector("#topleft").value,
-            topmiddle: document.querySelector("#topmiddle").value,
-            topright: document.querySelector("#topright").value,
-            lefttop: document.querySelector("#lefttop").value,
-            leftmiddle: document.querySelector("#leftmiddle").value,
-            leftbottom: document.querySelector("#leftbottom").value
+            mobiletopleft: document.querySelector("#mobiletopleft").value,
+            mobiletopmiddle: document.querySelector("#mobiletopmiddle").value,
+            mobiletopright: document.querySelector("#mobiletopright").value,
+            mobilelefttop: document.querySelector("#mobilelefttop").value,
+            mobileleftmiddle: document.querySelector("#mobileleftmiddle").value,
+            mobileleftbottom: document.querySelector("#mobileleftbottom").value
         }
         const res = await fetch("/checkanswers", {
             method: 'POST',
@@ -961,15 +1046,15 @@ function Game3x3mobile(){
                 
                 
             }
-            document.getElementById('oneoneAnswers').innerHTML = received.box1 + " possible answers"
-            document.getElementById('onetwoAnswers').innerHTML = received.box2 + " possible answers"
-            document.getElementById('onethreeAnswers').innerHTML = received.box3 + " possible answers"
-            document.getElementById('twooneAnswers').innerHTML = received.box4 + " possible answers"
-            document.getElementById('twotwoAnswers').innerHTML = received.box5 + " possible answers"
-            document.getElementById('twothreeAnswers').innerHTML = received.box6 + " possible answers"
-            document.getElementById('threeoneAnswers').innerHTML = received.box7 + " possible answers"
-            document.getElementById('threetwoAnswers').innerHTML = received.box8 + " possible answers"
-            document.getElementById('threethreeAnswers').innerHTML = received.box9 + " possible answers"
+            document.getElementById('mobileoneoneAnswers').innerHTML = received.box1 + " possible answers"
+            document.getElementById('mobileonetwoAnswers').innerHTML = received.box2 + " possible answers"
+            document.getElementById('mobileonethreeAnswers').innerHTML = received.box3 + " possible answers"
+            document.getElementById('mobiletwooneAnswers').innerHTML = received.box4 + " possible answers"
+            document.getElementById('mobiletwotwoAnswers').innerHTML = received.box5 + " possible answers"
+            document.getElementById('mobiletwothreeAnswers').innerHTML = received.box6 + " possible answers"
+            document.getElementById('mobilethreeoneAnswers').innerHTML = received.box7 + " possible answers"
+            document.getElementById('mobilethreetwoAnswers').innerHTML = received.box8 + " possible answers"
+            document.getElementById('mobilethreethreeAnswers').innerHTML = received.box9 + " possible answers"
             //console.log(received)
         }
         catch(error) {
@@ -984,6 +1069,7 @@ function Game3x3mobile(){
         setTimeout(() => {
             checkAnswers()
         }, 250)
+        document.getElementById('choiceButton').style.display = 'none';
     }
 
     async function testAnswer1(answerChoice){
@@ -1002,13 +1088,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('oneoneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileoneoneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileoneonebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileoneonebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('oneoneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileoneoneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileoneonebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileoneonebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 return 0;
             }
             catch(error) {
@@ -1017,6 +1108,7 @@ function Game3x3mobile(){
         } else {
 
         }
+
         
     }
 
@@ -1036,13 +1128,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('onetwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileonetwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileonetwobutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileonetwobutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('onetwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileonetwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileonetwobutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileonetwobutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1067,13 +1164,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('onethreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileonethreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileonethreebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobileonethreebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('onethreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileonethreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileonethreebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobileonethreebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1098,13 +1200,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('twooneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwooneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwoonebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwoonebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('twooneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwooneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwoonebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwoonebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1129,13 +1236,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('twotwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwotwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwotwobutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwotwobutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('twotwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwotwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwotwobutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwotwobutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1160,13 +1272,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('twothreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwothreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwothreebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobiletwothreebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('twothreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwothreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwothreebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobiletwothreebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1191,13 +1308,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('threeoneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreeoneinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreeonebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreeonebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('threeoneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreeoneinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreeonebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreeonebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1222,13 +1344,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('threetwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreetwoinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreetwobutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreetwobutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('threetwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreetwoinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreetwobutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreetwobutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1253,13 +1380,18 @@ function Game3x3mobile(){
                 const received = await res.json();
 
                 if(received === 'Correct'){
-                    document.getElementById('threethreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreethreeinputcell').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreethreebutton').style.backgroundColor = "#50C878";
+                    document.getElementById('mobilethreethreebutton').innerHTML = answerChoice;
                     //console.log("GOOD")
                 } else {
-                    document.getElementById('threethreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreethreeinputcell').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreethreebutton').style.backgroundColor = "#D22B2B";
+                    document.getElementById('mobilethreethreebutton').innerHTML = answerChoice;
                     //console.log("BAD")
                 }
                 //console.log(received);
+                noBlur()
                 //return received;
             }
             catch(error) {
@@ -1268,10 +1400,91 @@ function Game3x3mobile(){
         }
     }
 
+    async function showBox1(){
+        document.getElementById("mobileoneoneinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobileoneone").focus()
+    }
+
+    async function showBox2(){
+        document.getElementById("mobileonetwoinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobileonetwo").focus()
+    }
+
+    async function showBox3(){
+        document.getElementById("mobileonethreeinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobileonethree").focus()
+    }
+
+    async function showBox4(){
+        document.getElementById("mobiletwooneinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobiletwoone").focus()
+    }
+
+    async function showBox5(){
+        document.getElementById("mobiletwotwoinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobiletwotwo").focus()
+    }
+
+    async function showBox6(){
+        document.getElementById("mobiletwothreeinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobiletwothree").focus()
+    }
+
+    async function showBox7(){
+        document.getElementById("mobilethreeoneinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobilethreeone").focus()
+    }
+
+    async function showBox8(){
+        document.getElementById("mobilethreetwoinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobilethreetwo").focus()
+    }
+
+    async function showBox9(){
+        document.getElementById("mobilethreethreeinputcell").style.display = "flex";
+        blur()
+        document.getElementById("mobilethreethree").focus()
+    }
+
+    async function noBlur(){
+        document.getElementById("mobileguessBoxes").style.backdropFilter = "blur(0px)";
+        document.getElementById("mobileguessBoxes").style.backgroundColor = "rgba(0, 0, 0, 0.0)";
+        document.getElementById("mobileguessBoxes").style.width = "0";
+        document.getElementById("mobileguessBoxes").style.height = "0";
+        document.getElementById("mobileoneoneinputcell").style.display = "none";
+        document.getElementById("mobileonetwoinputcell").style.display = "none";
+        document.getElementById("mobileonethreeinputcell").style.display = "none";
+        document.getElementById("mobiletwooneinputcell").style.display = "none";
+        document.getElementById("mobiletwotwoinputcell").style.display = "none";
+        document.getElementById("mobiletwothreeinputcell").style.display = "none";
+        document.getElementById("mobilethreeoneinputcell").style.display = "none";
+        document.getElementById("mobilethreetwoinputcell").style.display = "none";
+        document.getElementById("mobilethreethreeinputcell").style.display = "none";
+
+    }
+
+    async function blur(){
+        document.getElementById("mobileguessBoxes").style.backdropFilter = "blur(1px)";
+        document.getElementById("mobileguessBoxes").style.backgroundColor = "rgba(0, 0, 0, 0.1)";
+        document.getElementById("mobileguessBoxes").style.width = "100vw";
+        document.getElementById("mobileguessBoxes").style.height = "100vw";
+    }
+
     async function loadFunction(){
+        noBlur()
+        showBoxes()
         await randomize();
         await testGrid();
         setTimeout(await checkAnswers(),2000);
+        document.getElementById('choiceButton').style.display = 'none';
     }
 
     useEffect(() => {
@@ -1290,24 +1503,43 @@ function Game3x3mobile(){
         setValue8('')
         setValue9('')
 
-        document.getElementById('oneoneAnswers').innerHTML = ""
-        document.getElementById('onetwoAnswers').innerHTML = ""
-        document.getElementById('onethreeAnswers').innerHTML = ""
-        document.getElementById('twooneAnswers').innerHTML = ""
-        document.getElementById('twotwoAnswers').innerHTML = ""
-        document.getElementById('twothreeAnswers').innerHTML = ""
-        document.getElementById('threeoneAnswers').innerHTML = ""
-        document.getElementById('threetwoAnswers').innerHTML = ""
-        document.getElementById('threethreeAnswers').innerHTML = ""
-        document.getElementById('oneoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('onethreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twooneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twotwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('twothreeinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threeoneinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threetwoinputcell').style.backgroundColor = "#808080";
-        document.getElementById('threethreeinputcell').style.backgroundColor = "#808080";
+        document.getElementById('mobileoneoneAnswers').innerHTML = ""
+        document.getElementById('mobileonetwoAnswers').innerHTML = ""
+        document.getElementById('mobileonethreeAnswers').innerHTML = ""
+        document.getElementById('mobiletwooneAnswers').innerHTML = ""
+        document.getElementById('mobiletwotwoAnswers').innerHTML = ""
+        document.getElementById('mobiletwothreeAnswers').innerHTML = ""
+        document.getElementById('mobilethreeoneAnswers').innerHTML = ""
+        document.getElementById('mobilethreetwoAnswers').innerHTML = ""
+        document.getElementById('mobilethreethreeAnswers').innerHTML = ""
+        document.getElementById('mobileoneoneinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobileonetwoinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobileonethreeinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobiletwooneinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobiletwotwoinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobiletwothreeinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobilethreeoneinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobilethreetwoinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobilethreethreeinputcell').style.backgroundColor = "rgb(12, 42, 70)";
+
+        document.getElementById('mobileoneonebutton').innerHTML = ""
+        document.getElementById('mobileoneonebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobileonetwobutton').innerHTML = ""
+        document.getElementById('mobileonetwobutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobileonethreebutton').innerHTML = ""
+        document.getElementById('mobileonethreebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobiletwoonebutton').innerHTML = ""
+        document.getElementById('mobiletwoonebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobiletwotwobutton').innerHTML = ""
+        document.getElementById('mobiletwotwobutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobiletwothreebutton').innerHTML = ""
+        document.getElementById('mobiletwothreebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobilethreeonebutton').innerHTML = ""
+        document.getElementById('mobilethreeonebutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobilethreetwobutton').innerHTML = ""
+        document.getElementById('mobilethreetwobutton').style.backgroundColor = "rgb(12, 42, 70)";
+        document.getElementById('mobilethreethreebutton').innerHTML = ""
+        document.getElementById('mobilethreethreebutton').style.backgroundColor = "rgb(12, 42, 70)";
     }
 
     // async function dailyGrid(){
@@ -1330,239 +1562,290 @@ function Game3x3mobile(){
     //     }
     // }
 
-    // return(
-    //     <div>
-    //         <p>Test</p>
-    //     </div>
-    // )
-
     return(
-        <div className="game-containerMobile">
-            <div className="gameMobile">
-            <div className="choiceCell" id="buttonsMobile">
-                {/* <button id="choiceButton" className='choiceButtonsMobile' onClick={dailyGrid}>Custom Grid</button> */}
-                <button id="randomize" className='choiceButtonsMobile' onClick={randomize} type='reset'>Randomize</button>
-                <button id="choiceButton" className='choiceButtonsMobile' onClick={testCheck}>Set Grid</button>
+        <div className="mobilegame-container">
+            <div id="mobileguessBoxes">
+                <div className="mobileinputCell" id="mobileoneoneinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobileoneone'
+                        value={value1}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
 
+                            } else{
+                                setValue1(newValue);
+                                testAnswer1(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 1" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobileoneoneAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobileonetwoinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobileonetwo'
+                        value={value2}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue2(newValue);
+                                testAnswer2(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 2" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobileonetwoAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobileonethreeinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobileonethree'
+                        value={value3}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue3(newValue);
+                                testAnswer3(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 3" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobileonethreeAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobiletwooneinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobiletwoone'
+                        value={value4}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue4(newValue);
+                                testAnswer4(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 4" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobiletwooneAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobiletwotwoinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobiletwotwo'
+                        value={value5}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue5(newValue);
+                                testAnswer5(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 5" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobiletwotwoAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobiletwothreeinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobiletwothree'
+                        value={value6}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue6(newValue);
+                                testAnswer6(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 6" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobiletwothreeAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobilethreeoneinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobilethreeone'
+                        value={value7}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue7(newValue);
+                                testAnswer7(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 7" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobilethreeoneAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobilethreetwoinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobilethreetwo'
+                        value={value8}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue8(newValue);
+                                testAnswer8(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 8" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobilethreetwoAnswers'></p>
+                </div>
+                <div className="mobileinputCell" id="mobilethreethreeinputcell">
+                    <Autocomplete
+                        filterOptions={filterOptions}
+                        id='mobilethreethree'
+                        value={value9}
+                        onChange={(event, newValue) => {
+                            if(newValue===""){
+
+                            } else{
+                                setValue9(newValue);
+                                testAnswer9(newValue.label);
+                            }
+                        }}
+                        options={options}
+                        getOptionLabel={(option) => option.label}
+                        style={{ width: 300 }}
+                        renderInput={(params) => (
+                            <TextField {...params} label="Player 9" variant="outlined" onBlur={noBlur}/>
+                        )}
+                    />
+                    <p id='mobilethreethreeAnswers'></p>
+                </div>
             </div>
-            <div></div>
-            <div className="choiceCell">
-                <select id="topleft" className='selectorBoxesMobile' >
+            <div className="mobilegame">
+            <div className="mobilechoiceCell">
+                {/* <button id="choiceButton" className='mobilechoiceButtons' onClick={showBoxes}>show</button>
+                <button id="choiceButton" className='mobilechoiceButtons' onClick={hideBoxes}>hide</button> */}
+                <button id="randomize" className='mobilechoiceButtons' onClick={randomize} type='reset'>Randomize</button>
+                <button id="choiceButton" className='mobilechoiceButtons' onClick={testCheck}>Set Grid</button>
+            </div>
+            <div className="mobilechoiceCell">
+                <select id="mobiletopleft" className='mobileselectorBoxes' >
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='mobilelogoIMG' src="/resources/images/league.png" id='mobiletopleftimg' alt="logo"></img>
+                <p id='mobiletopleftstat'></p>
             </div>
-            <div className="choiceCell">
-                <select id="topmiddle" className='selectorBoxesMobile' >
+            <div className="mobilechoiceCell">
+                <select id="mobiletopmiddle" className='mobileselectorBoxes' >
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='mobilelogoIMG' src="/resources/images/league.png" id='mobiletopmiddleimg' alt="logo"></img>
+                <p id='mobiletopmiddlestat'></p>
             </div>
-            <div className="choiceCell">
-                <select id="topright" className='selectorBoxesMobile' >
+            <div className="mobilechoiceCell">
+                <select id="mobiletopright" className='mobileselectorBoxes' >
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='mobilelogoIMG' src="/resources/images/league.png" id='mobiletoprightimg' alt="logo"></img>
+                <p id='mobiletoprightstat'></p>
             </div>
-            <div className="choiceCell">
-                <select id="lefttop" className='selectorBoxesMobile' >
+            <div className="mobilechoiceCell">
+                <select id="mobilelefttop" className='mobileselectorBoxes' >
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='mobilelogoIMG' src="/resources/images/league.png" id='mobilelefttopimg' alt="logo"></img>
+                <p id='mobilelefttopstat'></p>
             </div>
-            <div className="inputCellMobile" id="oneoneinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='oneone'
-                    value={value1}
-                    onChange={(event, newValue) => {
-                        setValue1(newValue);
-                        testAnswer1(newValue.label);
-                        //setTimeout(console.log(newValue.label),1000)
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 1" variant="outlined"/>
-                    )}
-                />
-                <p id='oneoneAnswers'></p>
-            </div>
-            <div className="inputCellMobile" id="onetwoinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='onetwo'
-                    value={value2}
-                    onChange={(event, newValue) => {
-                        setValue2(newValue);
-                        testAnswer2(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 2" variant="outlined" onBlur={testAnswer2}/>
-                    )}
-                />
-                <p id='onetwoAnswers'></p>
-            </div>
-            <div className="inputCellMobile" id="onethreeinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='onethree'
-                    value={value3}
-                    onChange={(event, newValue) => {
-                        setValue3(newValue);
-                        testAnswer3(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 3" variant="outlined" onBlur={testAnswer3}/>
-                    )}
-                />
-                <p id='onethreeAnswers'></p>
-            </div>
-            <div className="choiceCell">
-                <select id="leftmiddle" className='selectorBoxesMobile' >
+            <button id='mobileoneonebutton' className='mobileguessButtons' onClick={showBox1}></button>
+            <button id='mobileonetwobutton' className='mobileguessButtons' onClick={showBox2}></button>
+            <button id='mobileonethreebutton' className='mobileguessButtons' onClick={showBox3}></button>
+            <div className="mobilechoiceCell">
+                <select id="mobileleftmiddle" className='mobileselectorBoxes' >
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='mobilelogoIMG' src="/resources/images/league.png" id='mobileleftmiddleimg' alt="logo"></img>
+                <p id='mobileleftmiddlestat'></p>
             </div>
-            <div className="inputCellMobile" id="twooneinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='twoone'
-                    value={value4}
-                    onChange={(event, newValue) => {
-                        setValue4(newValue);
-                        testAnswer4(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 4" variant="outlined" onBlur={testAnswer4}/>
-                    )}
-                />
-                <p id='twooneAnswers'></p>
-            </div>
-            <div className="inputCellMobile" id="twotwoinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='twotwo'
-                    value={value5}
-                    onChange={(event, newValue) => {
-                        setValue5(newValue);
-                        testAnswer5(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 5" variant="outlined" onBlur={testAnswer5}/>
-                    )}
-                />
-                <p id='twotwoAnswers'></p>
-            </div>
-            <div className="inputCellMobile" id="twothreeinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='twothree'
-                    value={value6}
-                    onChange={(event, newValue) => {
-                        setValue6(newValue);
-                        testAnswer6(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 6" variant="outlined" onBlur={testAnswer6}/>
-                    )}
-                />
-                <p id='twothreeAnswers'></p>
-            </div>
-            <div className="choiceCell">
-                <select id="leftbottom" className='selectorBoxesMobile' >
+            <button id='mobiletwoonebutton' className='mobileguessButtons' onClick={showBox4}></button>
+            <button id='mobiletwotwobutton' className='mobileguessButtons' onClick={showBox5}></button>
+            <button id='mobiletwothreebutton' className='mobileguessButtons' onClick={showBox6}></button>
+            <div className="mobilechoiceCell">
+                <select id="mobileleftbottom" className='mobileselectorBoxes' >
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
+                <img className='mobilelogoIMG' src="/resources/images/league.png" id='mobileleftbottomimg' alt="logo"></img>
+                <p id='mobileleftbottomstat'></p>
             </div>
-            <div className="inputCellMobile" id="threeoneinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='threeone'
-                    value={value7}
-                    onChange={(event, newValue) => {
-                        setValue7(newValue);
-                        testAnswer7(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 7" variant="outlined" onBlur={testAnswer7}/>
-                    )}
-                />
-                <p id='threeoneAnswers'></p>
-            </div>
-            <div className="inputCellMobile" id="threetwoinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='threetwo'
-                    value={value8}
-                    onChange={(event, newValue) => {
-                        setValue8(newValue);
-                        testAnswer8(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 8" variant="outlined" onBlur={testAnswer8}/>
-                    )}
-                />
-                <p id='threetwoAnswers'></p>
-            </div>
-            <div className="inputCellMobile" id="threethreeinputcell">
-                <Autocomplete
-                    filterOptions={filterOptions}
-                    id='threethree'
-                    value={value9}
-                    onChange={(event, newValue) => {
-                        setValue9(newValue);
-                        testAnswer9(newValue.label);
-                    }}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: 35 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Player 9" variant="outlined" onBlur={testAnswer9}/>
-                    )}
-                />
-                <p id='threethreeAnswers'></p>
-            </div>
+            <button id='mobilethreeonebutton' className='mobileguessButtons' onClick={showBox7}></button>
+            <button id='mobilethreetwobutton' className='mobileguessButtons' onClick={showBox8}></button>
+            <button id='mobilethreethreebutton' className='mobileguessButtons' onClick={showBox9}></button>
                 <p id="hud"></p>
             </div>
                 
@@ -1570,9 +1853,73 @@ function Game3x3mobile(){
     )
 }
 
-
+export default Game3x3mobile;
 
 const selections = [
+    "ARI",
+    "ATL",
+    "BAL",
+    "BUF",
+    "CAR",
+    "CHI",
+    "CIN",
+    "CLE",
+    "DAL",
+    "DEN",
+    "DET",
+    "GNB",
+    "HOU",
+    "IND",
+    "JAX",
+    "KAN",
+    "LVR",
+    "LAC",
+    "LAR",
+    "MIA",
+    "MIN",
+    "NWE",
+    "NOR",
+    "NYG",
+    "NYJ",
+    "PHI",
+    "PIT",
+    "SFO",
+    "SEA",
+    "TAM",
+    "TEN",
+    "WAS",
+    "ARI",
+    "ATL",
+    "BAL",
+    "BUF",
+    "CAR",
+    "CHI",
+    "CIN",
+    "CLE",
+    "DAL",
+    "DEN",
+    "DET",
+    "GNB",
+    "HOU",
+    "IND",
+    "JAX",
+    "KAN",
+    "LVR",
+    "LAC",
+    "LAR",
+    "MIA",
+    "MIN",
+    "NWE",
+    "NOR",
+    "NYG",
+    "NYJ",
+    "PHI",
+    "PIT",
+    "SFO",
+    "SEA",
+    "TAM",
+    "TEN",
+    "WAS",
     "ARI",
     "ATL",
     "BAL",

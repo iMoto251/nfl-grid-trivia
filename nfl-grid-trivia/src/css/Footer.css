@@ -1,0 +1,7 @@
+#footer {
+    text-align: center;
+    color: white;
+    font-size: .75em;
+    display: flex;
+    flex-direction: column;
+  }

@@ -51,6 +51,25 @@ function SelectorNFL(){
     )
 }
 
+function SelectorCollegeConferences(){
+    return(
+        <optgroup label="Conferences">
+            <option>ACC</option>
+            <option>American</option>
+            <option>Big 12</option>
+            <option>Big Ten</option>
+            <option>CUSA</option>
+            <option>Independent</option>
+            <option>MAC</option>
+            <option>Mountain West</option>
+            <option>Pac 12</option>
+            <option>SEC</option>
+            <option>Sun Belt</option>
+            <option>Other</option>
+        </optgroup>
+    )
+}
+
 function SelectorPower5(){
     return(
         <optgroup label="Power 5 & Group of 5">
@@ -895,7 +914,7 @@ function Game3x3(){
             if(i<3){
                 gridOptions[i] = selections[Math.floor(Math.random() * selections.length)]
             } else {
-                gridOptions[i] = selections[Math.floor(Math.random() * (selections.length-69))]
+                gridOptions[i] = selections[Math.floor(Math.random() * (selections.length-141))]
             } 
         }
         
@@ -923,7 +942,7 @@ function Game3x3(){
                     if(i<3){
                         gridOptions[i] = selections[Math.floor(Math.random() * selections.length)]
                     } else {
-                        gridOptions[i] = selections[Math.floor(Math.random() * (selections.length-69))]
+                        gridOptions[i] = selections[Math.floor(Math.random() * (selections.length-141))]
                     } 
                 }
             } else {
@@ -1484,6 +1503,7 @@ function Game3x3(){
         await randomize();
         await testGrid();
         setTimeout(await checkAnswers(),2000);
+        document.getElementById('choiceButton').style.display = 'none';
     }
 
     useEffect(() => {
@@ -1775,6 +1795,7 @@ function Game3x3(){
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
+                    <SelectorCollegeConferences/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -1786,6 +1807,7 @@ function Game3x3(){
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
+                    <SelectorCollegeConferences/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -1797,6 +1819,7 @@ function Game3x3(){
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
+                    <SelectorCollegeConferences/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -1808,6 +1831,7 @@ function Game3x3(){
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
+                    <SelectorCollegeConferences/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -1822,6 +1846,7 @@ function Game3x3(){
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
+                    <SelectorCollegeConferences/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -1836,6 +1861,7 @@ function Game3x3(){
                     <SelectorNFL/>
                     <SeasonSelectorStats/>
                     <CareerSelectorStats/>
+                    <SelectorCollegeConferences/>
                     <SelectorPower5/>
                     <SelectorColleges/>
                 </select>
@@ -2128,7 +2154,79 @@ const selections = [
     "Washington",
     "Washington St.",
     "West Virginia",
-    "Wisconsin"
+    "Wisconsin",
+    "ACC",
+    "American",
+    "Big 12",
+    "Big Ten",
+    "CUSA",
+    "Independent",
+    "MAC",
+    "Mountain West",
+    "Pac 12",
+    "SEC",
+    "Sun Belt",
+    "Other",
+    "ACC",
+    "American",
+    "Big 12",
+    "Big Ten",
+    "CUSA",
+    "Independent",
+    "MAC",
+    "Mountain West",
+    "Pac 12",
+    "SEC",
+    "Sun Belt",
+    "Other",
+    "ACC",
+    "American",
+    "Big 12",
+    "Big Ten",
+    "CUSA",
+    "Independent",
+    "MAC",
+    "Mountain West",
+    "Pac 12",
+    "SEC",
+    "Sun Belt",
+    "Other",
+    "ACC",
+    "American",
+    "Big 12",
+    "Big Ten",
+    "CUSA",
+    "Independent",
+    "MAC",
+    "Mountain West",
+    "Pac 12",
+    "SEC",
+    "Sun Belt",
+    "Other",
+    "ACC",
+    "American",
+    "Big 12",
+    "Big Ten",
+    "CUSA",
+    "Independent",
+    "MAC",
+    "Mountain West",
+    "Pac 12",
+    "SEC",
+    "Sun Belt",
+    "Other",
+    "ACC",
+    "American",
+    "Big 12",
+    "Big Ten",
+    "CUSA",
+    "Independent",
+    "MAC",
+    "Mountain West",
+    "Pac 12",
+    "SEC",
+    "Sun Belt",
+    "Other"
 ]
 
 const options = [
